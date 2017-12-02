@@ -6,4 +6,6 @@ map_Kd Diffuse.png
 Ks 1.00000000000000 1.00000000000000 1.00000000000000
 Ns 100
 illum 7
+map_Bump Bump.png
+map_Refl Reflection.png
 

@@ -134,7 +134,7 @@ function loadModels() {
 				//	boxgeometry.faces[ face ].materialIndex = 0;
 				//}
 				
-				boxgeometry.translate( 0, 1, 0 );
+				boxgeometry.translate( 0, 2, 0 );
 				
 				THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
 				var mtlLoader = new THREE.MTLLoader();
