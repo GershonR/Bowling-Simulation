@@ -7,6 +7,7 @@ var stick, button;
 var clock = new THREE.Clock();
 var mesh = null;
 var keyboard = new KeyboardState();
+var ball;
 unloadScrollBars();
 function fillScene() {
 	scene = new Physijs.Scene;
@@ -46,7 +47,7 @@ function init() {
 
 	camera = new THREE.PerspectiveCamera( 45, canvasRatio, 1, 4000 );
 	cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
-	camera.position.set( -1300, 800, 0);
+	camera.position.set( -1800, 800, 0);
 	cameraControls.target.set(4,301,92);
 	cameraControls.noKeys = true;
 	
@@ -61,7 +62,6 @@ function animate() {
 	window.requestAnimationFrame(animate);
 	scene.simulate(undefined, 2);
 	render();
-	update();
 }
 
 function render() {
@@ -112,6 +112,30 @@ function loadFloor() {
 }
 
 function loadModels() {
+				var redMaterial = new THREE.MeshLambertMaterial();
+				redMaterial.color.setHex( 0xff3333 );
+				// Ball
+	            geometry = new THREE.SphereGeometry( 12, 32, 32 );
+	            ball = new Physijs.ConvexMesh(
+	            	geometry,
+					new THREE.MeshBasicMaterial({ color: 0x888888 }),
+	            	10
+	            );
+	            ball.position.y = 275;
+				ball.position.x = -800;
+	            scene.add( ball );
+				
+				//box = new THREE.Mesh(geometry = new THREE.BoxGeometry( 5, 5, 5 ), redMaterial );
+				//box.position.y = 50;
+				//scene.add( box );
+				var boxgeometry = new THREE.BoxGeometry( 7, 10, 7 );
+				
+				//for ( var face in boxgeometry.faces ) {
+				//	boxgeometry.faces[ face ].materialIndex = 0;
+				//}
+				
+				boxgeometry.translate( 0, 1, 0 );
+				
 				THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
 				var mtlLoader = new THREE.MTLLoader();
 				mtlLoader.setPath( 'models/pins/' );
@@ -143,11 +167,12 @@ function loadModels() {
 						for ( var i = 0; i < geometry.faces.length; i ++ ) {
 							geometry.faces[i].materialIndex = materialsL.length-1;
 						}
-					for(x = 0; x < 2; x++) {
+					geometry.merge(boxgeometry);
+					for(x = 0; x < 5; x++) {
 						var shape = new Physijs.ConvexMesh(
 						geometry,
 						materialsL,
-						5
+						3
 						);
 					    shape.position.y = 200;
 					    shape.position.z = (Math.random() * 50) + x - (Math.random() * 50);
@@ -158,6 +183,35 @@ function loadModels() {
 					});           
 					});
 }
+
+				document.addEventListener('keydown', function( ev ) {
+					switch ( ev.keyCode ) {
+						case 37: // left
+							//ball.position.z -= 3;
+							ball.setLinearVelocity(new THREE.Vector3(0, 0, -300));
+						    //ball.__dirtyPosition = true;
+							break;
+
+						case 38: // forward
+							//ball.position.x += 3;
+						    //ball.__dirtyPosition = true;
+							ball.setLinearVelocity(new THREE.Vector3(300, 0, 0));
+							break;
+
+						case 39: // right
+							//ball.position.z += 3;
+						   // ball.__dirtyPosition = true;
+						   ball.setLinearVelocity(new THREE.Vector3(0, 0, 300));
+							break;
+
+						case 40: // back
+							//ball.position.x -= 3;
+						    //ball.__dirtyPosition = true;
+							ball.setLinearVelocity(new THREE.Vector3(-300, 0, 0));
+							break;
+					}
+				});
+
 
 try {
   init();
