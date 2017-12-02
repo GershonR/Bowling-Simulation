@@ -8,7 +8,7 @@
 	            geometry = new THREE.SphereGeometry( 12, 32, 32 );
 	            ball = new Physijs.ConvexMesh(
 	            	geometry,
-					new THREE.MeshBasicMaterial({ color: 0x888888 }),
+					new THREE.MeshPhongMaterial({ color: 0x000000 }),
 	            	10
 	            );
 
