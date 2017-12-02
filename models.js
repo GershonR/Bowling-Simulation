@@ -5,12 +5,43 @@
 				// //draw the transparent bowling ball for placement
 
 				// Ball
-	            geometry = new THREE.SphereGeometry( 12, 32, 32 );
+				geometry = new THREE.SphereGeometry( 12, 32, 64 );
+
+
+				var subMaterial = new THREE.MeshPhongMaterial({color: 0x000000});
+				var cylinderSubtract = new THREE.CylinderGeometry(1, 1, 10, 32);
+				var hole1 = new THREE.Mesh(cylinderSubtract, subMaterial);
+				hole1.position.x = 0;
+				hole1.position.y = 10;
+				hole1.position.z = 0;
+				var hole2 = new THREE.Mesh(cylinderSubtract, subMaterial);
+				hole2.position.x = -5;
+				hole2.position.y = 10;
+				hole2.position.z = -2;
+				var hole3 = new THREE.Mesh(cylinderSubtract, subMaterial);
+				hole3.position.x = -5;
+				hole3.position.y = 10;
+				hole3.position.z = 2;
+
+				var result = new THREE.Mesh(geometry, subMaterial);
+
+				var ballSub = new ThreeBSP(result);
+				var subHole1 = new ThreeBSP(hole1);
+				var subHole2 = new ThreeBSP(hole2);
+				var subHole3 = new ThreeBSP(hole3);
+				var ballSub = ballSub.subtract(subHole1);
+				var ballSub = ballSub.subtract(subHole2);
+				var ballSub = ballSub.subtract(subHole3);
+				result = ballSub.toMesh();
+
 	            ball = new Physijs.ConvexMesh(
-	            	geometry,
+	            	result.geometry,
 					new THREE.MeshPhongMaterial({ color: 0x000000 }),
 	            	10
-	            );
+				);
+
+				
+
 
 	            
 				
@@ -64,7 +95,7 @@
 						materialsL,
 						3
 						);
-					    shape.position.y = 10;
+					    shape.position.y = 60;
 					    shape.position.z = 12*x;
 						shape.castShadow = true;
 					    scene.add( shape );
@@ -75,7 +106,7 @@
 						materialsL,
 						3
 						);
-					    shape.position.y = 10;
+					    shape.position.y = 60;
 					    shape.position.z = 7+11*x;
 						shape.position.x = -10;
 						shape.castShadow = true;
@@ -87,7 +118,7 @@
 						materialsL,
 						3
 						);
-					    shape.position.y = 10;
+					    shape.position.y = 60;
 					    shape.position.z = 13+11*x;
 						shape.position.x = -20;
 						shape.castShadow = true;
@@ -98,7 +129,7 @@
 					materialsL,
 					3
 					);
-					shape.position.y = 10;
+					shape.position.y = 60;
 					shape.position.z = 19;
 					shape.position.x = -30;
 					shape.castShadow = true;
