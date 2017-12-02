@@ -7,8 +7,9 @@ var stick, button;
 var clock = new THREE.Clock();
 var mesh = null;
 var keyboard = new KeyboardState();
+var ball;
+var pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
 var ball, ballSet;
-
 unloadScrollBars();
 
 function fillScene() {
@@ -79,6 +80,7 @@ function unloadScrollBars() {
     document.body.scroll = "no"; // ie only
 }
 
+<<<<<<< HEAD
 function loadFloor() {
 		var groundMirror = new THREE.Reflector( 3000, 3000, {
 		  clipBias: 0.003,
@@ -219,6 +221,37 @@ function loadModels() {
 							break;
 					}
 				});
+=======
+document.addEventListener('keydown', function( ev ) {
+	switch ( ev.keyCode ) {
+		case 37: // left
+			//ball.position.z -= 3;
+			//ball.setLinearVelocity(new THREE.Vector3(0, 0, -300));
+			//ballSet.translateZ(-10);
+		    //ball.__dirtyPosition = true;
+			break;
+
+		case 38: // forward
+			//ball.position.x += 3;
+		    //ball.__dirtyPosition = true;
+			ball.setLinearVelocity(new THREE.Vector3(300, 0, 0));
+			break;
+
+		case 39: // right
+			//ball.position.z += 3;
+		   // ball.__dirtyPosition = true;
+		   //ball.setLinearVelocity(new THREE.Vector3(0, 0, 300));
+		   //ballset.translateZ(10);
+			break;
+
+		case 40: // back
+			//ball.position.x -= 3;
+		    //ball.__dirtyPosition = true;
+			ball.setLinearVelocity(new THREE.Vector3(-300, 0, 0));
+			break;
+	}
+});
+>>>>>>> 21a8fa3e3cad856e9c1b8c7968f039afad3d1e78
 
 
 try {
