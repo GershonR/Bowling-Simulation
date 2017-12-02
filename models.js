@@ -95,8 +95,8 @@
 						materialsL,
 						3
 						);
-					    shape.position.y = 60;
-					    shape.position.z = 12*x;
+					    shape.position.y = 50;
+					    shape.position.z = -18 + 12*x;
 						shape.castShadow = true;
 					    scene.add( shape );
 					}
@@ -106,9 +106,9 @@
 						materialsL,
 						3
 						);
-					    shape.position.y = 60;
-					    shape.position.z = 7+11*x;
-						shape.position.x = -10;
+					    shape.position.y = 50;
+					    shape.position.z = -10+11*x;
+						shape.position.x = -15;
 						shape.castShadow = true;
 					    scene.add( shape );
 					}
@@ -118,9 +118,9 @@
 						materialsL,
 						3
 						);
-					    shape.position.y = 60;
-					    shape.position.z = 13+11*x;
-						shape.position.x = -20;
+					    shape.position.y = 50;
+					    shape.position.z = -5+11*x;
+						shape.position.x = -25;
 						shape.castShadow = true;
 					    scene.add( shape );
 					}
@@ -129,9 +129,9 @@
 					materialsL,
 					3
 					);
-					shape.position.y = 60;
-					shape.position.z = 19;
-					shape.position.x = -30;
+					shape.position.y = 50;
+					shape.position.z = 0;
+					shape.position.x = -32;
 					shape.castShadow = true;
 					scene.add( shape );
 					});           
