@@ -10,6 +10,7 @@ var keyboard = new KeyboardState();
 var ball;
 var pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
 var ball, ballSet;
+var boxLeft, boxRight, boxBack, boxBottom;
 unloadScrollBars();
 
 function fillScene() {
@@ -34,6 +35,7 @@ function fillScene() {
 	loadFloor();
 	loadModels();
 	drawBowlingBall();
+	loadCollectionBox();
 
 }
 

@@ -126,3 +126,35 @@ function loadFloor() {
 		scene.add( shape2 );
 		scene.add( shape3 );
 }
+
+function loadCollectionBox() {
+
+	var collectBoxMaterial = new THREE.MeshPhongMaterial({color: 0x000000});
+	
+	//boxLeft, boxRight, boxBottom, boxBack
+	boxBottom = new Physijs.ConvexMesh(new THREE.BoxGeometry(100,25,200), collectBoxMaterial, 0);
+	boxBottom.position.x = 75;
+	boxBottom.position.y = -25;
+	boxBottom.position.z = 0;
+	scene.add(boxBottom);
+
+
+	boxBack = new Physijs.ConvexMesh(new THREE.BoxGeometry(10, 200, 200), collectBoxMaterial, 0);
+	boxBack.position.x = 130;
+	boxBack.position.y = 62.5;
+	boxBack.position.z = 0;
+	scene.add(boxBack);
+
+	boxLeft = new Physijs.ConvexMesh(new THREE.BoxGeometry(100, 200, 10), collectBoxMaterial, 0);
+	boxLeft.position.x = 75;
+	boxLeft.position.y = 62.5;
+	boxLeft.position.z = 100;
+	scene.add(boxLeft);
+
+	boxRight = new Physijs.ConvexMesh(new THREE.BoxGeometry(100, 200, 10), collectBoxMaterial, 0);
+	boxRight.position.x = 75;
+	boxRight.position.y = 62.5;
+	boxRight.position.z = -100;
+	scene.add(boxRight);
+
+}
