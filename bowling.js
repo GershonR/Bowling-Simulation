@@ -9,7 +9,9 @@ var mesh = null;
 var keyboard = new KeyboardState();
 var ball;
 var pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
+var ball, ballSet;
 unloadScrollBars();
+
 function fillScene() {
 	scene = new Physijs.Scene;
 	scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
@@ -31,6 +33,7 @@ function fillScene() {
     scene.add(axes);
 	loadFloor();
 	loadModels();
+	drawBowlingBall();
 
 }
 
@@ -117,6 +120,9 @@ function loadFloor() {
 		function loadModels() {
 				var redMaterial = new THREE.MeshLambertMaterial();
 				redMaterial.color.setHex( 0xff3333 );
+
+				// //draw the transparent bowling ball for placement
+
 				// Ball
 	            geometry = new THREE.SphereGeometry( 12, 32, 32 );
 	            ball = new Physijs.ConvexMesh(
@@ -226,7 +232,8 @@ function loadFloor() {
 					switch ( ev.keyCode ) {
 						case 37: // left
 							//ball.position.z -= 3;
-							ball.setLinearVelocity(new THREE.Vector3(0, 0, -300));
+							//ball.setLinearVelocity(new THREE.Vector3(0, 0, -300));
+							//ballSet.translateZ(-10);
 						    //ball.__dirtyPosition = true;
 							break;
 
@@ -239,7 +246,8 @@ function loadFloor() {
 						case 39: // right
 							//ball.position.z += 3;
 						   // ball.__dirtyPosition = true;
-						   ball.setLinearVelocity(new THREE.Vector3(0, 0, 300));
+						   //ball.setLinearVelocity(new THREE.Vector3(0, 0, 300));
+						   //ballset.translateZ(10);
 							break;
 
 						case 40: // back
