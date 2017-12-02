@@ -5,7 +5,7 @@
 				// //draw the transparent bowling ball for placement
 
 				// Ball
-				geometry = new THREE.SphereGeometry( 12, 32, 64 );
+				 geometry = new THREE.SphereGeometry( 12, 32, 64 );
 
 
 				var subMaterial = new THREE.MeshPhongMaterial({color: 0x000000});
@@ -38,7 +38,7 @@
 	            	result.geometry,
 					new THREE.MeshPhongMaterial({ color: 0x000000 }),
 	            	10
-				);
+				); 
 
 				
 

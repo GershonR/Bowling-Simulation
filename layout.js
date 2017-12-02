@@ -34,7 +34,7 @@ function loadFloor() {
         //scene.add(floor);
 		
 		
-		var cylinder = new THREE.Mesh( new THREE.CylinderGeometry( 10, 10, 1100, 12 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
+		var cylinder = new THREE.Mesh( new THREE.CylinderGeometry( 12, 12, 1100, 12 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
 		cylinder.rotation.z = -(Math.PI / 2);
 		cylinder.position.y = 20;
 		cylinder.position.x = -500;
@@ -46,7 +46,7 @@ function loadFloor() {
         var afterSub = floorObj.subtract( cyl1 );
         var result = afterSub.toMesh();
         result.material = material;
-        var shape = new Physijs.ConcaveMesh(
+        var shape = new Physijs.ConvexMesh(
         	result.geometry,
         	material,
         	0
@@ -56,14 +56,14 @@ function loadFloor() {
 		shape.rotation.x = -(Math.PI / 2);
 		scene.add( shape );
 		
-		var cylinder2 = new THREE.Mesh( new THREE.CylinderGeometry( 8, 8, 1100, 12 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
+		var cylinder2 = new THREE.Mesh( new THREE.CylinderGeometry( 10, 10, 1100, 12 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
 		cylinder2.rotation.z = -(Math.PI / 2);
 		cylinder2.position.y = 19.5;
 		cylinder2.position.x = -500;
 		cylinder2.position.z = 80;
 		//scene.add( cylinder2 );
 		
-		var cylinder3 = new THREE.Mesh( new THREE.CylinderGeometry( 7.5, 7.5, 1100, 12 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
+		var cylinder3 = new THREE.Mesh( new THREE.CylinderGeometry( 9.5, 9.5, 1100, 12 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
 		cylinder3.rotation.z = -(Math.PI / 2);
 		cylinder3.position.y = 21;
 		cylinder3.position.x = -500;
