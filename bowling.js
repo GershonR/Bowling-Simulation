@@ -1,17 +1,3 @@
-////////////////////////////////////////////////////////////////////////////////
-
-/* COMP 3490 A1 Skeleton for Claw Machine (Barebones Edition) 
- * Note that you may make use of the skeleton provided, or start from scratch.
- * The choice is up to you.
- * Read the assignment directions carefully
- * Your claw mechanism should be created such that it is represented hierarchically
- * You might consider looking at THREE.Group and THREE.Object3D for reference
- * If you want to play around with the canvas position, or other HTML/JS level constructs
- * you are welcome to do so.
-
-
- /*global variables, coordinates, clock etc.  */
- 
 Physijs.scripts.worker = 'js/physijs_worker.js';
 Physijs.scripts.ammo = 'ammo.js';
 	
@@ -21,7 +7,6 @@ var stick, button;
 var clock = new THREE.Clock();
 var mesh = null;
 var keyboard = new KeyboardState();
-var tempBtVec3_1 = new Ammo.btVector3( 0, 0, 0 );
 unloadScrollBars();
 function fillScene() {
 	scene = new Physijs.Scene;
@@ -38,20 +23,15 @@ function fillScene() {
 	light.position.set( -200, -100, -400 );
 
 	scene.add( light );
-
-    var gridXZ = new THREE.GridHelper(2000, 100, new THREE.Color(0xCCCCCC), new THREE.Color(0x888888));
-    scene.add(gridXZ);
    
     var axes = new THREE.AxisHelper(150);
     axes.position.y = 1;
     scene.add(axes);
+	loadFloor();
+	loadModels();
 
 }
 
-
-
-// Initialization. Define the size of the canvas and store the aspect ratio
-// You can change these as well
 function init() {
 	var canvasWidth = window.innerWidth;
 	var canvasHeight = innerHeight;
@@ -72,16 +52,11 @@ function init() {
 	
 }
 
-	// We want our document object model (a javascript / HTML construct) to include our canvas
-	// These allow for easy integration of webGL and HTML
 function addToDOM() {
     var canvas = document.getElementById('canvas');
     canvas.appendChild(renderer.domElement);
 }
 
-	// This is a browser callback for repainting
-	// Since you might change view, or move things
-	// We cant to update what appears
 function animate() {
 	window.requestAnimationFrame(animate);
 	scene.simulate(undefined, 2);
@@ -89,9 +64,6 @@ function animate() {
 	update();
 }
 
-	// getDelta comes from THREE.js - this tells how much time passed since this was last called
-	// This might be useful if time is needed to make things appear smooth, in any animation, or calculation
-	// The following function stores this, and also renders the scene based on the defined scene and camera
 function render() {
 	var delta = clock.getDelta();
 	cameraControls.update(delta);
@@ -104,9 +76,89 @@ function unloadScrollBars() {
     document.body.scroll = "no"; // ie only
 }
 
-	// Since we're such talented programmers, we include some exception handeling in case we break something
-	// a try and catch accomplished this as it often does
-	// The sequence below includes initialization, filling up the scene, adding this to the DOM, and animating (updating what appears)
+function loadFloor() {
+		var groundMirror = new THREE.Reflector( 3000, 3000, {
+		  clipBias: 0.003,
+		  textureWidth: window.innerWidth * window.devicePixelRatio,
+		  textureHeight: window.innerHeight * window.devicePixelRatio,
+		  color: 0x777777,
+		  recursion: 1
+	    } );
+	    groundMirror.position.y = -0.9;
+	    groundMirror.rotateX( - Math.PI / 2 );
+	    scene.add( groundMirror );
+	    
+        //create the floor
+        
+        var floorTexture = new THREE.ImageUtils.loadTexture( 'textures/floor.png' ); //256x256
+        floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
+	    floorTexture.repeat.set( 10, 10 );
+        var floorMaterial = new THREE.MeshBasicMaterial( { map: floorTexture, side: THREE.DoubleSide, transparent: true, opacity: 0.7 } );
+		var material = Physijs.createMaterial(
+			floorMaterial,
+			0.8,
+			0.3
+		);
+        var floorGeometry = new THREE.PlaneGeometry(3000, 3000, 10, 10);
+        //var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+		var floor = new Physijs.ConvexMesh(
+			floorGeometry,
+			material,
+			0
+		);
+        floor.position.y = 0;
+        floor.rotation.x = -(Math.PI / 2);
+        scene.add(floor);
+}
+
+function loadModels() {
+				THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
+				var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.setPath( 'models/pins/' );
+				mtlLoader.load( 'Pin.mtl', function( materials ) {
+					materials.preload();
+					var manager = new THREE.LoadingManager();
+					var objLoader = new THREE.OBJLoader(manager);
+					var materialsL = new Array();
+					objLoader.setMaterials( materials );
+					objLoader.setPath( 'models/pins/' );
+					objLoader.load( 'Pin.obj', function ( object ) {
+					//object.position.y = 600;
+					//object.scale.set(0.2,0.2,0.2);
+					object.updateMatrix();
+					geometry = new THREE.Geometry();
+					object.traverse( function( child ) {
+                        if ( child instanceof THREE.Mesh ) {
+                            geometry.merge(new THREE.Geometry().fromBufferGeometry(child.geometry));
+							geometry.mergeVertices();
+							materialsL.push(child.material);
+                            console.log("Mesh name: " + child.name);
+							console.log("Texture: " + child.material);
+                            console.log("Mesh's geometry has " + geometry.vertices.length + " vertices.");
+                            console.log("Mesh's geometry has " + geometry.faces.length + " faces.");
+                            console.log("");
+                        }
+						});
+					    //set the material index of each face so a merge knows which material to apply
+						for ( var i = 0; i < geometry.faces.length; i ++ ) {
+							geometry.faces[i].materialIndex = materialsL.length-1;
+						}
+					for(x = 0; x < 2; x++) {
+						var shape = new Physijs.ConvexMesh(
+						geometry,
+						materialsL,
+						5
+						);
+					    shape.position.y = 200;
+					    shape.position.z = (Math.random() * 50) + x - (Math.random() * 50);
+						shape.position.x = (Math.random() * 50) + x - (Math.random() * 50);
+						shape.castShadow = true;
+					    scene.add( shape );
+					}
+					});           
+					});
+}
+
 try {
   init();
   fillScene();
