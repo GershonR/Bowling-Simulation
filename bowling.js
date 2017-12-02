@@ -10,6 +10,7 @@ var keyboard = new KeyboardState();
 var ball;
 var pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
 var ball, ballSet;
+var stopArrow = false;
 unloadScrollBars();
 
 function fillScene() {
@@ -95,6 +96,7 @@ document.addEventListener('keydown', function( ev ) {
 			//ball.position.x += 3;
 		    //ball.__dirtyPosition = true;
 			ball.setLinearVelocity(new THREE.Vector3(300, 0, 0));
+			stopArrow = true;
 			break;
 
 		case 39: // right
@@ -112,12 +114,12 @@ document.addEventListener('keydown', function( ev ) {
 
 		case 32:
 
-			ball.position.y = ballSet.position.y;
+			ball.position.y = ballSet.position.y - 40;
 			ball.position.x = ballSet.position.x;
 			ball.position.z = ballSet.position.z;
 			scene.add(ball);
-
 			scene.remove(ballSet);
+			setTimeout(function() { drawArrow(); }, 500);
 			break;
 	}
 });
