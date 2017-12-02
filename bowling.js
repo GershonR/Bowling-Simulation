@@ -8,7 +8,9 @@ var clock = new THREE.Clock();
 var mesh = null;
 var keyboard = new KeyboardState();
 var ball;
+
 unloadScrollBars();
+
 function fillScene() {
 	scene = new Physijs.Scene;
 	scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
@@ -30,6 +32,7 @@ function fillScene() {
     scene.add(axes);
 	loadFloor();
 	loadModels();
+	drawBowlingBall();
 
 }
 
@@ -188,7 +191,8 @@ function loadModels() {
 					switch ( ev.keyCode ) {
 						case 37: // left
 							//ball.position.z -= 3;
-							ball.setLinearVelocity(new THREE.Vector3(0, 0, -300));
+							ballSet.translateZ(-10);
+							//ball.setLinearVelocity(new THREE.Vector3(0, 0, -300));
 						    //ball.__dirtyPosition = true;
 							break;
 
@@ -201,7 +205,8 @@ function loadModels() {
 						case 39: // right
 							//ball.position.z += 3;
 						   // ball.__dirtyPosition = true;
-						   ball.setLinearVelocity(new THREE.Vector3(0, 0, 300));
+						   //ball.setLinearVelocity(new THREE.Vector3(0, 0, 300));
+						   ballSet.translateZ(10);
 							break;
 
 						case 40: // back
