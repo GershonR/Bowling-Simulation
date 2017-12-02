@@ -1,6 +1,7 @@
 Physijs.scripts.worker = 'js/physijs_worker.js';
 Physijs.scripts.ammo = 'ammo.js';
-	
+
+var addedArrow = false;
 var camera, scene, renderer;
 var cameraControls;
 var stick, button;
@@ -97,7 +98,7 @@ document.addEventListener('keydown', function( ev ) {
 		case 38: // forward
 			//ball.position.x += 3;
 		    //ball.__dirtyPosition = true;
-			ball.setLinearVelocity(new THREE.Vector3(300, 0, 0));
+			ball.setLinearVelocity(new THREE.Vector3(300, 0, 50 * -arrow.rotation.z));
 			stopArrow = true;
 			break;
 
@@ -121,7 +122,10 @@ document.addEventListener('keydown', function( ev ) {
 			ball.position.z = ballSet.position.z;
 			scene.add(ball);
 			scene.remove(ballSet);
-			setTimeout(function() { drawArrow(); }, 500);
+			if(!addedArrow) {
+				addedArrow = true;
+				setTimeout(function() { drawArrow(); }, 500);
+			}
 			break;
 	}
 });
