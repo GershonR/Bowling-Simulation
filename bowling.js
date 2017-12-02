@@ -10,11 +10,7 @@ var keyboard = new KeyboardState();
 var ball;
 var pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
 var ball, ballSet;
-<<<<<<< HEAD
 var boxLeft, boxRight, boxBack, boxBottom;
-=======
-var stopArrow = false;
->>>>>>> 6b8212aea43c4eb6c7b09711521c55c339325e66
 unloadScrollBars();
 
 function fillScene() {
