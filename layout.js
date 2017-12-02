@@ -72,9 +72,15 @@ function loadFloor() {
 		var innerCyl1 = new ThreeBSP(cylinder2);
         var outerCyl1 = new ThreeBSP(cylinder3);
 		var subtract_hole2 = innerCyl1.subtract( outerCyl1 );
-		var result2 = subtract_hole2.toMesh( new THREE.MeshLambertMaterial({
-        	shading: THREE.SmoothShading,
-        	color: 0xFF0000
-        }));
-		scene.add( result2 );
+		var result2 = subtract_hole2.toMesh();
+		var shape2 = new Physijs.ConcaveMesh(
+        	result2.geometry,
+        	new THREE.MeshPhongMaterial({color: 0x212428}),
+        	0
+        );
+		shape2.position.y = 19;
+		shape2.position.x = -500;
+		shape2.position.z = 80;
+		shape2.rotation.z = -(Math.PI / 2);
+		scene.add( shape2 );
 }
