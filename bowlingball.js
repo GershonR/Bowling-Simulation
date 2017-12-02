@@ -12,7 +12,4 @@ function drawBowlingBall() {
 
 
     scene.add(ballSet);
-
-
-
 }
