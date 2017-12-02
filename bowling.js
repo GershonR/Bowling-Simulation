@@ -8,6 +8,7 @@ var clock = new THREE.Clock();
 var mesh = null;
 var keyboard = new KeyboardState();
 var ball;
+var pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
 unloadScrollBars();
 function fillScene() {
 	scene = new Physijs.Scene;
@@ -77,7 +78,7 @@ function unloadScrollBars() {
 }
 
 function loadFloor() {
-		var groundMirror = new THREE.Reflector( 3000, 3000, {
+		var groundMirror = new THREE.Reflector( 1050, 1000, {
 		  clipBias: 0.003,
 		  textureWidth: window.innerWidth * window.devicePixelRatio,
 		  textureHeight: window.innerHeight * window.devicePixelRatio,
@@ -85,6 +86,7 @@ function loadFloor() {
 		  recursion: 1
 	    } );
 	    groundMirror.position.y = -0.9;
+		groundMirror.position.x = -500;
 	    groundMirror.rotateX( - Math.PI / 2 );
 	    scene.add( groundMirror );
 	    
@@ -99,7 +101,7 @@ function loadFloor() {
 			0.8,
 			0.3
 		);
-        var floorGeometry = new THREE.PlaneGeometry(3000, 3000, 10, 10);
+        var floorGeometry = new THREE.PlaneGeometry(1050, 1000, 10, 10);
         //var floor = new THREE.Mesh(floorGeometry, floorMaterial);
 		var floor = new Physijs.ConvexMesh(
 			floorGeometry,
@@ -107,11 +109,12 @@ function loadFloor() {
 			0
 		);
         floor.position.y = 0;
+		floor.position.x = -500;
         floor.rotation.x = -(Math.PI / 2);
         scene.add(floor);
 }
 
-function loadModels() {
+		function loadModels() {
 				var redMaterial = new THREE.MeshLambertMaterial();
 				redMaterial.color.setHex( 0xff3333 );
 				// Ball
@@ -123,6 +126,7 @@ function loadModels() {
 	            );
 	            ball.position.y = 275;
 				ball.position.x = -800;
+				ball.position.z = 10;
 	            scene.add( ball );
 				
 				//box = new THREE.Mesh(geometry = new THREE.BoxGeometry( 5, 5, 5 ), redMaterial );
@@ -168,18 +172,52 @@ function loadModels() {
 							geometry.faces[i].materialIndex = materialsL.length-1;
 						}
 					geometry.merge(boxgeometry);
-					for(x = 0; x < 5; x++) {
+					
+ 					for(x = 0; x < 4; x++) {
 						var shape = new Physijs.ConvexMesh(
 						geometry,
 						materialsL,
 						3
 						);
-					    shape.position.y = 200;
-					    shape.position.z = (Math.random() * 50) + x - (Math.random() * 50);
-						shape.position.x = (Math.random() * 50) + x - (Math.random() * 50);
+					    shape.position.y = 10;
+					    shape.position.z = 12*x;
 						shape.castShadow = true;
 					    scene.add( shape );
 					}
+					for(x = 0; x < 3; x++) {
+						var shape = new Physijs.ConvexMesh(
+						geometry,
+						materialsL,
+						3
+						);
+					    shape.position.y = 10;
+					    shape.position.z = 7+11*x;
+						shape.position.x = -10;
+						shape.castShadow = true;
+					    scene.add( shape );
+					}
+					for(x = 0; x < 2; x++) {
+						var shape = new Physijs.ConvexMesh(
+						geometry,
+						materialsL,
+						3
+						);
+					    shape.position.y = 10;
+					    shape.position.z = 13+11*x;
+						shape.position.x = -20;
+						shape.castShadow = true;
+					    scene.add( shape );
+					}
+					var shape = new Physijs.ConvexMesh(
+					geometry,
+					materialsL,
+					3
+					);
+					shape.position.y = 10;
+					shape.position.z = 19;
+					shape.position.x = -30;
+					shape.castShadow = true;
+					scene.add( shape );
 					});           
 					});
 }
