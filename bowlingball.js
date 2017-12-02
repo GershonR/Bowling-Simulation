@@ -7,7 +7,7 @@ function drawBowlingBall() {
     ballSet = new THREE.Mesh(new THREE.SphereGeometry(12, 32, 32), bowlingBallMaterial);
 
     ballSet.position.x = -800;
-    ballSet.position.y = 12;
+    ballSet.position.y = 60;
     ballSet.position.z = 0;
 
 

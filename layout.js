@@ -22,15 +22,59 @@ function loadFloor() {
 			0.8,
 			0.3
 		);
-        var floorGeometry = new THREE.PlaneGeometry(1050, 1000, 10, 10);
+        //var floorGeometry = new THREE.BoxGeometry(1050, 1000, 50, 10);
         //var floor = new THREE.Mesh(floorGeometry, floorMaterial);
-		var floor = new Physijs.ConvexMesh(
-			floorGeometry,
-			material,
-			0
+		var floor = new THREE.Mesh(new THREE.BoxGeometry(1050, 1000, 50, 10),
+			new THREE.MeshPhongMaterial({color: 0x000000})
 		);
-        floor.position.y = 0;
+		floor.position.y = 0;
 		floor.position.x = -500;
-        floor.rotation.x = -(Math.PI / 2);
-        scene.add(floor);
+		floor.rotation.x = -(Math.PI / 2);
+        //floor.rotation.x = -(Math.PI / 2);
+        //scene.add(floor);
+		
+		
+		var cylinder = new THREE.Mesh( new THREE.CylinderGeometry( 10, 10, 1100, 12 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
+		cylinder.rotation.z = -(Math.PI / 2);
+		cylinder.position.y = 20;
+		cylinder.position.x = -500;
+		cylinder.position.z = 80;
+		//scene.add( cylinder );
+		
+		var floorObj = new ThreeBSP(floor);
+        var cyl1 = new ThreeBSP(cylinder);
+        var afterSub = floorObj.subtract( cyl1 );
+        var result = afterSub.toMesh();
+        result.material = material;
+        var shape = new Physijs.ConcaveMesh(
+        	result.geometry,
+        	material,
+        	0
+        );        
+		shape.position.y = 0;
+		shape.position.x = -500;
+		shape.rotation.x = -(Math.PI / 2);
+		scene.add( shape );
+		
+		var cylinder2 = new THREE.Mesh( new THREE.CylinderGeometry( 8, 8, 1100, 12 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
+		cylinder2.rotation.z = -(Math.PI / 2);
+		cylinder2.position.y = 19.5;
+		cylinder2.position.x = -500;
+		cylinder2.position.z = 80;
+		//scene.add( cylinder2 );
+		
+		var cylinder3 = new THREE.Mesh( new THREE.CylinderGeometry( 7.5, 7.5, 1100, 12 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
+		cylinder3.rotation.z = -(Math.PI / 2);
+		cylinder3.position.y = 21;
+		cylinder3.position.x = -500;
+		cylinder3.position.z = 80;
+		//scene.add( cylinder3 );
+		var innerCyl1 = new ThreeBSP(cylinder2);
+        var outerCyl1 = new ThreeBSP(cylinder3);
+		var subtract_hole2 = innerCyl1.subtract( outerCyl1 );
+		var result2 = subtract_hole2.toMesh( new THREE.MeshLambertMaterial({
+        	shading: THREE.SmoothShading,
+        	color: 0xFF0000
+        }));
+		scene.add( result2 );
 }
