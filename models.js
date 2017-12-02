@@ -11,10 +11,8 @@
 					new THREE.MeshBasicMaterial({ color: 0x888888 }),
 	            	10
 	            );
-	            ball.position.y = 275;
-				ball.position.x = -800;
-				ball.position.z = 10;
-	            scene.add( ball );
+
+	            
 				
 				//box = new THREE.Mesh(geometry = new THREE.BoxGeometry( 5, 5, 5 ), redMaterial );
 				//box.position.y = 50;

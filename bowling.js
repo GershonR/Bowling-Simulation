@@ -87,7 +87,7 @@ document.addEventListener('keydown', function( ev ) {
 		case 37: // left
 			//ball.position.z -= 3;
 			//ball.setLinearVelocity(new THREE.Vector3(0, 0, -300));
-			ballSet.translateZ(-10);
+			ballSet.translateZ(-2);
 		    //ball.__dirtyPosition = true;
 			break;
 
@@ -101,13 +101,23 @@ document.addEventListener('keydown', function( ev ) {
 			//ball.position.z += 3;
 		    //ball.__dirtyPosition = true;
 		    //ball.setLinearVelocity(new THREE.Vector3(0, 0, 300));
-		    ballSet.translateZ(10);
+		    ballSet.translateZ(2);
 			break;
 
 		case 40: // back
 			//ball.position.x -= 3;
 		    //ball.__dirtyPosition = true;
 			ball.setLinearVelocity(new THREE.Vector3(-300, 0, 0));
+			break;
+
+		case 32:
+
+			ball.position.y = ballSet.position.y;
+			ball.position.x = ballSet.position.x;
+			ball.position.z = ballSet.position.z;
+			scene.add(ball);
+
+			scene.remove(ballSet);
 			break;
 	}
 });
