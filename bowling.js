@@ -80,146 +80,37 @@ function unloadScrollBars() {
     document.body.scroll = "no"; // ie only
 }
 
-function loadFloor() {
-		var groundMirror = new THREE.Reflector( 3000, 3000, {
-		  clipBias: 0.003,
-		  textureWidth: window.innerWidth * window.devicePixelRatio,
-		  textureHeight: window.innerHeight * window.devicePixelRatio,
-		  color: 0x777777,
-		  recursion: 1
-	    } );
-	    groundMirror.position.y = -0.9;
-	    groundMirror.rotateX( - Math.PI / 2 );
-	    scene.add( groundMirror );
-	    
-        //create the floor
-        
-        var floorTexture = new THREE.ImageUtils.loadTexture( 'textures/floor.png' ); //256x256
-        floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
-	    floorTexture.repeat.set( 10, 10 );
-        var floorMaterial = new THREE.MeshBasicMaterial( { map: floorTexture, side: THREE.DoubleSide, transparent: true, opacity: 0.7 } );
-		var material = Physijs.createMaterial(
-			floorMaterial,
-			0.8,
-			0.3
-		);
-        var floorGeometry = new THREE.PlaneGeometry(3000, 3000, 10, 10);
-        //var floor = new THREE.Mesh(floorGeometry, floorMaterial);
-		var floor = new Physijs.ConvexMesh(
-			floorGeometry,
-			material,
-			0
-		);
-        floor.position.y = 0;
-        floor.rotation.x = -(Math.PI / 2);
-        scene.add(floor);
-}
 
-function loadModels() {
-				var redMaterial = new THREE.MeshLambertMaterial();
-				redMaterial.color.setHex( 0xff3333 );
 
-				// //draw the transparent bowling ball for placement
+document.addEventListener('keydown', function( ev ) {
+	switch ( ev.keyCode ) {
+		case 37: // left
+			//ball.position.z -= 3;
+			//ball.setLinearVelocity(new THREE.Vector3(0, 0, -300));
+			ballSet.translateZ(-10);
+		    //ball.__dirtyPosition = true;
+			break;
 
-				// Ball
-	            geometry = new THREE.SphereGeometry( 12, 32, 32 );
-	            ball = new Physijs.ConvexMesh(
-	            	geometry,
-					new THREE.MeshBasicMaterial({ color: 0x888888 }),
-	            	10
-	            );
-	            ball.position.y = 275;
-				ball.position.x = -800;
-	            scene.add( ball );
-				
-				//box = new THREE.Mesh(geometry = new THREE.BoxGeometry( 5, 5, 5 ), redMaterial );
-				//box.position.y = 50;
-				//scene.add( box );
-				var boxgeometry = new THREE.BoxGeometry( 7, 10, 7 );
-				
-				//for ( var face in boxgeometry.faces ) {
-				//	boxgeometry.faces[ face ].materialIndex = 0;
-				//}
-				
-				boxgeometry.translate( 0, 2, 0 );
-				
-				THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
-				var mtlLoader = new THREE.MTLLoader();
-				mtlLoader.setPath( 'models/pins/' );
-				mtlLoader.load( 'Pin.mtl', function( materials ) {
-					materials.preload();
-					var manager = new THREE.LoadingManager();
-					var objLoader = new THREE.OBJLoader(manager);
-					var materialsL = new Array();
-					objLoader.setMaterials( materials );
-					objLoader.setPath( 'models/pins/' );
-					objLoader.load( 'Pin.obj', function ( object ) {
-					//object.position.y = 600;
-					//object.scale.set(0.2,0.2,0.2);
-					object.updateMatrix();
-					geometry = new THREE.Geometry();
-					object.traverse( function( child ) {
-                        if ( child instanceof THREE.Mesh ) {
-                            geometry.merge(new THREE.Geometry().fromBufferGeometry(child.geometry));
-							geometry.mergeVertices();
-							materialsL.push(child.material);
-                            console.log("Mesh name: " + child.name);
-							console.log("Texture: " + child.material);
-                            console.log("Mesh's geometry has " + geometry.vertices.length + " vertices.");
-                            console.log("Mesh's geometry has " + geometry.faces.length + " faces.");
-                            console.log("");
-                        }
-						});
-					    //set the material index of each face so a merge knows which material to apply
-						for ( var i = 0; i < geometry.faces.length; i ++ ) {
-							geometry.faces[i].materialIndex = materialsL.length-1;
-						}
-					geometry.merge(boxgeometry);
-					for(x = 0; x < 5; x++) {
-						var shape = new Physijs.ConvexMesh(
-						geometry,
-						materialsL,
-						3
-						);
-					    shape.position.y = 200;
-					    shape.position.z = (Math.random() * 50) + x - (Math.random() * 50);
-						shape.position.x = (Math.random() * 50) + x - (Math.random() * 50);
-						shape.castShadow = true;
-					    scene.add( shape );
-					}
-					});           
-					});
-}
+		case 38: // forward
+			//ball.position.x += 3;
+		    //ball.__dirtyPosition = true;
+			ball.setLinearVelocity(new THREE.Vector3(300, 0, 0));
+			break;
 
-				document.addEventListener('keydown', function( ev ) {
-					switch ( ev.keyCode ) {
-						case 37: // left
-							//ball.position.z -= 3;
-							//ball.setLinearVelocity(new THREE.Vector3(0, 0, -300));
-							ballSet.translateZ(-10);
-						    //ball.__dirtyPosition = true;
-							break;
+		case 39: // right
+			//ball.position.z += 3;
+		    //ball.__dirtyPosition = true;
+		    //ball.setLinearVelocity(new THREE.Vector3(0, 0, 300));
+		    ballSet.translateZ(10);
+			break;
 
-						case 38: // forward
-							//ball.position.x += 3;
-						    //ball.__dirtyPosition = true;
-							ball.setLinearVelocity(new THREE.Vector3(300, 0, 0));
-							break;
-
-						case 39: // right
-							//ball.position.z += 3;
-						    //ball.__dirtyPosition = true;
-						    //ball.setLinearVelocity(new THREE.Vector3(0, 0, 300));
-						    ballSet.translateZ(10);
-							break;
-
-						case 40: // back
-							//ball.position.x -= 3;
-						    //ball.__dirtyPosition = true;
-							ball.setLinearVelocity(new THREE.Vector3(-300, 0, 0));
-							break;
-					}
-				});
+		case 40: // back
+			//ball.position.x -= 3;
+		    //ball.__dirtyPosition = true;
+			ball.setLinearVelocity(new THREE.Vector3(-300, 0, 0));
+			break;
+	}
+});
 
 
 try {
