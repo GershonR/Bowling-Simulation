@@ -179,6 +179,66 @@ function WALL() {
 
 }
 
+<<<<<<< HEAD
+function loadGuard() {
+	var boxWidth = 2;
+	var guardHeight = 20;
+	var gaurdLength = 1050; //-500 15.5 0 
+	var standAmount = 50;
+	var barAmount = 3;
+	var x = -1020;
+	var z = 100;
+	var y = 13;
+
+	var guardMaterial = new THREE.MeshPhongMaterial({color: 0x000000});
+	
+	var guardStandGeometry = new THREE.BoxGeometry(boxWidth, guardHeight, boxWidth);
+	
+	for (var standNum = 0; standNum < standAmount; standNum++) {
+		var stand = new Physijs.ConvexMesh(guardStandGeometry, guardMaterial, 0);
+		stand.position.x = x + (standNum * (gaurdLength/standAmount));
+		stand.position.y = y + guardHeight/2;
+		stand.position.z = z;
+		scene.add(stand);
+
+		//console.log("hey");
+	}
+
+	for (var standNum = 0; standNum < standAmount; standNum++) {
+		var stand = new Physijs.ConvexMesh(guardStandGeometry, guardMaterial, 0);
+		stand.position.x = x + (standNum * (gaurdLength/standAmount));
+		stand.position.y = y + guardHeight/2;
+		stand.position.z = -z;
+		scene.add(stand);
+
+		//console.log("hey");
+	}
+
+	var guardBarGeometry = new THREE.BoxGeometry(gaurdLength, boxWidth, boxWidth);		
+
+	for (var barNum = 0; barNum < barAmount; barNum++) {
+		var bar = new Physijs.ConvexMesh(guardBarGeometry, guardMaterial, 0);
+		bar.position.x = x + gaurdLength/2;
+		bar.position.y = y + guardHeight - boxWidth - (barNum * ((guardHeight - 5)/barAmount));
+		bar.position.z = z;
+		scene.add(bar);
+
+		//console.log("hey");
+	}
+
+	for (var barNum = 0; barNum < barAmount; barNum++) {
+		var bar = new Physijs.ConvexMesh(guardBarGeometry, guardMaterial, 0);
+		bar.position.x = x + gaurdLength/2;
+		bar.position.y = y + guardHeight - boxWidth - (barNum * ((guardHeight - 5)/barAmount));
+		bar.position.z = -z;
+		scene.add(bar);
+
+		//console.log("hey");
+	}
+
+	
+
+=======
 function loadCeiling() {
 		var ceilMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
 		var ceilTexture = new THREE.TextureLoader().load( "textures/ceiling.jpg");
@@ -191,4 +251,5 @@ function loadCeiling() {
 		cieling.rotation.x = -(Math.PI / 2);
 		scene.add(cieling);
 	
+>>>>>>> 98904a18421130e27d6f1f2dae6f1d04fdc1443a
 }
