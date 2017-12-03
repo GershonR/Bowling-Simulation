@@ -2,6 +2,7 @@ var arrow;
 var right = 0;
 var left = 0;
 function drawArrow() {
+	addedArrow = true;
     var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
         map:THREE.ImageUtils.loadTexture('textures/arrow.png')
     });
