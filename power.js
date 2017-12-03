@@ -9,17 +9,21 @@ function drawPower() {
 	sprite = new THREE.Sprite( spriteMaterial );
 	sprite.scale.set(100, 100, 1000);
 	ball.add(sprite); // this centers the glow at the mesh
+	stopPower = true;
 	powerUp();
 }
 
 function powerUp() {
     function animateUp() {
 	  power += 0.8;
-	  console.log("Power: " + power);
 	  sprite.scale.set(power, power, 1000);
       renderer.render(scene, camera);
-      if(power >= 120) {
+      if(power >= 100) {
     	 return powerDown();
+	  }
+	  if(stopPower) {
+		  ball.remove(sprite);
+		  return;
 	  }
       requestAnimationFrame(animateUp);
       
@@ -32,8 +36,12 @@ function powerDown() {
 	  power -= 0.8;
 	  sprite.scale.set(power, power, 1000);
       renderer.render(scene, camera);
-      if(power <= 45) {
+      if(power <= 35) {
     	 return powerUp();
+	  }
+	  if(stopPower) {
+		ball.remove(sprite);
+		return;
 	  }
       requestAnimationFrame(animateDown);
       

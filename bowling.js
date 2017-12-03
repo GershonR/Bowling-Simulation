@@ -2,6 +2,7 @@ Physijs.scripts.worker = 'js/physijs_worker.js';
 Physijs.scripts.ammo = 'ammo.js';
 
 var power = 45;
+var stopPower = false;
 var sprite;
 var addedArrow = false;
 var camera, scene, renderer;
@@ -123,19 +124,23 @@ document.addEventListener('keydown', function( ev ) {
 			break;
 
 		case 40: // back
-			drawPower();
+			//drawPower();
 			break;
 
-		case 32:
-
-			ball.position.y = ballSet.position.y;
-			ball.position.x = ballSet.position.x;
-			ball.position.z = ballSet.position.z;
-			scene.add(ball);
-			scene.remove(ballSet);
+		case 32: // space
 			if(!addedArrow) {
-				addedArrow = true;
+			    ball.position.y = ballSet.position.y;
+			    ball.position.x = ballSet.position.x;
+			    ball.position.z = ballSet.position.z;
+			    scene.add(ball);
+			    scene.remove(ballSet);
 				setTimeout(function() { drawArrow(); }, 500);
+			}
+			if(addedArrow && !stopPower) {
+				drawPower();
+			}
+			if(addedArrow && stopPower) {
+				ball.setLinearVelocity(new THREE.Vector3(10 * power, 0, 50 * -arrow.rotation.z));
 			}
 			break;
 	}
