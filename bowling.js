@@ -1,7 +1,7 @@
 Physijs.scripts.worker = 'js/physijs_worker.js';
 Physijs.scripts.ammo = 'ammo.js';
 
-var power = 45;
+var power = 35;
 var stopPower = false;
 var sprite;
 var addedArrow = false;
