@@ -156,9 +156,30 @@ function loadCollectionBox() {
 	boxRight.position.y = 62.5;
 	boxRight.position.z = -100;
 	scene.add(boxRight);
+}
+
+function WALL() {
+
+   var wallMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
+   var wallTexture = new THREE.TextureLoader().load( "textures/bl.jpg");
+   var basetop = new THREE.MeshLambertMaterial( { map: wallTexture } );
+   
+   //wallLeft, wallRight
+   wallLeft = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);
+   wallLeft.position.x = 30;
+   wallLeft.position.y = 62.5;
+   wallLeft.position.z = 300;
+   scene.add(wallLeft);
+   
+   wallRight = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);
+   wallRight.position.x = 30;
+   wallRight.position.y = 62.5;
+   wallRight.position.z = -300;
+   scene.add(wallRight);
 
 }
 
+<<<<<<< HEAD
 function loadGuard() {
 	var boxWidth = 2;
 	var guardHeight = 20;
@@ -217,4 +238,18 @@ function loadGuard() {
 
 	
 
+=======
+function loadCeiling() {
+		var ceilMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
+		var ceilTexture = new THREE.TextureLoader().load( "textures/ceiling.jpg");
+		ceilTexture.wrapS = ceilTexture.wrapT = THREE.RepeatWrapping; 
+	    ceilTexture.repeat.set( 20, 20 );
+		var ceilTop = new THREE.MeshLambertMaterial( { map: ceilTexture } );
+		var cieling = new THREE.Mesh(new THREE.BoxGeometry(1050, 1000, 5, 10), ceilTop);
+		cieling.position.y = 165;
+		cieling.position.x = -500;
+		cieling.rotation.x = -(Math.PI / 2);
+		scene.add(cieling);
+	
+>>>>>>> 98904a18421130e27d6f1f2dae6f1d04fdc1443a
 }
