@@ -177,13 +177,10 @@ document.addEventListener('keydown', function( ev ) {
 				setTimeout(function() { drawArrow(); }, 500);
 				return;
 			}
-<<<<<<< HEAD
 			if(glowing) {
 				stopPower = true;
 			}
 
-=======
->>>>>>> 91b2d0a9de461eb473a0dd5da30a4dd4dbde1ca0
 			if(!stopPower) {
 				drawPower();
 				return;
