@@ -160,8 +160,8 @@ function loadCollectionBox() {
 }
 
 function loadGuard() {
-	var boxWidth = 3;
-	var guardHeight = 30;
+	var boxWidth = 2;
+	var guardHeight = 20;
 	var gaurdLength = 1050; //-500 15.5 0 
 	var standAmount = 50;
 	var barAmount = 3;
@@ -198,7 +198,7 @@ function loadGuard() {
 	for (var barNum = 0; barNum < barAmount; barNum++) {
 		var bar = new Physijs.ConvexMesh(guardBarGeometry, guardMaterial, 0);
 		bar.position.x = x + gaurdLength/2;
-		bar.position.y = y + guardHeight - boxWidth - (barNum * ((guardHeight - 10)/barAmount));
+		bar.position.y = y + guardHeight - boxWidth - (barNum * ((guardHeight - 5)/barAmount));
 		bar.position.z = z;
 		scene.add(bar);
 
@@ -208,7 +208,7 @@ function loadGuard() {
 	for (var barNum = 0; barNum < barAmount; barNum++) {
 		var bar = new Physijs.ConvexMesh(guardBarGeometry, guardMaterial, 0);
 		bar.position.x = x + gaurdLength/2;
-		bar.position.y = y + guardHeight - boxWidth - (barNum * ((guardHeight - 10)/barAmount));
+		bar.position.y = y + guardHeight - boxWidth - (barNum * ((guardHeight - 5)/barAmount));
 		bar.position.z = -z;
 		scene.add(bar);
 
