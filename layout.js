@@ -43,13 +43,13 @@ function loadFloor() {
 		floorfix.rotation.x = -(Math.PI / 2);
 		scene.add(floorfix);
 
-		var cylinder = new THREE.Mesh( new THREE.CylinderGeometry( 17, 17, 1050, 12 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
+		var cylinder = new THREE.Mesh( new THREE.CylinderGeometry( 17, 17, 1050, 36 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
 		cylinder.rotation.z = -(Math.PI / 2);
 		cylinder.position.y = 6;
 		cylinder.position.x = -500;
 		cylinder.position.z = 80;
 
-		var cylinder2 = new THREE.Mesh( new THREE.CylinderGeometry( 17, 17, 1050, 12 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
+		var cylinder2 = new THREE.Mesh( new THREE.CylinderGeometry( 17, 17, 1050, 36 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
 		cylinder2.rotation.z = -(Math.PI / 2);
 		cylinder2.position.y = 6;
 		cylinder2.position.x = -500;
@@ -73,25 +73,25 @@ function loadFloor() {
 		shape.rotation.x = -(Math.PI / 2);
 		scene.add( shape );
 		
-		var cylinder2 = new THREE.Mesh( new THREE.CylinderGeometry( 16, 16, 1050, 12 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
+		var cylinder2 = new THREE.Mesh( new THREE.CylinderGeometry( 16, 16, 1050, 36 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
 		cylinder2.rotation.z = -(Math.PI / 2);
 		cylinder2.position.y = 6;
 		cylinder2.position.x = -500;
 		cylinder2.position.z = 80;
 		
-		var cylinder3 = new THREE.Mesh( new THREE.CylinderGeometry( 15.5, 15.5, 1050, 12 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
+		var cylinder3 = new THREE.Mesh( new THREE.CylinderGeometry( 15.5, 15.5, 1050, 36 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
 		cylinder3.rotation.z = -(Math.PI / 2);
 		cylinder3.position.y = 7;
 		cylinder3.position.x = -500;
 		cylinder3.position.z = 80;
 
-		var cylinder4 = new THREE.Mesh( new THREE.CylinderGeometry( 16, 16, 1050, 12 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
+		var cylinder4 = new THREE.Mesh( new THREE.CylinderGeometry( 16, 16, 1050, 36 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
 		cylinder4.rotation.z = -(Math.PI / 2);
 		cylinder4.position.y = 6;
 		cylinder4.position.x = -500;
 		cylinder4.position.z = -80;
 		
-		var cylinder5 = new THREE.Mesh( new THREE.CylinderGeometry( 15.5, 15.5, 1050, 12 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
+		var cylinder5 = new THREE.Mesh( new THREE.CylinderGeometry( 15.5, 15.5, 1050, 36 ), new THREE.MeshPhongMaterial({color: 0x000000}) );
 		cylinder5.rotation.z = -(Math.PI / 2);
 		cylinder5.position.y = 7;
 		cylinder5.position.x = -500;
