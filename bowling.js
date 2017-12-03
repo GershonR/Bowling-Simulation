@@ -67,7 +67,8 @@ function init() {
 
 	camera = new THREE.PerspectiveCamera( 45, canvasRatio, 1, 4000 );
 	cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
-	camera.position.set( -1200, 100, 0);
+	camera.position.set( -1000, 150, 0);
+	
 	cameraControls.target.set(0,0,0);
 	cameraControls.noKeys = true;
 	
