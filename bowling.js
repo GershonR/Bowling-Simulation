@@ -135,9 +135,11 @@ document.addEventListener('keydown', function( ev ) {
 			    scene.add(ball);
 			    scene.remove(ballSet);
 				setTimeout(function() { drawArrow(); }, 500);
+				return;
 			}
 			if(addedArrow && !stopPower) {
 				drawPower();
+				return;
 			}
 			if(addedArrow && stopPower) {
 				ball.setLinearVelocity(new THREE.Vector3(10 * power, 0, 50 * -arrow.rotation.z));
