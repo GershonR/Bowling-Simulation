@@ -176,11 +176,11 @@ document.addEventListener('keydown', function( ev ) {
 				setTimeout(function() { drawArrow(); }, 500);
 				return;
 			}
-			if(addedArrow && !stopPower) {
+			if(!stopPower) {
 				drawPower();
 				return;
 			}
-			if(addedArrow && stopPower) {
+			if(stopPower) {
 				ball.setLinearVelocity(new THREE.Vector3(10 * power, 0, 50 * -arrow.rotation.z));
 			}
 			break;
