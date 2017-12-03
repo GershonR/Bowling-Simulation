@@ -9,14 +9,15 @@ function loadFloor() {
 	    groundMirror.position.y = -10;
 		groundMirror.position.x = -500;
 	    groundMirror.rotateX( - Math.PI / 2 );
-	    scene.add( groundMirror );
+	    //scene.add( groundMirror );
 	    
         //create the floor
         
         var floorTexture = new THREE.ImageUtils.loadTexture( 'textures/floor.png' ); //256x256
         floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
 	    floorTexture.repeat.set( 10, 10 );
-        var floorMaterial = new THREE.MeshBasicMaterial( { map: floorTexture, side: THREE.DoubleSide, transparent: true, opacity: 0.95 } );
+        var floorMaterial = new THREE.MeshPhysicalMaterial( { map: floorTexture, side: THREE.DoubleSide, transparent: false, opacity: 0.95 } );
+		floorMaterial.clearCoat = 1.0;
 		var material = Physijs.createMaterial(
 			floorMaterial,
 			0.8,

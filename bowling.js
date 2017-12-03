@@ -111,7 +111,7 @@ document.addEventListener('keydown', function( ev ) {
 		case 38: // forward
 			//ball.position.x += 3;
 		    //ball.__dirtyPosition = true;
-			ball.setLinearVelocity(new THREE.Vector3(300, 0, 50 * -arrow.rotation.z));
+			ball.setLinearVelocity(new THREE.Vector3(200, 0, 50 * -arrow.rotation.z));
 			stopArrow = true;
 			break;
 
