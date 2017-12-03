@@ -5,6 +5,7 @@ var power = 45;
 var stopPower = false;
 var sprite;
 var addedArrow = false;
+var glowing = false;
 var camera, scene, renderer;
 var cameraControls;
 var stick, button;
@@ -176,11 +177,15 @@ document.addEventListener('keydown', function( ev ) {
 				setTimeout(function() { drawArrow(); }, 500);
 				return;
 			}
-			if(addedArrow && !stopPower) {
+			if(glowing) {
+				stopPower = true;
+			}
+
+			if(!stopPower) {
 				drawPower();
 				return;
 			}
-			if(addedArrow && stopPower) {
+			if(stopPower) {
 				ball.setLinearVelocity(new THREE.Vector3(10 * power, 0, 50 * -arrow.rotation.z));
 			}
 			break;

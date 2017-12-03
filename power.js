@@ -9,7 +9,7 @@ function drawPower() {
 	sprite = new THREE.Sprite( spriteMaterial );
 	sprite.scale.set(100, 100, 1000);
 	ball.add(sprite); // this centers the glow at the mesh
-	stopPower = true;
+	glowing = true;
 	powerUp();
 }
 
