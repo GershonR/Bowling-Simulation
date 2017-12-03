@@ -21,24 +21,30 @@ function fillScene() {
 	scene = new Physijs.Scene;
 	scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
 	scene.fog = new THREE.Fog( 0x808080, 2000, 4000 );
-	//scene.add( new THREE.AmbientLight( 0x222222 ) );
+	scene.add( new THREE.AmbientLight( 0x404040 ) );
 
-	var light = new THREE.DirectionalLight( 0xffffff, 0.2 );
-	light.position.set( 200, 500, 500 );
+	var lightL = new THREE.PointLight(0xffffff, 2, 300);
+	lightL.position.x = -150;
+	lightL.position.y = 25;
+	lightL.position.z = -200;
+	scene.add(lightL);
 
-	scene.add( light );
+	// var light = new THREE.DirectionalLight( 0xffffff, 0.2 );
+	// light.position.set( 200, 500, 500 );
 
-	var light2 = new THREE.PointLight(0xffffff, .5, 200);
-	light2.position.x = -400;
-	light2.position.y = 200;
-	light2.position.z = -300;
-	//light2.rotateZ(250);
-	scene.add(light2);
+	// scene.add( light );
 
-	var light3 = new THREE.DirectionalLight( 0xffffff, .8 );
-	light3.position.set( -200, -100, -400 );
+	// var light2 = new THREE.PointLight(0xffffff, .5, 200);
+	// light2.position.x = -400;
+	// light2.position.y = 200;
+	// light2.position.z = -300;
+	// //light2.rotateZ(250);
+	// scene.add(light2);
 
-	scene.add( light3 );
+	// var light3 = new THREE.DirectionalLight( 0xffffff, .8 );
+	// light3.position.set( -200, -100, -400 );
+
+	// scene.add( light3 );
    
     //var axes = new THREE.AxisHelper(150);
     //axes.position.y = 1;
