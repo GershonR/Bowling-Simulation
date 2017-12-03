@@ -62,11 +62,11 @@ function fillScene() {
 	sideLight.position.y = 190;
 	scene.add(sideLight);
 
-	sideLight = new THREE.PointLight(0xffffff, 2, 300);
-	sideLight.position.x = -100;
-	sideLight.position.z = -200;
-	sideLight.position.y = 190;
-	scene.add(sideLight);
+	sideLight2 = new THREE.PointLight(0xffffff, 2, 300);
+	sideLight2.position.x = -100;
+	sideLight2.position.z = -200;
+	sideLight2.position.y = 190;
+	scene.add(sideLight2);
 
 
 
