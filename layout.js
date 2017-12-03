@@ -1,4 +1,5 @@
 function loadFloor() {
+	//hey	
 		var groundMirror = new THREE.Reflector( 1050, 1000, {
 		  clipBias: 0.003,
 		  textureWidth: window.innerWidth * window.devicePixelRatio,
