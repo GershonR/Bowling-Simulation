@@ -41,6 +41,7 @@ function fillScene() {
 	drawBowlingBall();
 	loadCollectionBox();
 	WALL();
+	loadCeiling();
 
 }
 
