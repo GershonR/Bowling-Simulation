@@ -27,6 +27,7 @@ function fillScene() {
 	lightL.position.x = -150;
 	lightL.position.y = 25;
 	lightL.position.z = -200;
+	lightL.rotation.set(0,0, 90);
 	scene.add(lightL);
 
 	// var light = new THREE.DirectionalLight( 0xffffff, 0.2 );
@@ -66,7 +67,8 @@ function init() {
 
 	camera = new THREE.PerspectiveCamera( 45, canvasRatio, 1, 4000 );
 	cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
-	camera.position.set( -1200, 100, 0);
+	camera.position.set( -1000, 150, 0);
+	
 	cameraControls.target.set(0,0,0);
 	cameraControls.noKeys = true;
 	
@@ -126,7 +128,7 @@ document.addEventListener('keydown', function( ev ) {
 
 		case 32:
 
-			ball.position.y = ballSet.position.y - 40;
+			ball.position.y = ballSet.position.y;
 			ball.position.x = ballSet.position.x;
 			ball.position.z = ballSet.position.z;
 			scene.add(ball);
