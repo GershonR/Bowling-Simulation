@@ -23,6 +23,7 @@ function loadFloor() {
 			0.8,
 			0.3
 		);
+
         //var floorGeometry = new THREE.BoxGeometry(1050, 1000, 50, 10);
         //var floor = new THREE.Mesh(floorGeometry, floorMaterial);
 		var floor = new THREE.Mesh(new THREE.BoxGeometry(1050, 1000, 30, 10),
@@ -177,6 +178,20 @@ function WALL() {
    wallRight.position.y = 62.5;
    wallRight.position.z = -300;
    scene.add(wallRight);
+
+
+	//wallLeft, wallRight
+	var leftWall = new THREE.Mesh(new THREE.BoxGeometry(1000, 200, 10), basetop);
+	leftWall.position.x = -1000/2 + 25;
+	leftWall.position.y = 62.5;
+	leftWall.position.z = 1000/2;
+	scene.add(leftWall);
+
+	var rightWall = new THREE.Mesh(new THREE.BoxGeometry(1000, 200, 10), basetop);
+	rightWall.position.x = -1000/2 + 25;
+	rightWall.position.y = 62.5;
+	rightWall.position.z = -1000/2;
+	scene.add(rightWall);
 
 }
 
