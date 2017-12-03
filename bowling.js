@@ -58,13 +58,13 @@ function fillScene() {
 	scene.add(backLight);
 
 	var sideLight = new THREE.PointLight(0xffffff, 2, 300);
-	sideLight.position.x = -150;
+	sideLight.position.x = -100;
 	sideLight.position.z = 200;
 	sideLight.position.y = 190;
 	scene.add(sideLight);
 
 	sideLight = new THREE.PointLight(0xffffff, 2, 300);
-	sideLight.position.x = -150;
+	sideLight.position.x = -100;
 	sideLight.position.z = -200;
 	sideLight.position.y = 190;
 	scene.add(sideLight);
@@ -177,10 +177,13 @@ document.addEventListener('keydown', function( ev ) {
 				setTimeout(function() { drawArrow(); }, 500);
 				return;
 			}
+<<<<<<< HEAD
 			if(glowing) {
 				stopPower = true;
 			}
 
+=======
+>>>>>>> 91b2d0a9de461eb473a0dd5da30a4dd4dbde1ca0
 			if(!stopPower) {
 				drawPower();
 				return;
