@@ -158,3 +158,63 @@ function loadCollectionBox() {
 	scene.add(boxRight);
 
 }
+
+function loadGuard() {
+	var boxWidth = 3;
+	var guardHeight = 30;
+	var gaurdLength = 1050; //-500 15.5 0 
+	var standAmount = 50;
+	var barAmount = 3;
+	var x = -1020;
+	var z = 100;
+	var y = 13;
+
+	var guardMaterial = new THREE.MeshPhongMaterial({color: 0x000000});
+	
+	var guardStandGeometry = new THREE.BoxGeometry(boxWidth, guardHeight, boxWidth);
+	
+	for (var standNum = 0; standNum < standAmount; standNum++) {
+		var stand = new Physijs.ConvexMesh(guardStandGeometry, guardMaterial, 0);
+		stand.position.x = x + (standNum * (gaurdLength/standAmount));
+		stand.position.y = y + guardHeight/2;
+		stand.position.z = z;
+		scene.add(stand);
+
+		//console.log("hey");
+	}
+
+	for (var standNum = 0; standNum < standAmount; standNum++) {
+		var stand = new Physijs.ConvexMesh(guardStandGeometry, guardMaterial, 0);
+		stand.position.x = x + (standNum * (gaurdLength/standAmount));
+		stand.position.y = y + guardHeight/2;
+		stand.position.z = -z;
+		scene.add(stand);
+
+		//console.log("hey");
+	}
+
+	var guardBarGeometry = new THREE.BoxGeometry(gaurdLength, boxWidth, boxWidth);		
+
+	for (var barNum = 0; barNum < barAmount; barNum++) {
+		var bar = new Physijs.ConvexMesh(guardBarGeometry, guardMaterial, 0);
+		bar.position.x = x + gaurdLength/2;
+		bar.position.y = y + guardHeight - boxWidth - (barNum * ((guardHeight - 10)/barAmount));
+		bar.position.z = z;
+		scene.add(bar);
+
+		//console.log("hey");
+	}
+
+	for (var barNum = 0; barNum < barAmount; barNum++) {
+		var bar = new Physijs.ConvexMesh(guardBarGeometry, guardMaterial, 0);
+		bar.position.x = x + gaurdLength/2;
+		bar.position.y = y + guardHeight - boxWidth - (barNum * ((guardHeight - 10)/barAmount));
+		bar.position.z = -z;
+		scene.add(bar);
+
+		//console.log("hey");
+	}
+
+	
+
+}

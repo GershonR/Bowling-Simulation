@@ -33,12 +33,13 @@ function fillScene() {
    
     var axes = new THREE.AxisHelper(150);
     axes.position.y = 1;
-    scene.add(axes);
+	scene.add(axes);
+	loadGuard();
+		
 	loadFloor();
 	loadModels();
 	drawBowlingBall();
 	loadCollectionBox();
-
 }
 
 function init() {
