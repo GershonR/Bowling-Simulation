@@ -57,6 +57,7 @@ function fillScene() {
 	loadCollectionBox();
 	WALL();
 	loadGuard();
+	loadCeiling();
 
 }
 
