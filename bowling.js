@@ -27,6 +27,7 @@ function fillScene() {
 	lightL.position.x = -150;
 	lightL.position.y = 25;
 	lightL.position.z = -200;
+	lightL.rotation.set(0,0, 90);
 	scene.add(lightL);
 
 	// var light = new THREE.DirectionalLight( 0xffffff, 0.2 );
@@ -126,7 +127,7 @@ document.addEventListener('keydown', function( ev ) {
 
 		case 32:
 
-			ball.position.y = ballSet.position.y - 40;
+			ball.position.y = ballSet.position.y;
 			ball.position.x = ballSet.position.x;
 			ball.position.z = ballSet.position.z;
 			scene.add(ball);
