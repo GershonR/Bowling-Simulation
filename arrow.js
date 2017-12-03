@@ -32,7 +32,7 @@ function rotateRight() {
 	  }
 	  if(stopArrow)
 	  {
-		scene.remove(arrow);
+		//scene.remove(arrow);
 		return;
 	  }
       setTimeout(function() { requestAnimationFrame(animateRight); }, 10);
@@ -52,7 +52,7 @@ function rotateLeft() {
 	  }
 	  if(stopArrow)
 	  {
-		scene.remove(arrow);
+		//scene.remove(arrow);
 		return;
 	  }
 	  setTimeout(function() { requestAnimationFrame(animateLeft); }, 10);
