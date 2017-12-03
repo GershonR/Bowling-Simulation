@@ -131,7 +131,7 @@ function loadFloor() {
 
 function loadCollectionBox() {
 
-	var collectBoxMaterial = new THREE.MeshPhongMaterial({color: 0x000000});
+	var collectBoxMaterial = new THREE.MeshPhongMaterial({color: 0x3c3f44});
 	
 	//boxLeft, boxRight, boxBottom, boxBack
 	boxBottom = new Physijs.ConvexMesh(new THREE.BoxGeometry(100,25,200), collectBoxMaterial, 0);

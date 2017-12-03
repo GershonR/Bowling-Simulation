@@ -27,9 +27,48 @@ function fillScene() {
 	var lightL = new THREE.PointLight(0xffffff, 2, 300);
 	lightL.position.x = -150;
 	lightL.position.y = 50;
-	lightL.position.z = -200;
-	lightL.rotation.set(0,0, 90);
-	scene.add(lightL);
+	lightL.position.z = -400;
+	lightL.rotation.set(90,0, 180);
+	//scene.add(lightL);
+
+	var backLight = new THREE.PointLight(0xffffff, 2, 300);
+	backLight.position.x = -50;
+	backLight.position.z = 0;
+	backLight.position.y = 190;
+	scene.add(backLight);
+
+	backLight = new THREE.PointLight(0xffffff, 2, 300);
+	backLight.position.x = -250;
+	backLight.position.z = 0;
+	backLight.position.y = 190;
+	scene.add(backLight);
+
+	backLight = new THREE.PointLight(0xffffff, 2, 300);
+	backLight.position.x = -450;
+	backLight.position.z = 0;
+	backLight.position.y = 190;
+	scene.add(backLight);
+
+
+	backLight = new THREE.PointLight(0xffffff, 2, 300);
+	backLight.position.x = -650;
+	backLight.position.z = 0;
+	backLight.position.y = 190;
+	scene.add(backLight);
+
+	var sideLight = new THREE.PointLight(0xffffff, 2, 300);
+	sideLight.position.x = -150;
+	sideLight.position.z = 200;
+	sideLight.position.y = 190;
+	scene.add(sideLight);
+
+	sideLight = new THREE.PointLight(0xffffff, 2, 300);
+	sideLight.position.x = -150;
+	sideLight.position.z = -200;
+	sideLight.position.y = 190;
+	scene.add(sideLight);
+
+
 
 	// var light = new THREE.DirectionalLight( 0xffffff, 0.2 );
 	// light.position.set( 200, 500, 500 );
@@ -37,7 +76,7 @@ function fillScene() {
 	light = new THREE.DirectionalLight( 0xffffff, 0.2 );
 	light.position.set( -200, -100, -400 );
 
-	scene.add( light );
+	//scene.add( light );
    
     // var axes = new THREE.AxisHelper(150);
     // axes.position.y = 1;
