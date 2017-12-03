@@ -30,7 +30,7 @@ function rotateRight() {
       if(arrow.rotation.z >= 0.7) {
     	 return rotateLeft();
 	  }
-	  if(stopArrow)
+	  if(stopArrow || glowing)
 	  {
 		//scene.remove(arrow);
 		return;
@@ -50,7 +50,7 @@ function rotateLeft() {
       if(arrow.rotation.z <= -0.7) {
     	 return rotateRight();
 	  }
-	  if(stopArrow)
+	  if(stopArrow || glowing)
 	  {
 		//scene.remove(arrow);
 		return;
