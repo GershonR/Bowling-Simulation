@@ -28,10 +28,17 @@ function fillScene() {
 
 	scene.add( light );
 
-	light = new THREE.DirectionalLight( 0xffffff, 0.2 );
-	light.position.set( -200, -100, -400 );
+	var light2 = new THREE.PointLight(0xffffff, .5, 200);
+	light2.position.x = -400;
+	light2.position.y = 200;
+	light2.position.z = -300;
+	//light2.rotateZ(250);
+	scene.add(light2);
 
-	scene.add( light );
+	var light3 = new THREE.DirectionalLight( 0xffffff, .8 );
+	light3.position.set( -200, -100, -400 );
+
+	scene.add( light3 );
    
     //var axes = new THREE.AxisHelper(150);
     //axes.position.y = 1;
@@ -59,7 +66,7 @@ function init() {
 
 	camera = new THREE.PerspectiveCamera( 45, canvasRatio, 1, 4000 );
 	cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
-	camera.position.set( -1200, 200, 0);
+	camera.position.set( -1200, 100, 0);
 	cameraControls.target.set(0,0,0);
 	cameraControls.noKeys = true;
 	
