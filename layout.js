@@ -129,7 +129,7 @@ function loadFloor() {
 
 function loadCollectionBox() {
 
-	var collectBoxMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
+	var collectBoxMaterial = new THREE.MeshPhongMaterial({color: 0x000000});
 	
 	//boxLeft, boxRight, boxBottom, boxBack
 	boxBottom = new Physijs.ConvexMesh(new THREE.BoxGeometry(100,25,200), collectBoxMaterial, 0);
@@ -156,26 +156,36 @@ function loadCollectionBox() {
 	boxRight.position.y = 62.5;
 	boxRight.position.z = -100;
 	scene.add(boxRight);
-
 }
 
 function WALL() {
 
-	var wallMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
-	var wallTexture = new THREE.TextureLoader().load( "textures/bl.jpg");
-	var basetop = new THREE.MeshLambertMaterial( { map: wallTexture } );
+   var wallMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
+   var wallTexture = new THREE.TextureLoader().load( "textures/bl.jpg");
+   var basetop = new THREE.MeshLambertMaterial( { map: wallTexture } );
+   
+   //wallLeft, wallRight
+   wallLeft = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);
+   wallLeft.position.x = 30;
+   wallLeft.position.y = 62.5;
+   wallLeft.position.z = 300;
+   scene.add(wallLeft);
+   
+   wallRight = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);
+   wallRight.position.x = 30;
+   wallRight.position.y = 62.5;
+   wallRight.position.z = -300;
+   scene.add(wallRight);
 
-	//wallLeft, wallRight
-	wallLeft = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);
-	wallLeft.position.x = 30;
-	wallLeft.position.y = 62.5;
-	wallLeft.position.z = 300;
-	scene.add(wallLeft);
+}
 
-	wallRight = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);
-	wallRight.position.x = 30;
-	wallRight.position.y = 62.5;
-	wallRight.position.z = -300;
-	scene.add(wallRight);
-
+function loadCeiling() {
+		var cieling = new THREE.Mesh(new THREE.BoxGeometry(1050, 1000, 5, 10),
+		new THREE.MeshPhongMaterial({color: 0x000000})
+		);
+		cieling.position.y = 165;
+		cieling.position.x = -500;
+		cieling.rotation.x = -(Math.PI / 2);
+		scene.add(cieling);
+	
 }
