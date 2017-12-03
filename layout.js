@@ -180,9 +180,12 @@ function WALL() {
 }
 
 function loadCeiling() {
-		var cieling = new THREE.Mesh(new THREE.BoxGeometry(1050, 1000, 5, 10),
-		new THREE.MeshPhongMaterial({color: 0x000000})
-		);
+		var ceilMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
+		var ceilTexture = new THREE.TextureLoader().load( "textures/ceiling.jpg");
+		ceilTexture.wrapS = ceilTexture.wrapT = THREE.RepeatWrapping; 
+	    ceilTexture.repeat.set( 20, 20 );
+		var ceilTop = new THREE.MeshLambertMaterial( { map: ceilTexture } );
+		var cieling = new THREE.Mesh(new THREE.BoxGeometry(1050, 1000, 5, 10), ceilTop);
 		cieling.position.y = 165;
 		cieling.position.x = -500;
 		cieling.rotation.x = -(Math.PI / 2);
