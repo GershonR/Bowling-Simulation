@@ -10,7 +10,7 @@ var mesh = null;
 var keyboard = new KeyboardState();
 var ball;
 var pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
-var ball, ballSet;
+var ball, ballSet, wallLeft, wallRight;
 var boxLeft, boxRight, boxBack, boxBottom;
 var stopArrow = false;
 unloadScrollBars();
@@ -31,13 +31,14 @@ function fillScene() {
 
 	scene.add( light );
    
-    var axes = new THREE.AxisHelper(150);
-    axes.position.y = 1;
-    scene.add(axes);
+    //var axes = new THREE.AxisHelper(150);
+    //axes.position.y = 1;
+    //scene.add(axes);
 	loadFloor();
 	loadModels();
 	drawBowlingBall();
 	loadCollectionBox();
+	WALL();
 
 }
 
