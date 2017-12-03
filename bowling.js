@@ -46,16 +46,27 @@ function fillScene() {
 
 	// scene.add( light3 );
    
+<<<<<<< HEAD
+    var axes = new THREE.AxisHelper(150);
+    axes.position.y = 1;
+	scene.add(axes);
+	loadGuard();
+		
+=======
     //var axes = new THREE.AxisHelper(150);
     //axes.position.y = 1;
     //scene.add(axes);
+>>>>>>> 98904a18421130e27d6f1f2dae6f1d04fdc1443a
 	loadFloor();
 	loadModels();
 	drawBowlingBall();
 	loadCollectionBox();
+<<<<<<< HEAD
+=======
 	WALL();
 	loadCeiling();
 
+>>>>>>> 98904a18421130e27d6f1f2dae6f1d04fdc1443a
 }
 
 function init() {
