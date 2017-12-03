@@ -25,7 +25,7 @@ function fillScene() {
 
 	var lightL = new THREE.PointLight(0xffffff, 2, 300);
 	lightL.position.x = -150;
-	lightL.position.y = 25;
+	lightL.position.y = 50;
 	lightL.position.z = -200;
 	lightL.rotation.set(0,0, 90);
 	scene.add(lightL);
