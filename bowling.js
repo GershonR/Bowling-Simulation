@@ -1,6 +1,8 @@
 Physijs.scripts.worker = 'js/physijs_worker.js';
 Physijs.scripts.ammo = 'ammo.js';
 
+var power = 45;
+var sprite;
 var addedArrow = false;
 var camera, scene, renderer;
 var cameraControls;
@@ -19,7 +21,7 @@ function fillScene() {
 	scene = new Physijs.Scene;
 	scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
 	scene.fog = new THREE.Fog( 0x808080, 2000, 4000 );
-	scene.add( new THREE.AmbientLight( 0x222222 ) );
+	//scene.add( new THREE.AmbientLight( 0x222222 ) );
 
 	var light = new THREE.DirectionalLight( 0xffffff, 0.2 );
 	light.position.set( 200, 500, 500 );
@@ -110,9 +112,7 @@ document.addEventListener('keydown', function( ev ) {
 			break;
 
 		case 40: // back
-			//ball.position.x -= 3;
-		    //ball.__dirtyPosition = true;
-			ball.setLinearVelocity(new THREE.Vector3(-300, 0, 0));
+			drawPower();
 			break;
 
 		case 32:
