@@ -179,7 +179,6 @@ function WALL() {
 
 }
 
-<<<<<<< HEAD
 function loadGuard() {
 	var boxWidth = 2;
 	var guardHeight = 20;
@@ -238,18 +237,4 @@ function loadGuard() {
 
 	
 
-=======
-function loadCeiling() {
-		var ceilMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
-		var ceilTexture = new THREE.TextureLoader().load( "textures/ceiling.jpg");
-		ceilTexture.wrapS = ceilTexture.wrapT = THREE.RepeatWrapping; 
-	    ceilTexture.repeat.set( 20, 20 );
-		var ceilTop = new THREE.MeshLambertMaterial( { map: ceilTexture } );
-		var cieling = new THREE.Mesh(new THREE.BoxGeometry(1050, 1000, 5, 10), ceilTop);
-		cieling.position.y = 165;
-		cieling.position.x = -500;
-		cieling.rotation.x = -(Math.PI / 2);
-		scene.add(cieling);
-	
->>>>>>> 98904a18421130e27d6f1f2dae6f1d04fdc1443a
 }
