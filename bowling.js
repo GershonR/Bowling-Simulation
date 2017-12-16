@@ -217,7 +217,7 @@ function animate() {
 	scene.simulate(undefined, 2);
     stats.update();
 
-    camera.position.x = ball.position.x - 150;
+    //camera.position.x = ball.position.x - 150;
 
 
     render();
