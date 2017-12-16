@@ -112,14 +112,24 @@ function fillScene() {
     // var axes = new THREE.AxisHelper(150);
     // axes.position.y = 1;
 	// scene.add(axes);
-	loadGuard();
+//var x = -1020;
+    //var z = 100;
+    //var y = 13;
+
+    var bowlingLane = createBowlingLane(200, 1000, 20);
+    bowlingLane.position.set(-450,0,0);
+    scene.add(bowlingLane);
+
+    var bowlingLane2 = createBowlingLane(200, 1000, 20);
+    bowlingLane2.position.set(-450,0, -210);
+    scene.add(bowlingLane2);
 		
-	loadFloor();
+	//loadFloor();
 	loadModels();
 	drawBowlingBall();
 	loadCollectionBox();
 	WALL();
-	loadGuard();
+	//loadGuard();
 	loadCeiling();
 	loadClearer();
 
