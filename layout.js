@@ -227,13 +227,13 @@ function loadCeiling() {
 function loadClearer() {
 		var clearerWidth = 8;
 	    var clearerHeight = 30;
-	    var clearerLength = 100;
+	    var clearerLength = 80;
 	    var x = -50;
 	    var z = 0;
 	    var y = 105;
 		var clearerMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
 		var clearerGeometry = new THREE.BoxGeometry(clearerWidth, clearerHeight, clearerLength);	
-		clearer = new Physijs.ConvexMesh(clearerGeometry, clearerMaterial, 500);
+		clearer = new Physijs.ConvexMesh(clearerGeometry, clearerMaterial, 1000);
 		clearer.position.x = x;
 		clearer.position.y = y;
 		clearer.position.z = z;

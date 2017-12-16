@@ -25,7 +25,7 @@ unloadScrollBars();
 
 function fillScene() {
 	scene = new Physijs.Scene;
-	scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
+	scene.setGravity(new THREE.Vector3( 0, -50, 0 ));
 	scene.fog = new THREE.Fog( 0x808080, 2000, 4000 );
     scene.add( new THREE.AmbientLight( 0x222222 ) );
 
