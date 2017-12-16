@@ -37,8 +37,40 @@
 	            ball = new Physijs.ConvexMesh(
 	            	result.geometry,
 					new THREE.MeshPhongMaterial({ color: 0x000000 }),
-	            	10
-				); 
+	            	15
+				);
+				ball.collisions = 0;
+				handleCollision = function( collided_with, linearVelocity, angularVelocity ) {
+				switch ( ++this.collisions ) {
+					
+					case 1:
+						this.material.color.setHex(0xcc8855);
+						break;
+					
+					case 2:
+						this.material.color.setHex(0xbb9955);
+						break;
+					
+					case 3:
+						this.material.color.setHex(0xaaaa55);
+						break;
+					
+					case 4:
+						this.material.color.setHex(0x99bb55);
+						break;
+					
+					case 5:
+						this.material.color.setHex(0x88cc55);
+						break;
+					
+					case 6:
+						this.material.color.setHex(0x77dd55);
+						break;
+				}
+			},
+				ball.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ) {
+					console.log("hello world"); // NOT FIRING
+				});
 
 				
 
@@ -133,6 +165,9 @@
 					shape.position.z = 0;
 					shape.position.x = -32;
 					shape.castShadow = true;
+					shape.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ){
+						alert("hello world"); // NOT FIRING
+					});
 					scene.add( shape );
 					});           
 					});
