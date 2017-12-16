@@ -2,8 +2,6 @@
 				var redMaterial = new THREE.MeshLambertMaterial();
 				redMaterial.color.setHex( 0xff3333 );
 
-				// //draw the transparent bowling ball for placement
-
 				// Ball
 				 geometry = new THREE.SphereGeometry( 8, 32, 32 );
 
@@ -39,52 +37,9 @@
 					new THREE.MeshPhongMaterial({ color: 0x000000 }),
 	            	15
 				);
-				ball.collisions = 0;
-				handleCollision = function( collided_with, linearVelocity, angularVelocity ) {
-				switch ( ++this.collisions ) {
-					
-					case 1:
-						this.material.color.setHex(0xcc8855);
-						break;
-					
-					case 2:
-						this.material.color.setHex(0xbb9955);
-						break;
-					
-					case 3:
-						this.material.color.setHex(0xaaaa55);
-						break;
-					
-					case 4:
-						this.material.color.setHex(0x99bb55);
-						break;
-					
-					case 5:
-						this.material.color.setHex(0x88cc55);
-						break;
-					
-					case 6:
-						this.material.color.setHex(0x77dd55);
-						break;
-				}
-			},
-			ball.name = "Bowling Ball";
-			ball.addEventListener('collision', handleCollision);
+				ball.name = "Bowling Ball";
 
-				
-
-
-	            
-				
-				//box = new THREE.Mesh(geometry = new THREE.BoxGeometry( 5, 5, 5 ), redMaterial );
-				//box.position.y = 50;
-				//scene.add( box );
 				var boxgeometry = new THREE.BoxGeometry( 7, 10, 7 );
-				
-				//for ( var face in boxgeometry.faces ) {
-				//	boxgeometry.faces[ face ].materialIndex = 0;
-				//}
-				
 				boxgeometry.translate( 0, 2, 0 );
 				
 				THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
