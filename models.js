@@ -119,7 +119,7 @@
 						for ( var i = 0; i < geometry.faces.length; i ++ ) {
 							geometry.faces[i].materialIndex = materialsL.length-1;
 						}
-					geometry.merge(boxgeometry);
+					//geometry.merge(boxgeometry);
 					
  					for(x = 0; x < 4; x++) {
 						var shape = new Physijs.ConvexMesh(
