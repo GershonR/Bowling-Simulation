@@ -88,7 +88,7 @@ function createGutter(length, gutterSize, thickness) {
 
 
     var gutterMesh = ( (new ThreeBSP(gutterCylinder)).subtract(new ThreeBSP(cutoutBox)).subtract(new ThreeBSP(cutoutCylinder)) ).toMesh();
-
+	gutterMesh.geometry.computeVertexNormals();
     var gutter = new Physijs.ConcaveMesh(gutterMesh.geometry, gutterMaterial, 0);
     gutter.rotation.z = -(Math.PI / 2);
 
