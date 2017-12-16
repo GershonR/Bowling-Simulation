@@ -77,11 +77,11 @@ function createGutter(length, gutterSize, thickness) {
     var cutoutBox = new THREE.Mesh(cutoutBoxGeometry, gutterMaterial);
     cutoutBox.position.set(-gutterSize/2, 0, 0);
 
-    var cutoutCylinderGeometry = new THREE.CylinderGeometry(gutterRadius - thickness, gutterRadius - thickness, length, 100);
+    var cutoutCylinderGeometry = new THREE.CylinderGeometry(gutterRadius - thickness, gutterRadius - thickness, length, 20);
     var cutoutCylinder = new THREE.Mesh(cutoutCylinderGeometry, gutterMaterial);
     cutoutCylinder.position.set(0, 1, 0);
 
-    var gutterGeometry = new THREE.CylinderGeometry(gutterRadius, gutterRadius, length, 100);
+    var gutterGeometry = new THREE.CylinderGeometry(gutterRadius, gutterRadius, length, 10);
     var gutterCylinder = new THREE.Mesh( gutterGeometry, gutterMaterial );
     //gutterCylinder.rotation.z = -(Math.PI / 2);
     //gutterCylinder.position.set(0,0,0);

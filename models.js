@@ -127,7 +127,7 @@
 						materialsL,
 						3
 						);
-					    shape.position.y = 50;
+					    shape.position.y = 10;
 					    shape.position.z = -18 + 12*x;
 						shape.castShadow = true;
 					    scene.add( shape );
@@ -138,7 +138,7 @@
 						materialsL,
 						3
 						);
-					    shape.position.y = 50;
+					    shape.position.y = 10;
 					    shape.position.z = -10+11*x;
 						shape.position.x = -15;
 						shape.castShadow = true;
@@ -150,7 +150,7 @@
 						materialsL,
 						3
 						);
-					    shape.position.y = 50;
+					    shape.position.y = 10;
 					    shape.position.z = -5+11*x;
 						shape.position.x = -25;
 						shape.castShadow = true;
@@ -161,7 +161,7 @@
 					materialsL,
 					3
 					);
-					shape.position.y = 50;
+					shape.position.y = 10;
 					shape.position.z = 0;
 					shape.position.x = -32;
 					shape.castShadow = true;
