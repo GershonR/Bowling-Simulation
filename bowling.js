@@ -145,6 +145,7 @@ function fillScene() {
     bowlingLaneR2.position.set(-laneLength/2 +25,0, (laneWidth+space)*2);
     scene.add(bowlingLaneR2);
 
+    //github not working?
 	var backFloor = createBack(1000, 400);
     backFloor.position.set(-775,0,0);
 	scene.add(backFloor);
