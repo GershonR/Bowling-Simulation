@@ -89,7 +89,7 @@ function fillScene() {
 	scene.add( collight );
 
 	collight = new THREE.PointLight( 0x0000ff, 1, 300 );
-	collight.position.set( -250, 100, 170 );
+	collight.position.set( -250, 100, -400 );
 	scene.add( collight );
 
 	collight = new THREE.PointLight( 0x0000ff, 1, 300 );
