@@ -171,13 +171,13 @@ function WALL() {
    wallLeft = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);
    wallLeft.position.x = 30;
    wallLeft.position.y = 72.5;
-   wallLeft.position.z = 310;
+   wallLeft.position.z = 325;
    scene.add(wallLeft);
    
    wallRight = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);
    wallRight.position.x = 30;
    wallRight.position.y = 72.5;
-   wallRight.position.z = -310;
+   wallRight.position.z = -325;
    scene.add(wallRight);
 
 
