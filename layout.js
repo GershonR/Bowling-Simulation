@@ -210,6 +210,13 @@ function WALL() {
 	rightWall.position.y = 72.5;
 	rightWall.position.z = -1000/2;
 	scene.add(rightWall);
+	
+	
+  //main walll
+   mainwall = new THREE.Mesh(new THREE.BoxGeometry(5, 110, 1000), basetop);
+   mainwall.position.x = -60;
+   mainwall.position.y = 120;
+   scene.add(mainwall);
 
 }
 

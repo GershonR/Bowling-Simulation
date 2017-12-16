@@ -85,6 +85,7 @@
 						);
 					    shape.position.y = 10;
 					    shape.position.z = -18 + 12*x;
+						shape.position.x = 15;
 						shape.castShadow = true;
 						shape.collided = false;
 						shape.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ){
@@ -103,7 +104,7 @@
 						);
 					    shape.position.y = 10;
 					    shape.position.z = -10+11*x;
-						shape.position.x = -15;
+						shape.position.x = 0;
 						shape.castShadow = true;
 						shape.collided = false;
 						shape.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ){
@@ -114,7 +115,7 @@
 	                    });
 					    scene.add( shape );
 					}
-					for(x = 0; x < 2; x++) {
+					for(x = 0; x < 3; x++) {
 						shape = new Physijs.ConvexMesh(
 						geometry,
 						materialsL,
@@ -122,7 +123,7 @@
 						);
 					    shape.position.y = 10;
 					    shape.position.z = -5+11*x;
-						shape.position.x = -25;
+						shape.position.x = -15;
 						shape.castShadow = true;
 						shape.collided = false;
 						shape.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ){
