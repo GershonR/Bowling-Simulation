@@ -228,7 +228,9 @@ document.addEventListener('keydown', function( ev ) {
 		case 37: // left
 			//ball.position.z -= 3;
 			//ball.setLinearVelocity(new THREE.Vector3(0, 0, -300));
+			if(ballSet.position.z > -15) {
 			ballSet.translateZ(-2);
+			}
 		    //ball.__dirtyPosition = true;
 			break;
 
@@ -242,8 +244,10 @@ document.addEventListener('keydown', function( ev ) {
 		case 39: // right
 			//ball.position.z += 3;
 		    //ball.__dirtyPosition = true;
-		    //ball.setLinearVelocity(new THREE.Vector3(0, 0, 300));
-		    ballSet.translateZ(2);
+			//ball.setLinearVelocity(new THREE.Vector3(0, 0, 300));
+			if(ballSet.position.z < 15) {
+			ballSet.translateZ(2);
+			}
 			break;
 
 		case 40: // back
