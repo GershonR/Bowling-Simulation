@@ -67,7 +67,7 @@ function createLaneBase(width, length, thickness, sideWidth) {
 function createGutter(length, gutterSize, thickness) {
 	var gutterRadius = gutterSize/2;
 
-	var gutterMaterial = new THREE.MeshPhysicalMaterial( {
+	var gutterMaterial = new THREE.MeshPhongMaterial( {
         color: 0x212428,
         clearCoat: 1.0,
         side: THREE.DoubleSide
