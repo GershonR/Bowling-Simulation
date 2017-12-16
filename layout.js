@@ -275,7 +275,7 @@ function loadClearer() {
 	    var clearerLength = 100;
 	    var x = -50;
 	    var z = 0;
-	    var y = 100;
+	    var y = 105;
 		var clearerMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
 		var clearerGeometry = new THREE.BoxGeometry(clearerWidth, clearerHeight, clearerLength);	
 		clearer = new Physijs.ConvexMesh(clearerGeometry, clearerMaterial, 500);
