@@ -1,6 +1,7 @@
 Physijs.scripts.worker = 'js/physijs_worker.js';
 Physijs.scripts.ammo = 'ammo.js';
 
+var container, stats;
 var clearer;
 var clearerPlane;
 var power = 75;
@@ -129,6 +130,9 @@ function init() {
 	var canvasHeight = innerHeight;
 	var canvasRatio = canvasWidth / canvasHeight;
 	textureLoader = new THREE.TextureLoader();
+	
+	container = document.createElement( 'div' );
+	document.body.appendChild( container );
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 
 	renderer.gammaInput = true;
@@ -142,6 +146,10 @@ function init() {
 	
 	cameraControls.target.set(0,0,0);
 	cameraControls.noKeys = true;
+	// performance monitor
+	container.appendChild( renderer.domElement );
+	stats = new Stats();
+	container.appendChild( stats.dom );
 	
 }
 
@@ -154,6 +162,7 @@ function animate() {
 	window.requestAnimationFrame(animate);
 	scene.simulate(undefined, 2);
 	render();
+	stats.update();
 }
 
 function render() {
