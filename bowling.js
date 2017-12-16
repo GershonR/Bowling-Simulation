@@ -68,17 +68,25 @@ function fillScene() {
 	backLight.position.y = 190;
 	scene.add(backLight);
 
-	var sideLight = new THREE.PointLight(0xffffff, 2, 300);
-	sideLight.position.x = -100;
-	sideLight.position.z = 200;
-	sideLight.position.y = 190;
-	scene.add(sideLight);
+	// var sideLight = new THREE.PointLight(0xffffff, 2, 300);
+	// sideLight.position.x = -100;
+	// sideLight.position.z = 200;
+	// sideLight.position.y = 190;
+	// scene.add(sideLight);
 
-	sideLight2 = new THREE.PointLight(0xffffff, 2, 300);
-	sideLight2.position.x = -100;
-	sideLight2.position.z = -200;
-	sideLight2.position.y = 190;
-	scene.add(sideLight2);
+	// var sideLight2 = new THREE.PointLight(0xffffff, 2, 300);
+	// sideLight2.position.x = -100;
+	// sideLight2.position.z = -200;
+	// sideLight2.position.y = 190;
+	// scene.add(sideLight2);
+
+	var collight = new THREE.PointLight( 0xff0000, 1, 300 );
+	collight.position.set( -500, 100, -400 );
+	scene.add( collight );
+
+	collight = new THREE.PointLight( 0xff0000, 1, 300 );
+	collight.position.set( -500, 100, 170 );
+	scene.add( collight );
 
 
 
