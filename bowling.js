@@ -4,6 +4,7 @@ Physijs.scripts.ammo = 'ammo.js';
 var collisions = 0;
 var container, stats;
 var clearer;
+var setter;
 var clearerPlane;
 var power = 75;
 var stopPower = false;
@@ -19,7 +20,7 @@ var keyboard = new KeyboardState();
 var ball;
 var pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
 var ball, ballSet, wallLeft, wallRight;
-var boxLeft, boxRight, boxBack, boxBottom, setter;
+var boxLeft, boxRight, boxBack, boxBottom;
 var stopArrow = false;
 unloadScrollBars();
 
@@ -166,8 +167,6 @@ function fillScene() {
     audio.src = "http://www.moviewavs.com/0053148414/MP3S/Movies/Big_Lebowski/bowling.mp3\n";
     audio.load(); // must call after setting/changing source
 	audio.play();
-	
-	//dropSetter();
 }
 
 function init() {

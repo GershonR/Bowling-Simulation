@@ -66,7 +66,7 @@ function moveClearerBack() {
 	     clearer.setLinearVelocity(new THREE.Vector3(0, 0, 0));
 	     clearer.setAngularVelocity(new THREE.Vector3(0, 0, 0));
 		 scene.add(clearerPlane);
-    	 return;
+    	 return dropSetter();
 	  }
       requestAnimationFrame(animateClearer); // keep looping
     }
@@ -75,8 +75,6 @@ function moveClearerBack() {
 
 function dropSetter() {
    var direction = new THREE.Vector3(0, -0.5, 0); // amount to move per frame
-   setter.setLinearVelocity(new THREE.Vector3(0, 0, 0));
-   setter.setAngularVelocity(new THREE.Vector3(0, 0, 0));
    function animateSetterDown() {
 	 setter.position.add(direction); // add to position
 	 setter.__dirtyPosition = true;
