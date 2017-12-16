@@ -1,6 +1,8 @@
 
 function createBowlingLane(width, length, guardHeight, sideWidth) {
     var gutterAndRailThickness = 1;
+	var collectionBoxHeight = 200;
+	var collectionBoxDepth = 100;
 
     var laneFloor = createLaneBase(width, length, gutterAndRailThickness, sideWidth);
 
@@ -11,6 +13,10 @@ function createBowlingLane(width, length, guardHeight, sideWidth) {
     var rightGuard = createGuardRail(guardHeight, length, gutterAndRailThickness);
     rightGuard.position.set(0, guardHeight, (width/2 - gutterAndRailThickness/2));
     laneFloor.add(rightGuard);
+
+    var collectionBox = createCollectionBox(width, collectionBoxDepth, collectionBoxHeight);
+    collectionBox.position.set(collectionBoxDepth/2 + length/2, -25, 0);
+    laneFloor.add(collectionBox);
 
     return laneFloor;
 }
@@ -132,15 +138,10 @@ function createBack(width, length) {
     return floor;
 }
 
-function loadCollectionBox() {
+function createCollectionBox(width, depth, height) {
+	var collectBoxMaterial = new THREE.MeshPhongMaterial({ color: 0x3c3f44 });
 
-	var collectBoxMaterial = new THREE.MeshPhongMaterial({color: 0x3c3f44});
-	
-	//boxLeft, boxRight, boxBottom, boxBack
-	boxBottom = new Physijs.ConvexMesh(new THREE.BoxGeometry(100,25,200), collectBoxMaterial, 0);
-	boxBottom.position.x = 75;
-	boxBottom.position.y = -25;
-	boxBottom.position.z = 0;
+	var boxBottom = new Physijs.ConvexMesh(new THREE.BoxGeometry(depth, 1, width), collectBoxMaterial, 0);
 	boxBottom.name = "bottom";
 	boxBottom.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ){
 		if(other_object.name == "Bowling Ball" && !other_object.collided) {
@@ -156,26 +157,20 @@ function loadCollectionBox() {
 			}, 5000);
 		}
 	});
-	scene.add(boxBottom);
 
+    var boxBack = new Physijs.BoxMesh(new THREE.BoxGeometry(1, height, width), collectBoxMaterial, 0);
+    boxBack.position.set(depth/2, height/2, 0);
+    boxBottom.add(boxBack);
 
-	boxBack = new Physijs.ConvexMesh(new THREE.BoxGeometry(10, 200, 200), collectBoxMaterial, 0);
-	boxBack.position.x = 130;
-	boxBack.position.y = 62.5;
-	boxBack.position.z = 0;
-	scene.add(boxBack);
+    var boxLeft = new Physijs.BoxMesh(new THREE.BoxGeometry(depth, height, 1), collectBoxMaterial, 0);
+	boxLeft.position.set(0, height/2, -width/2);
+    boxBottom.add(boxLeft);
 
-	boxLeft = new Physijs.ConvexMesh(new THREE.BoxGeometry(100, 200, 10), collectBoxMaterial, 0);
-	boxLeft.position.x = 75;
-	boxLeft.position.y = 62.5;
-	boxLeft.position.z = 100;
-	scene.add(boxLeft);
+    var boxRight = new Physijs.BoxMesh(new THREE.BoxGeometry(depth, height, 1), collectBoxMaterial, 0);
+	boxRight.position.set(0, height/2, width/2);
+    boxBottom.add(boxRight);
 
-	boxRight = new Physijs.ConvexMesh(new THREE.BoxGeometry(100, 200, 10), collectBoxMaterial, 0);
-	boxRight.position.x = 75;
-	boxRight.position.y = 62.5;
-	boxRight.position.z = -100;
-	scene.add(boxRight);
+	return boxBottom;
 }
 
 function WALL() {

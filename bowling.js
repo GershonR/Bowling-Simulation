@@ -19,7 +19,6 @@ var keyboard = new KeyboardState();
 var ball;
 var pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
 var ball, ballSet, wallLeft, wallRight;
-var boxLeft, boxRight, boxBack, boxBottom;
 var stopArrow = false;
 unloadScrollBars();
 
@@ -151,10 +150,11 @@ function fillScene() {
     backFloor.position.set(-775,0,0);
 	scene.add(backFloor);
 
+
     //loadFloor();
 	loadModels();
 	drawBowlingBall();
-	loadCollectionBox();
+	//loadCollectionBox();
 	WALL();
 	//loadGuard();
 	//loadCeiling();
@@ -207,7 +207,9 @@ function animate() {
 
     //camera.position.x = ball.position.x - 150;
 
+
     render();
+
 }
 
 function render() {
