@@ -165,7 +165,9 @@ function fillScene() {
     var audio = document.createElement( 'audio' );
     audio.src = "http://www.moviewavs.com/0053148414/MP3S/Movies/Big_Lebowski/bowling.mp3\n";
     audio.load(); // must call after setting/changing source
-    audio.play();
+	audio.play();
+	
+	//dropSetter();
 }
 
 function init() {

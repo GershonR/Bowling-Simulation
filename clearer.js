@@ -72,3 +72,33 @@ function moveClearerBack() {
     }
 	requestAnimationFrame(animateClearer); // start loop;
 }
+
+function dropSetter() {
+   var direction = new THREE.Vector3(0, -0.5, 0); // amount to move per frame
+   setter.setLinearVelocity(new THREE.Vector3(0, 0, 0));
+   setter.setAngularVelocity(new THREE.Vector3(0, 0, 0));
+   function animateSetterDown() {
+	 setter.position.add(direction); // add to position
+	 setter.__dirtyPosition = true;
+	 renderer.render(scene, camera);
+	 if(setter.position.y < 50) {
+		 moveSetterUp();
+	 }
+	 requestAnimationFrame(animateSetterDown); // keep looping
+   }
+   requestAnimationFrame(animateSetterDown); // start loop;
+}
+
+function moveSetterUp() {
+	var direction = new THREE.Vector3(0, 0.5, 0); // amount to move per frame
+	function animateSetterUp() {
+      setter.position.add(direction); // add to position
+	  setter.__dirtyPosition = true;
+	  renderer.render(scene, camera);
+	  if(setter.position.y >= 60) {
+		  return;
+	  }
+      requestAnimationFrame(animateSetterUp); // keep looping
+    }
+	requestAnimationFrame(animateSetterUp); // start loop;
+}
