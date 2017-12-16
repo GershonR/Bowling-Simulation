@@ -213,7 +213,7 @@ document.addEventListener('keydown', function( ev ) {
 				return;
 			}
 			if(stopPower) {
-				ball.setLinearVelocity(new THREE.Vector3(power, 0, 70 * -arrow.rotation.z));
+				ball.setLinearVelocity(new THREE.Vector3(power * 2, 0, 70 * -arrow.rotation.z));
 			}
 			break;
 	}
