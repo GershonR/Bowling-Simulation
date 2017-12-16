@@ -120,8 +120,7 @@ function fillScene() {
     //var y = 13;
 
 	var laneLength = 600;
-	var laneLength = 600;
-	var laneWidth = 150;
+	var laneWidth = 115;
 	var guardHeight = 10;
 	var space = 25;
 
