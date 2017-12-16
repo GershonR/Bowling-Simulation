@@ -19,7 +19,7 @@ var keyboard = new KeyboardState();
 var ball;
 var pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
 var ball, ballSet, wallLeft, wallRight;
-var boxLeft, boxRight, boxBack, boxBottom;
+var boxLeft, boxRight, boxBack, boxBottom, setter;
 var stopArrow = false;
 unloadScrollBars();
 
@@ -159,6 +159,7 @@ function fillScene() {
 	//loadGuard();
 	//loadCeiling();
 	loadClearer();
+	loadSetter();
 
 
     var audio = document.createElement( 'audio' );
