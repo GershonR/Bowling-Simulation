@@ -31,28 +31,39 @@ function fillScene() {
 	lightL.position.z = -400;
 	lightL.rotation.set(90,0, 180);
 	//scene.add(lightL);
-
-	var backLight = new THREE.PointLight(0xffffff, 2, 300);
-	backLight.position.x = -50;
+	var backLight = new THREE.PointLight(0xffffff, 1, 300);
+	backLight.position.x = 0;
 	backLight.position.z = 0;
 	backLight.position.y = 190;
 	scene.add(backLight);
 
-	backLight = new THREE.PointLight(0xffffff, 2, 300);
+	backLight = new THREE.PointLight(0xffffff, 1, 300);
+	backLight.position.x = -100;
+	backLight.position.z = 0;
+	backLight.position.y = 190;
+	scene.add(backLight);
+
+	backLight = new THREE.PointLight(0xffffff, 1, 300);
 	backLight.position.x = -250;
 	backLight.position.z = 0;
 	backLight.position.y = 190;
 	scene.add(backLight);
 
-	backLight = new THREE.PointLight(0xffffff, 2, 300);
-	backLight.position.x = -450;
+	backLight = new THREE.PointLight(0xffffff, 1, 300);
+	backLight.position.x = -400;
 	backLight.position.z = 0;
 	backLight.position.y = 190;
 	scene.add(backLight);
 
 
-	backLight = new THREE.PointLight(0xffffff, 2, 300);
-	backLight.position.x = -650;
+	backLight = new THREE.PointLight(0xffffff, 1, 300);
+	backLight.position.x = -550;
+	backLight.position.z = 0;
+	backLight.position.y = 190;
+	scene.add(backLight);
+
+	backLight = new THREE.PointLight(0xffffff, 1, 300);
+	backLight.position.x = -700;
 	backLight.position.z = 0;
 	backLight.position.y = 190;
 	scene.add(backLight);
