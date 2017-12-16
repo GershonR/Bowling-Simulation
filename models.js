@@ -68,9 +68,8 @@
 						break;
 				}
 			},
-				ball.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ) {
-					console.log("hello world"); // NOT FIRING
-				});
+			ball.name = "Bowling Ball";
+			ball.addEventListener('collision', handleCollision);
 
 				
 
@@ -165,9 +164,6 @@
 					shape.position.z = 0;
 					shape.position.x = -32;
 					shape.castShadow = true;
-					shape.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ){
-						alert("hello world"); // NOT FIRING
-					});
 					scene.add( shape );
 					});           
 					});

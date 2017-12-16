@@ -141,6 +141,15 @@ function loadCollectionBox() {
 	boxBottom.position.x = 75;
 	boxBottom.position.y = -25;
 	boxBottom.position.z = 0;
+	boxBottom.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ){
+		if(other_object.name == "Bowling Ball") {
+			 setTimeout(function() { 
+				scene.remove(clearerPlane);
+				dropClearer();
+			 }, 2000);
+		}
+		console.log("hello world" + other_object.name);
+	});
 	scene.add(boxBottom);
 
 
@@ -226,9 +235,6 @@ function loadClearer() {
 		clearer.position.z = z;
 		clearer.setLinearVelocity(new THREE.Vector3(0, 0, 0));
 		clearer.setAngularVelocity(new THREE.Vector3(0, 0, 0));
-		clearer.addEventListener( 'collision', function(){
-			alert( 'hey' );
-		} );
 		scene.add(clearer);
 		var clearerPlaneGeometry = new THREE.BoxGeometry(clearerWidth, 0.5, clearerLength);
 		clearerPlane = new Physijs.ConvexMesh(clearerPlaneGeometry, clearerMaterial, 0);
