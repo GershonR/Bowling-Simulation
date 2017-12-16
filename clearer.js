@@ -81,6 +81,7 @@ function dropSetter() {
 	 renderer.render(scene, camera);
 	 if(setter.position.y < 50) {
 		 moveSetterUp();
+		 return;
 	 }
 	 requestAnimationFrame(animateSetterDown); // keep looping
    }
