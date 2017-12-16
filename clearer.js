@@ -74,7 +74,7 @@ function moveClearerBack() {
 }
 
 function dropSetter() {
-   var direction = new THREE.Vector3(0, -0.5, 0); // amount to move per frame
+   var direction = new THREE.Vector3(0, -0.2, 0); // amount to move per frame
    function animateSetterDown() {
 	 setter.position.add(direction); // add to position
 	 setter.__dirtyPosition = true;
