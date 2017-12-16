@@ -118,6 +118,7 @@ function createBack(width, length) {
     var floorTexture = new THREE.TextureLoader().load('textures/floor.png');
     floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
     //floorTexture.repeat.set(1 , 0.5 );
+	floorTexture.repeat.set( 1, 5 );
 
     var floorMaterial = new THREE.MeshPhysicalMaterial({
         map: floorTexture,
@@ -182,7 +183,9 @@ function WALL() {
 
    var wallMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
    var wallTexture = new THREE.TextureLoader().load( "textures/wall10.jpg");
+   var frontwallTexture = new THREE.TextureLoader().load( "textures/109.jpg");
    var basetop = new THREE.MeshLambertMaterial( { map: wallTexture } );
+   var basefront = new THREE.MeshLambertMaterial( { map: frontwallTexture } );
    
    //wallLeft, wallRight
    wallLeft = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);
@@ -213,7 +216,7 @@ function WALL() {
 	
 	
   //main walll
-   mainwall = new THREE.Mesh(new THREE.BoxGeometry(5, 110, 1000), basetop);
+   mainwall = new THREE.Mesh(new THREE.BoxGeometry(5, 110, 1000), basefront);
    mainwall.position.x = -60;
    mainwall.position.y = 120;
    scene.add(mainwall);
