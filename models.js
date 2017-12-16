@@ -129,6 +129,11 @@
 					    shape.position.y = 10;
 					    shape.position.z = -18 + 12*x;
 						shape.castShadow = true;
+						shape.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ){
+	                    	if(other_object.name == "bottom") {
+								collisions++;
+	                    	}
+	                    });
 					    scene.add( shape );
 					}
 					for(x = 0; x < 3; x++) {
@@ -141,6 +146,12 @@
 					    shape.position.z = -10+11*x;
 						shape.position.x = -15;
 						shape.castShadow = true;
+						shape.collided = false;
+						shape.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ){
+	                    	if(other_object.name == "bottom") {
+								collisions++;
+	                    	}
+	                    });
 					    scene.add( shape );
 					}
 					for(x = 0; x < 2; x++) {

@@ -1,6 +1,7 @@
 Physijs.scripts.worker = 'js/physijs_worker.js';
 Physijs.scripts.ammo = 'ammo.js';
 
+var collisions = 0;
 var container, stats;
 var clearer;
 var clearerPlane;
