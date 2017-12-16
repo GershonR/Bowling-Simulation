@@ -4,6 +4,7 @@ Physijs.scripts.ammo = 'ammo.js';
 var collisions = 0;
 var container, stats;
 var clearer;
+var setter;
 var clearerPlane;
 var power = 75;
 var stopPower = false;
@@ -159,12 +160,15 @@ function fillScene() {
 	//loadGuard();
 	//loadCeiling();
 	loadClearer();
+	loadSetter();
 
 
     var audio = document.createElement( 'audio' );
     audio.src = "http://www.moviewavs.com/0053148414/MP3S/Movies/Big_Lebowski/bowling.mp3\n";
     audio.load(); // must call after setting/changing source
-    audio.play();
+	audio.play();
+
+	dropSetter();
 }
 
 function init() {

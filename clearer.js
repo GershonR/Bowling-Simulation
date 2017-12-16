@@ -66,9 +66,38 @@ function moveClearerBack() {
 	     clearer.setLinearVelocity(new THREE.Vector3(0, 0, 0));
 	     clearer.setAngularVelocity(new THREE.Vector3(0, 0, 0));
 		 scene.add(clearerPlane);
-    	 return;
+    	 return dropSetter();
 	  }
       requestAnimationFrame(animateClearer); // keep looping
     }
 	requestAnimationFrame(animateClearer); // start loop;
+}
+
+function dropSetter() {
+   var direction = new THREE.Vector3(0, -0.2, 0); // amount to move per frame
+   function animateSetterDown() {
+	 setter.position.add(direction); // add to position
+	 setter.__dirtyPosition = true;
+	 renderer.render(scene, camera);
+	 if(setter.position.y < 50) {
+		 moveSetterUp();
+		 return;
+	 }
+	 requestAnimationFrame(animateSetterDown); // keep looping
+   }
+   requestAnimationFrame(animateSetterDown); // start loop;
+}
+
+function moveSetterUp() {
+	var direction = new THREE.Vector3(0, 0.5, 0); // amount to move per frame
+	function animateSetterUp() {
+      setter.position.add(direction); // add to position
+	  setter.__dirtyPosition = true;
+	  renderer.render(scene, camera);
+	  if(setter.position.y >= 60) {
+		  return;
+	  }
+      requestAnimationFrame(animateSetterUp); // keep looping
+    }
+	requestAnimationFrame(animateSetterUp); // start loop;
 }
