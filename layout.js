@@ -164,7 +164,7 @@ function loadCollectionBox() {
 function WALL() {
 
    var wallMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
-   var wallTexture = new THREE.TextureLoader().load( "textures/bl.jpg");
+   var wallTexture = new THREE.TextureLoader().load( "textures/wall10.jpg");
    var basetop = new THREE.MeshLambertMaterial( { map: wallTexture } );
    
    //wallLeft, wallRight
