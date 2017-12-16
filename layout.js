@@ -179,18 +179,18 @@ function WALL() {
    var wallTexture = new THREE.TextureLoader().load( "textures/wall10.jpg");
    var basetop = new THREE.MeshLambertMaterial( { map: wallTexture } );
    
-   //wallLeft, wallRight
-   wallLeft = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);
-   wallLeft.position.x = 30;
-   wallLeft.position.y = 72.5;
-   wallLeft.position.z = 305;
-   scene.add(wallLeft);
+//    //wallLeft, wallRight
+//    wallLeft = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);
+//    wallLeft.position.x = 30;
+//    wallLeft.position.y = 72.5;
+//    wallLeft.position.z = 305;
+//    scene.add(wallLeft);
    
-   wallRight = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);
-   wallRight.position.x = 30;
-   wallRight.position.y = 72.5;
-   wallRight.position.z = -305;
-   scene.add(wallRight);
+//    wallRight = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);
+//    wallRight.position.x = 30;
+//    wallRight.position.y = 72.5;
+//    wallRight.position.z = -305;
+//    scene.add(wallRight);
 
 
 	//wallLeft, wallRight
