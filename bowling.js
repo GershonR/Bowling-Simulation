@@ -138,6 +138,10 @@ function fillScene() {
     bowlingLaneL2.position.set(-laneLength/2 +25,0, -(laneWidth+space)*2);
     scene.add(bowlingLaneL2);
 
+    var bowlingLaneL3 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
+    bowlingLaneL3.position.set(-laneLength/2 +25,0, -(laneWidth+space)*3);
+    scene.add(bowlingLaneL3);
+
     var bowlingLaneR1 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
     bowlingLaneR1.position.set(-laneLength/2 +25,0, (laneWidth+space));
     scene.add(bowlingLaneR1);
@@ -145,6 +149,10 @@ function fillScene() {
     var bowlingLaneR2 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
     bowlingLaneR2.position.set(-laneLength/2 +25,0, (laneWidth+space)*2);
     scene.add(bowlingLaneR2);
+
+    var bowlingLaneR3 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
+    bowlingLaneR3.position.set(-laneLength/2 +25,0, (laneWidth+space)*3);
+    scene.add(bowlingLaneR3);
 
     //github not working?
 	var backFloor = createBack(1000, 400);
