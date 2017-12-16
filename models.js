@@ -84,7 +84,7 @@
 						2
 						);
 					    shape.position.y = 10;
-					    shape.position.z = -28 + 18*x;
+					    shape.position.z = -26 + 18*x;
 						shape.position.x = 15;
 						shape.castShadow = true;
 						shape.collided = false;
@@ -103,7 +103,7 @@
 						2
 						);
 					    shape.position.y = 10;
-					    shape.position.z = -20+17*x;
+					    shape.position.z = -18+18*x;
 						shape.position.x = 0;
 						shape.castShadow = true;
 						shape.collided = false;
@@ -122,7 +122,7 @@
 						2
 						);
 					    shape.position.y = 10;
-					    shape.position.z = -12+17*x;
+					    shape.position.z = -10+18*x;
 						shape.position.x = -15;
 						shape.castShadow = true;
 						shape.collided = false;
@@ -140,7 +140,7 @@
 					2
 					);
 					shape.position.y = 10;
-					shape.position.z = -4;
+					shape.position.z = 0;
 					shape.position.x = -32;
 					shape.castShadow = true;
 						shape.collided = false;
