@@ -268,3 +268,30 @@ function loadCeiling() {
 		cieling.rotation.x = -(Math.PI / 2);
 		scene.add(cieling);
 }
+
+function loadClearer() {
+		var clearerWidth = 8;
+	    var clearerHeight = 30;
+	    var clearerLength = 100;
+	    var x = -50;
+	    var z = 0;
+	    var y = 100;
+		var clearerMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
+		var clearerGeometry = new THREE.BoxGeometry(clearerWidth, clearerHeight, clearerLength);	
+		clearer = new Physijs.ConvexMesh(clearerGeometry, clearerMaterial, 500);
+		clearer.position.x = x;
+		clearer.position.y = y;
+		clearer.position.z = z;
+		clearer.setLinearVelocity(new THREE.Vector3(0, 0, 0));
+		clearer.setAngularVelocity(new THREE.Vector3(0, 0, 0));
+		clearer.addEventListener( 'collision', function(){
+			alert( 'hey' );
+		} );
+		scene.add(clearer);
+		var clearerPlaneGeometry = new THREE.BoxGeometry(clearerWidth, 0.5, clearerLength);
+		clearerPlane = new Physijs.ConvexMesh(clearerPlaneGeometry, clearerMaterial, 0);
+		clearerPlane.position.x = x;
+		clearerPlane.position.y = 90;
+		clearerPlane.position.z = z;
+		scene.add(clearerPlane);
+}

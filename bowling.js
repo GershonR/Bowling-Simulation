@@ -1,6 +1,8 @@
 Physijs.scripts.worker = 'js/physijs_worker.js';
 Physijs.scripts.ammo = 'ammo.js';
 
+var clearer;
+var clearerPlane;
 var power = 75;
 var stopPower = false;
 var sprite;
@@ -118,6 +120,7 @@ function fillScene() {
 	WALL();
 	loadGuard();
 	loadCeiling();
+	loadClearer();
 
 }
 
@@ -215,6 +218,11 @@ document.addEventListener('keydown', function( ev ) {
 			if(stopPower) {
 				ball.setLinearVelocity(new THREE.Vector3(power * 2, 0, 70 * -arrow.rotation.z));
 			}
+			break;
+
+		case 67: // c
+			scene.remove(clearerPlane);
+			dropClearer();
 			break;
 	}
 });
