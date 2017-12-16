@@ -4,7 +4,7 @@ function drawPower() {
 	{ 
 		map: new THREE.ImageUtils.loadTexture( 'textures/glow2.png' ), 
 		useScreenCoordinates: false,
-		color: 0x8b0000, transparent: false, blending: THREE.AdditiveBlending
+		color: 0x8baaaa, transparent: false, blending: THREE.AdditiveBlending
 	});
 	sprite = new THREE.Sprite( spriteMaterial );
 	sprite.scale.set(100, 100, 1000);

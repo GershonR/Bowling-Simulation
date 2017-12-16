@@ -26,7 +26,9 @@ function fillScene() {
 	scene = new Physijs.Scene;
 	scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
 	scene.fog = new THREE.Fog( 0x808080, 2000, 4000 );
-	scene.add( new THREE.AmbientLight( 0x404040 ) );
+    scene.add( new THREE.AmbientLight( 0x222222 ) );
+
+    //scene.add( new THREE.AmbientLight( 0x404040 ) );
 
 	var lightL = new THREE.PointLight(0xffffff, 2, 300);
 	lightL.position.x = -150;
@@ -116,21 +118,44 @@ function fillScene() {
     //var z = 100;
     //var y = 13;
 
-    var bowlingLane = createBowlingLane(200, 1000, 20);
-    bowlingLane.position.set(-450,0,0);
+	var laneLength = 600;
+	var laneLength = 600;
+	var laneWidth = 100;
+	var guardHeight = 10;
+	var space = 25;
+	var space = 25;
+
+    var bowlingLane = createBowlingLane(laneWidth, laneLength, guardHeight, space);
+    bowlingLane.position.set(-laneLength/2 +25,0, 0);
     scene.add(bowlingLane);
 
-    var bowlingLane2 = createBowlingLane(200, 1000, 20);
-    bowlingLane2.position.set(-450,0, -210);
-    scene.add(bowlingLane2);
-		
-	//loadFloor();
+    var bowlingLaneL1 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
+    bowlingLaneL1.position.set(-laneLength/2 +25,0, -(laneWidth+space));
+    scene.add(bowlingLaneL1);
+
+    var bowlingLaneL2 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
+    bowlingLaneL2.position.set(-laneLength/2 +25,0, -(laneWidth+space)*2);
+    scene.add(bowlingLaneL2);
+
+    var bowlingLaneR1 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
+    bowlingLaneR1.position.set(-laneLength/2 +25,0, (laneWidth+space));
+    scene.add(bowlingLaneR1);
+
+    var bowlingLaneR2 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
+    bowlingLaneR2.position.set(-laneLength/2 +25,0, (laneWidth+space)*2);
+    scene.add(bowlingLaneR2);
+
+	var backFloor = createBack(1000, 400);
+    backFloor.position.set(-775,0,0);
+	scene.add(backFloor);
+
+    //loadFloor();
 	loadModels();
 	drawBowlingBall();
 	loadCollectionBox();
 	WALL();
 	//loadGuard();
-	loadCeiling();
+	//loadCeiling();
 	loadClearer();
 
 }
@@ -152,8 +177,8 @@ function init() {
 
 	camera = new THREE.PerspectiveCamera( 45, canvasRatio, 1, 4000 );
 	cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
-	camera.position.set( -1000, 150, 0);
-	
+	camera.position.set( -650, 80, 0);
+	camera.lookAt(0,0,0);
 	cameraControls.target.set(0,0,0);
 	cameraControls.noKeys = true;
 	// performance monitor
@@ -171,8 +196,11 @@ function addToDOM() {
 function animate() {
 	window.requestAnimationFrame(animate);
 	scene.simulate(undefined, 2);
-	render();
-	stats.update();
+    stats.update();
+
+    //camera.position.x = ball.position.x - 150;
+
+    render();
 }
 
 function render() {

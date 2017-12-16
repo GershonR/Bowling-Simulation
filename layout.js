@@ -1,8 +1,8 @@
 
-function createBowlingLane(width, length, guardHeight) {
-    var gutterAndRailThickness = 2;
+function createBowlingLane(width, length, guardHeight, sideWidth) {
+    var gutterAndRailThickness = 1;
 
-    var laneFloor = createLaneBase(width, length, gutterAndRailThickness);
+    var laneFloor = createLaneBase(width, length, gutterAndRailThickness, sideWidth);
 
     var leftGuard = createGuardRail(guardHeight, length, gutterAndRailThickness);
     leftGuard.position.set(0, guardHeight, -(width/2 - gutterAndRailThickness/2));
@@ -15,11 +15,11 @@ function createBowlingLane(width, length, guardHeight) {
     return laneFloor;
 }
 
-function createLaneBase(width, length, thickness) {
-	var gutterSize = 30;
+function createLaneBase(width, length, thickness, sideWidth) {
+	var gutterSize = 20;
 
     var floorTexture = new THREE.TextureLoader().load('textures/floor.png'); //256x256
-	floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
+	//floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
 	//floorTexture.repeat.set( 5, 5 );
 
 	var floorMaterial = new THREE.MeshPhysicalMaterial({
@@ -29,8 +29,29 @@ function createLaneBase(width, length, thickness) {
         clearCoat: 1.0
 	});
 
-    var floorGeometry = new THREE.BoxGeometry(length, 1, width - (gutterSize*2) + thickness*2);
+    var floorGeometry = new THREE.BoxGeometry(length, thickness, width - (gutterSize*2) + thickness*2);
     var floor = new Physijs.BoxMesh(floorGeometry, floorMaterial, 0);
+
+    var sideTexture = new THREE.TextureLoader().load('textures/fun.jpg'); //256x256
+    sideTexture.wrapT = sideTexture.wrapS = THREE.RepeatWrapping;
+    sideTexture.repeat.set(20, 1);
+
+    var sideMaterial = new THREE.MeshPhysicalMaterial({
+        map: sideTexture,
+        side: THREE.FrontSide,
+        transparent: false,
+        clearCoat: 1.0
+    });
+    var sideGeometry = new THREE.BoxGeometry(length, thickness, sideWidth);
+
+    var leftSide = new Physijs.BoxMesh(sideGeometry, sideMaterial, 0);
+    leftSide.position.set(0,0, -width/2 - sideWidth/2);
+    floor.add(leftSide);
+
+    //var rightSide = new Physijs.BoxMesh(sideGeometry, sideMaterial, 0);
+    //rightSide.position.set(0,0, width/2 + sideWidth/2);
+    //floor.add(rightSide);
+
 
     var gutterLeft = createGutter(length, gutterSize, thickness);
     gutterLeft.position.z = -(width/2 - gutterSize/2);
@@ -58,7 +79,7 @@ function createGutter(length, gutterSize, thickness) {
 
     var cutoutCylinderGeometry = new THREE.CylinderGeometry(gutterRadius - thickness, gutterRadius - thickness, length, 100);
     var cutoutCylinder = new THREE.Mesh(cutoutCylinderGeometry, gutterMaterial);
-    //cutoutCylinder.position.set(0, 0, 0);
+    cutoutCylinder.position.set(0, 1, 0);
 
     var gutterGeometry = new THREE.CylinderGeometry(gutterRadius, gutterRadius, length, 100);
     var gutterCylinder = new THREE.Mesh( gutterGeometry, gutterMaterial );
@@ -93,6 +114,23 @@ function createGuardRail(guardHeight, guardLength, thickness) {
     return bar;
 }
 
+function createBack(width, length) {
+    var floorTexture = new THREE.TextureLoader().load('textures/floor.png');
+    floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
+    //floorTexture.repeat.set(1 , 0.5 );
+
+    var floorMaterial = new THREE.MeshPhysicalMaterial({
+        map: floorTexture,
+        side: THREE.FrontSide,
+        transparent: false,
+        clearCoat: 1.0
+    });
+
+    var floorGeometry = new THREE.BoxGeometry(length, 1, width);
+    var floor = new Physijs.BoxMesh(floorGeometry, floorMaterial, 0);
+
+    return floor;
+}
 
 function loadCollectionBox() {
 

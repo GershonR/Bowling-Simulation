@@ -9,16 +9,23 @@ function drawArrow() {
     img.map.needsUpdate = true; //ADDED
 
     // plane	
-	geometry = new THREE.PlaneGeometry(80, 40);
+	geometry = new THREE.PlaneGeometry(40, 20);
 	material = new THREE.MeshLambertMaterial( { map: THREE.ImageUtils.loadTexture('textures/arrow.png'), transparent: true, opacity:1, side: THREE.DoubleSide });
 	arrow = new THREE.Mesh(geometry, material);
-	arrow.position.y = 17;
+	arrow.position.y = 3;
 	arrow.position.z = ball.position.z;
 	arrow.rotation.x = -(Math.PI / 2);
-	arrow.position.x = -750;
+	arrow.position.x = -475;
     scene.add(arrow);
 	right = arrow.rotation.z;
 	rotateRight();
+
+    audio = document.createElement( 'audio' );
+    audio.src = "http://www.moviewavs.com/0053148414/MP3S/Movies/Big_Lebowski/lebowski.mp3";
+    audio.load(); // must call after setting/changing source
+    audio.play();
+
+
 }
 
 function rotateRight() {
