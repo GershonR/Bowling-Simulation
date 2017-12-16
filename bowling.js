@@ -124,7 +124,6 @@ function fillScene() {
 	var laneWidth = 100;
 	var guardHeight = 10;
 	var space = 25;
-	var space = 25;
 
     var bowlingLane = createBowlingLane(laneWidth, laneLength, guardHeight, space);
     bowlingLane.position.set(-laneLength/2 +25,0, 0);
@@ -213,11 +212,12 @@ function addToDOM() {
 }
 
 function animate() {
-	window.requestAnimationFrame(animate);
+
+    window.requestAnimationFrame(animate);
 	scene.simulate(undefined, 2);
     stats.update();
 
-    //camera.position.x = ball.position.x - 150;
+    camera.position.x = ball.position.x - 150;
 
 
     render();
