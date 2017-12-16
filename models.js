@@ -38,10 +38,12 @@
 	            	15
 				);
 				ball.name = "Bowling Ball";
+				ball.collided = false;
 
 				var boxgeometry = new THREE.BoxGeometry( 7, 10, 7 );
 				boxgeometry.translate( 0, 2, 0 );
 				
+				var shape;
 				THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
 				var mtlLoader = new THREE.MTLLoader();
 				mtlLoader.setPath( 'models/pins/' );
@@ -76,7 +78,7 @@
 					geometry.merge(boxgeometry);
 					
  					for(x = 0; x < 4; x++) {
-						var shape = new Physijs.ConvexMesh(
+						shape = new Physijs.ConvexMesh(
 						geometry,
 						materialsL,
 						2
@@ -84,15 +86,17 @@
 					    shape.position.y = 10;
 					    shape.position.z = -18 + 12*x;
 						shape.castShadow = true;
+						shape.collided = false;
 						shape.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ){
-	                    	if(other_object.name == "bottom") {
+	                    	if(other_object.name == "bottom" && !shape.collided) {
 								collisions++;
+								shape.collided = true;
 	                    	}
 	                    });
 					    scene.add( shape );
 					}
 					for(x = 0; x < 3; x++) {
-						var shape = new Physijs.ConvexMesh(
+						shape = new Physijs.ConvexMesh(
 						geometry,
 						materialsL,
 						2
@@ -103,14 +107,15 @@
 						shape.castShadow = true;
 						shape.collided = false;
 						shape.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ){
-	                    	if(other_object.name == "bottom") {
+	                    	if(other_object.name == "bottom" && !shape.collided) {
 								collisions++;
+								shape.collided = true;
 	                    	}
 	                    });
 					    scene.add( shape );
 					}
 					for(x = 0; x < 2; x++) {
-						var shape = new Physijs.ConvexMesh(
+						shape = new Physijs.ConvexMesh(
 						geometry,
 						materialsL,
 						2
@@ -119,9 +124,16 @@
 					    shape.position.z = -5+11*x;
 						shape.position.x = -25;
 						shape.castShadow = true;
+						shape.collided = false;
+						shape.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ){
+	                    	if(other_object.name == "bottom" && !shape.collided) {
+								collisions++;
+								shape.collided = true;
+	                    	}
+	                    });
 					    scene.add( shape );
 					}
-					var shape = new Physijs.ConvexMesh(
+					hape = new Physijs.ConvexMesh(
 					geometry,
 					materialsL,
 					2
@@ -130,6 +142,13 @@
 					shape.position.z = 0;
 					shape.position.x = -32;
 					shape.castShadow = true;
+						shape.collided = false;
+						shape.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ){
+	                    	if(other_object.name == "bottom" && !shape.collided) {
+								collisions++;
+								shape.collided = true;
+	                    	}
+	                    });
 					scene.add( shape );
 					});           
 					});

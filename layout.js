@@ -143,7 +143,9 @@ function loadCollectionBox() {
 	boxBottom.position.z = 0;
 	boxBottom.name = "bottom";
 	boxBottom.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ){
-		if(other_object.name == "Bowling Ball") {
+		if(other_object.name == "Bowling Ball" && !other_object.collided) {
+			other_object.collided = true;
+			setTimeout(function() { 
 			if(collisions >= 10) {
 				alert("Strike!");
 			} else {
@@ -151,8 +153,8 @@ function loadCollectionBox() {
 			}
 			scene.remove(clearerPlane);
 			dropClearer();
+			}, 5000);
 		}
-		console.log("hello world" + other_object.name);
 	});
 	scene.add(boxBottom);
 
