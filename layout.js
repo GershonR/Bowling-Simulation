@@ -309,13 +309,13 @@ function createTV() {
 
 	video = document.createElement( 'video' );
 
-	video.src = "videos/bowlingstrike1.mp4";
+	video.src = "videos/doublestrike.mp4";
 	video.load();
 	video.play();
 	
 	videoImage = document.createElement( 'canvas' );
 	videoImage.width = 400;
-	videoImage.height = 300;
+	videoImage.height = 250;
 	videoImageContext = videoImage.getContext( '2d' );
 	videoImageContext.fillStyle = '#ffffff';
 	videoImageContext.fillRect( 0, 0, videoImage.width, videoImage.height );
