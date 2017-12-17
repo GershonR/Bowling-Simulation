@@ -151,6 +151,7 @@ function animate() {
         if (tries < 3) {
             tries++;
         } else {
+            scene.remove(clearerPlane);
             dropClearer();
             tries = 1;
         }
