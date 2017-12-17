@@ -30,10 +30,23 @@ function createBowlingAlly(width, length, height) {
     });
     var sideGeometry = new THREE.BoxGeometry(laneLength, thickness, laneSeparation);
 
+    var columnTexture = new THREE.TextureLoader().load('textures/wood.jpg');
+    columnTexture.wrapT = sideTexture.wrapS = THREE.RepeatWrapping;
+    //columnTexture.repeat.set(20, 1);
+    var columnMaterial = new THREE.MeshPhysicalMaterial({
+        map: columnTexture,
+        clearCoat: 1.0
+    });
+    var columnGeometry = new THREE.BoxGeometry(thickness, height, laneSeparation);
+
     for (var spaceNum = 0; spaceNum < spacersAmount; spaceNum++) {
         var space = new Physijs.BoxMesh(sideGeometry, sideMaterial, 0);
         space.position.set(length/2 - laneLength/2, 10, (-width/2) + spaceNum * (laneWidth + laneSeparation));
         base.add(space);
+
+        var column = new Physijs.BoxMesh(columnGeometry, columnMaterial, 0);
+        column.position.set(length/2, height/2, (-width/2) + spaceNum * (laneWidth + laneSeparation));
+        base.add(column);
     }
 
     var backFloor = createBack(width, backLength);
