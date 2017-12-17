@@ -15,33 +15,39 @@ var clock = new THREE.Clock();
 var mesh = null;
 var keyboard = new KeyboardState();
 var ball;
+var pinsModel, pinMaterial;
 var pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
 var ball, ballSet, wallLeft, wallRight;
 var stopArrow = false;
 
 function fillScene() {
     scene = new Physijs.Scene;
-    //scene.setGravity(new THREE.Vector3( 0, -50, 0 ));
+    scene.setGravity(new THREE.Vector3( 0, -50, 0 ));
     scene.fog = new THREE.Fog( 0x808080, 2000, 4000 );
     scene.add(new THREE.AmbientLight(0x222222));
-    //scene.add( new THREE.AmbientLight( 0x404040 ) );
 
-
-    var bowlingAlly = createBowlingAlly(1000, 1000, 500);
+    var bowlingAlly = createBowlingAlly(1000, 1000, 300);
     bowlingAlly.position.set(-475, -10, 0);
     scene.add(bowlingAlly);
 
     loadModels();
+
+    loadPins();
+
+
+
     drawBowlingBall();
     WALL();
     //loadCeiling();
     loadClearer();
     loadSetter();
 
+    /*
     var audio = document.createElement('audio');
     audio.src = "http://www.moviewavs.com/0053148414/MP3S/Movies/Big_Lebowski/bowling.mp3\n";
     audio.load(); // must call after setting/changing source
     audio.play();
+    */
 
     dropSetter();
 }
@@ -90,13 +96,15 @@ function addToDOM() {
 function animate() {
     requestAnimationFrame(animate);
 
+
+    /*
     camera.position.y = (camera.position.y < 20) ? 20 : camera.position.y;
     camera.position.y = (camera.position.y > 300) ? 300 : camera.position.y;
     camera.position.x = (camera.position.x > 0) ? 0 : camera.position.x;
     camera.position.x = (camera.position.x < -1000) ? -1000 : camera.position.x;
     camera.position.z = (camera.position.z > 500) ? 500 : camera.position.z;
     camera.position.z = (camera.position.z < -500) ? -500 : camera.position.z;
-
+    */
 
     /*
 

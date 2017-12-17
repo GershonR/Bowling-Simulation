@@ -12,6 +12,17 @@ function createBowlingAlly(width, length, height) {
     var baseGeometry = new THREE.BoxGeometry(length, 0.25, width);
     var base = new Physijs.BoxMesh(baseGeometry, baseMaterial, 0);
 
+    var topTexture = new THREE.TextureLoader().load("textures/ceiling.jpg");
+    topTexture.wrapS = topTexture.wrapT = THREE.RepeatWrapping;
+    //topTexture.repeat.set(20, 20);
+    var topMaterial = new THREE.MeshLambertMaterial({
+        map: topTexture,
+        color: 0x212428
+    });
+    var top = new Physijs.BoxMesh(baseGeometry, topMaterial, 0);
+    top.position.y = height;
+    base.add(top);
+
     for (var laneNum = 0; laneNum < laneAmount; laneNum++) {
         var bowlingLane = createBowlingLane(laneWidth, laneLength, guardHeight, thickness);
         bowlingLane.position.set(length/2 - laneLength/2, 10, (-width/2 + laneSeparation/2 + laneWidth/2) + laneNum * (laneWidth + laneSeparation) );
@@ -190,11 +201,11 @@ function createCollectionBox(width, depth, height) {
     boxBottom.add(boxBack);
 
     var boxLeft = new Physijs.BoxMesh(new THREE.BoxGeometry(depth, height, 1), collectBoxMaterial, 0);
-    boxLeft.position.set(0, height / 2, -width / 2);
+    boxLeft.position.set(0, height / 2, -width / 2 +0.5);
     boxBottom.add(boxLeft);
 
     var boxRight = new Physijs.BoxMesh(new THREE.BoxGeometry(depth, height, 1), collectBoxMaterial, 0);
-    boxRight.position.set(0, height / 2, width / 2);
+    boxRight.position.set(0, height / 2, width / 2 -0.5);
     boxBottom.add(boxRight);
 
     return boxBottom;
