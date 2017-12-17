@@ -21,6 +21,7 @@ var ball, ballSet, wallLeft, wallRight;
 var stopArrow = false;
 var rolling = false;
 var cameraNeedsReset = false;
+var pinsAndBallNeedReset = false;
 
 function fillScene() {
     scene = new Physijs.Scene;
@@ -99,6 +100,8 @@ function animate() {
 
     if (keyboard.down("R")) {
         cameraNeedsReset = true;
+        pinsAndBallNeedReset = true;
+
     }
 
     if (keyboard.down("T")) {
@@ -115,13 +118,24 @@ function animate() {
         cameraNeedsReset = false;
     }
 
-
     camera.position.y = (camera.position.y < 20) ? 20 : camera.position.y;
     camera.position.y = (camera.position.y > 280) ? 280 : camera.position.y;
     camera.position.x = (camera.position.x > -150) ? -150 : camera.position.x;
     camera.position.x = (camera.position.x < -975) ? -975 : camera.position.x;
     camera.position.z = (camera.position.z > 490) ? 490 : camera.position.z;
     camera.position.z = (camera.position.z < -490) ? -490 : camera.position.z;
+
+
+    if (pinsAndBallNeedReset) {
+
+
+        pinsAndBallNeedReset = false;
+    }
+
+    if (rolling && ball.position.y < -10) {
+        cameraNeedsReset = true;
+        rolling = false;
+    }
 
 
     /*
@@ -210,6 +224,7 @@ document.addEventListener('keydown', function (ev) {
             }
             if (stopPower) {
                 ball.setLinearVelocity(new THREE.Vector3(power * 2, 0, 70 * -arrow.rotation.z));
+                rolling = true;
             }
             break;
 
