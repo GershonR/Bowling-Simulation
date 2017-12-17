@@ -262,7 +262,7 @@ function createEnclosing(width, length, height) {
 function loadClearer() {
     var clearerWidth = 8;
     var clearerHeight = 30;
-    var clearerLength = 80;
+    var clearerLength = 100;
     var x = -50;
     var z = 0;
     var y = 105;
@@ -285,10 +285,10 @@ function loadClearer() {
 
 function loadSetter() {
     var setterMaterial = new THREE.MeshLambertMaterial({color: 0x212428});
-    setter = new THREE.Mesh(new THREE.BoxGeometry(60, 20, 70), setterMaterial);
+    setter = new THREE.Mesh(new THREE.BoxGeometry(60, 40, 70), setterMaterial);
 
     setter.position.x = -15;
-    setter.position.y = 60;
+    setter.position.y = 90;
     setter.position.z = 0;
     scene.add(setter);
 }
