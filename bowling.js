@@ -30,12 +30,8 @@ function fillScene() {
     bowlingAlly.position.set(-475, -10, 0);
     scene.add(bowlingAlly);
 
-    loadModels();
-
+    loadBall();
     loadPins();
-
-
-
     drawBowlingBall();
     WALL();
     //loadCeiling();

@@ -1,4 +1,4 @@
-function loadModels() {
+function loadBall() {
     var redMaterial = new THREE.MeshLambertMaterial();
     redMaterial.color.setHex(0xff3333);
 
