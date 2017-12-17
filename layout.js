@@ -190,7 +190,11 @@ function WALL() {
     var wallTexture = new THREE.TextureLoader().load("textures/wall10.jpg");
     var frontwallTexture = new THREE.TextureLoader().load("textures/109.jpg");
     var basetop = new THREE.MeshLambertMaterial({map: wallTexture});
-    var basefront = new THREE.MeshLambertMaterial({map: frontwallTexture});
+    var basefront = new THREE.MeshPhysicalMaterial({
+        map: frontwallTexture,
+        reflectivity: 0.1
+        //clearCoat: 1.0
+    });
 
 //    //wallLeft, wallRight
 //    wallLeft = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);

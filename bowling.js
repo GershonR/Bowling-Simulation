@@ -162,7 +162,7 @@ function fillScene() {
     //loadFloor();
     loadModels();
 
-    /*
+
     drawBowlingBall();
     //loadCollectionBox();
     WALL();
@@ -178,7 +178,7 @@ function fillScene() {
     audio.play();
 
     dropSetter();
-    */
+
 }
 
 function init() {
@@ -267,7 +267,7 @@ function render() {
 }
 
 
-/*
+
 document.addEventListener('keydown', function( ev ) {
 	switch ( ev.keyCode ) {
 		case 37: // left
@@ -328,7 +328,7 @@ document.addEventListener('keydown', function( ev ) {
 			break;
 	}
 });
-*/
+
 
 try {
     init();
