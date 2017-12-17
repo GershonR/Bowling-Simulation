@@ -24,6 +24,8 @@ var cameraNeedsReset = false;
 var pinsAndBallNeedReset = false;
 var audioRoll;
 var audioHit;
+var pins = new Array();
+
 
 function fillScene() {
     scene = new Physijs.Scene;
@@ -50,7 +52,7 @@ function fillScene() {
     audio.play();
     */
 
-    dropSetter();
+    //dropSetter();
 
 
     audioRoll = document.createElement('audio');
@@ -113,7 +115,7 @@ function animate() {
         rolling = false;
         cameraNeedsReset = true;
         pinsAndBallNeedReset = true;
-
+        resetPins();
     }
 
     if (keyboard.down("T")) {
@@ -145,6 +147,8 @@ function animate() {
     }
 
     if (rolling && ball.position.y < -10) {
+        resetPins();
+        drawBowlingBall();
         cameraNeedsReset = true;
         rolling = false;
     }

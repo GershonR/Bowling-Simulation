@@ -78,29 +78,36 @@ function loadPins() {
                 geometry.faces[i].materialIndex = materialsL.length - 1;
             }
             //geometry.merge(boxgeometry);
+            pinsModel = geometry;
+            pinMaterial = materialsL;
+
 
             var pin;
 
             for (x = 0; x < 4; x++) {
                 pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
                 pin.position.set(15, 0, -26 + 18 * x);
+                pin.name = "pin";
                 scene.add(pin);
             }
 
             for (x = 0; x < 3; x++) {
-                    pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
-                    pin.position.set(0, 0, -18 + 18 * x);
-                    scene.add(pin);
+                pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
+                pin.position.set(0, 0, -18 + 18 * x);
+                pin.name = "pin";
+                scene.add(pin);
             }
 
             for (x = 0; x < 2; x++) {
                 pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
                 pin.position.set(-15, 0, -10 + 18 * x);
+                pin.name = "pin";
                 scene.add(pin);
             }
 
             pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
             pin.position.set(-32, 0, 0);
+            pin.name = "pin";
             scene.add(pin);
 
             var width = 1000;
@@ -117,6 +124,54 @@ function loadPins() {
             }
         });
     });
+}
+
+function resetPins() {
+    var geometry = pinsModel;
+    var materialsL = pinMaterial;
+    var pin;
+
+    /*
+    scene.children.forEach(function(item, index, array) {
+        if (item.name === "pin") {
+            scene.remove(item);
+        }
+    });
+    */
+
+    for (var i in scene._objects) {
+        if (scene._objects[i].name === "pin") {
+            scene.remove(scene._objects[i]);
+        }
+    }
+
+   // pins.clear();
+
+    for (x = 0; x < 4; x++) {
+        pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
+        pin.position.set(15, 0, -26 + 18 * x);
+        pin.name = "pin";
+        scene.add(pin);
+    }
+
+    for (x = 0; x < 3; x++) {
+        pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
+        pin.position.set(0, 0, -18 + 18 * x);
+        pin.name = "pin";
+        scene.add(pin);
+    }
+
+    for (x = 0; x < 2; x++) {
+        pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
+        pin.position.set(-15, 0, -10 + 18 * x);
+        pin.name = "pin";
+        scene.add(pin);
+    }
+
+    pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
+    pin.position.set(-32, 0, 0);
+    pin.name = "pin";
+    scene.add(pin);
 }
 
 function createPins(geometry, materialsL) {

@@ -101,6 +101,7 @@ function moveSetterUp() {
         setter.__dirtyPosition = true;
         renderer.render(scene, camera);
         if (setter.position.y >= 60) {
+
             return;
         }
         requestAnimationFrame(animateSetterUp); // keep looping
