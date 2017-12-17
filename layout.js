@@ -293,5 +293,43 @@ function loadSetter() {
     scene.add(setter);
 }
 
+function createTV() {
+	var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
+        map:THREE.ImageUtils.loadTexture('textures/TV.jpg')
+    });
+    img.map.needsUpdate = true; //ADDED
+
+    // plane
+    var plane = new THREE.Mesh(new THREE.PlaneGeometry(80, 35),img);
+    plane.overdraw = true;
+	plane.position.y = 110;
+	plane.position.x = -60;
+	plane.rotation.y = (-Math.PI / 2);
+    scene.add(plane);
+
+	video = document.createElement( 'video' );
+
+	video.src = "videos/bowlingstrike1.mp4";
+	video.load();
+	video.play();
+	
+	videoImage = document.createElement( 'canvas' );
+	videoImage.width = 400;
+	videoImage.height = 300;
+	videoImageContext = videoImage.getContext( '2d' );
+	videoImageContext.fillStyle = '#ffffff';
+	videoImageContext.fillRect( 0, 0, videoImage.width, videoImage.height );
+	videoTexture = new THREE.Texture( videoImage );
+	videoTexture.minFilter = THREE.LinearFilter;
+	videoTexture.magFilter = THREE.LinearFilter;
+	
+	var movieMaterial = new THREE.MeshBasicMaterial( { map: videoTexture, overdraw: true, side:THREE.DoubleSide } );
+	var movieGeometry = new THREE.PlaneGeometry( 75, 30, 4, 4 );
+	var movieScreen = new THREE.Mesh( movieGeometry, movieMaterial );
+	movieScreen.position.set(-61,110,0);
+	movieScreen.rotation.y = (-Math.PI / 2);
+	scene.add(movieScreen);
+}
+
 
 

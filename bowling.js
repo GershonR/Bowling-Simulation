@@ -26,6 +26,7 @@ var audioRoll;
 var audioHit;
 var pins = new Array();
 var tries = 1;
+var video;
 
 function fillScene() {
     scene = new Physijs.Scene;
@@ -44,6 +45,7 @@ function fillScene() {
     //loadCeiling();
     loadClearer();
     loadSetter();
+	createTV();
 
     /*
     var audio = document.createElement('audio');
@@ -196,6 +198,13 @@ function render() {
     cameraControls.update(delta);
 
     renderer.render(scene, camera);
+	
+	if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
+	{
+		videoImageContext.drawImage( video, 0, 0 );
+		if ( videoTexture ) 
+			videoTexture.needsUpdate = true;
+	}
 }
 
 
