@@ -85,6 +85,7 @@ function dropSetter() {
         setter.__dirtyPosition = true;
         renderer.render(scene, camera);
         if (setter.position.y < 50) {
+            resetPins();
             moveSetterUp();
             return;
         }

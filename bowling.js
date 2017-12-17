@@ -151,7 +151,7 @@ function animate() {
         if (tries < 3) {
             tries++;
         } else {
-            resetPins();
+            moveClearer();
             tries = 1;
         }
         addedArrow = false;
