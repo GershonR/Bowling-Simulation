@@ -331,5 +331,35 @@ function createTV() {
 	scene.add(movieScreen);
 }
 
+function laneNumbers() {
+		var loader = new THREE.FontLoader();
+		loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
+			var xMid, text;
+			var textShape = new THREE.BufferGeometry();
+			var color = 0xFFFFFF;
+			var matLite = new THREE.MeshBasicMaterial( {
+				color: color,
+				transparent: true,
+				opacity: 0.8,
+				side: THREE.DoubleSide
+			} );
+			var message = "4";
+
+			var shapes = font.generateShapes( message, 20, 2 );
+			var geometry = new THREE.ShapeGeometry( shapes );
+			geometry.computeBoundingBox();
+
+			xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
+
+			textShape.fromGeometry( geometry );
+			text = new THREE.Mesh( textShape, matLite );
+			text.rotation.y = (-Math.PI / 2);
+			text.position.x = 24;
+			text.position.z = -80;
+			text.position.y = 30;
+			scene.add( text );
+		});
+}
+
 
 
