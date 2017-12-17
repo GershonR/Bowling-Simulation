@@ -25,7 +25,7 @@ var pinsAndBallNeedReset = false;
 var audioRoll;
 var audioHit;
 var pins = new Array();
-
+var tries = 1;
 
 function fillScene() {
     scene = new Physijs.Scene;
@@ -147,9 +147,21 @@ function animate() {
     }
 
     if (rolling && ball.position.y < -10) {
-        resetPins();
+        countPins();
+        if (tries < 3) {
+            tries++;
+        } else {
+            resetPins();
+            tries = 1;
+        }
+        addedArrow = false;
+        glowing = false;
+        stopPower = false;
+        scene.remove(ball);
+        scene.add(ballSet);
         cameraNeedsReset = true;
         rolling = false;
+
     }
 
 
@@ -240,6 +252,7 @@ document.addEventListener('keydown', function (ev) {
             if (stopPower) {
                 ball.setLinearVelocity(new THREE.Vector3(power * 2, 0, 70 * -arrow.rotation.z));
                 rolling = true;
+                scene.remove(arrow);
                 audioRoll.play();
             }
             break;
@@ -251,6 +264,21 @@ document.addEventListener('keydown', function (ev) {
     }
 });
 
+
+function countPins() {
+    var score = 0;
+
+    for (var i in scene._objects) {
+        if (scene._objects[i].name === "pin") {
+            if (scene._objects[i].position.y < 0 || scene._objects[i].rotation.x > 0.1 || scene._objects[i].rotation.z > 0.1) {
+                score++;
+            }
+        }
+    }
+
+
+    alert(score);
+}
 
 try {
     init();
