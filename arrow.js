@@ -26,10 +26,6 @@ function drawArrow() {
     right = arrow.rotation.z;
     rotateRight();
 
-    var audio = document.createElement('audio');
-    audio.src = "http://www.moviewavs.com/0053148414/MP3S/Movies/Big_Lebowski/lebowski.mp3";
-    audio.load(); // must call after setting/changing source
-    audio.play();
 }
 
 function rotateRight() {

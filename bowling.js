@@ -22,6 +22,8 @@ var stopArrow = false;
 var rolling = false;
 var cameraNeedsReset = false;
 var pinsAndBallNeedReset = false;
+var audioRoll;
+var audioHit;
 
 function fillScene() {
     scene = new Physijs.Scene;
@@ -49,6 +51,15 @@ function fillScene() {
     */
 
     dropSetter();
+
+
+    audioRoll = document.createElement('audio');
+    audioRoll.src = "textures/roll.mp3";
+    audioRoll.load(); // must call after setting/changing source
+
+    audioHit = document.createElement('audio');
+    audioHit.src = "textures/hit.mp3";
+    audioHit.load(); // must call after setting/changing source
 }
 
 function init() {
@@ -99,6 +110,7 @@ function animate() {
 
 
     if (keyboard.down("R")) {
+        rolling = false;
         cameraNeedsReset = true;
         pinsAndBallNeedReset = true;
 
@@ -225,6 +237,7 @@ document.addEventListener('keydown', function (ev) {
             if (stopPower) {
                 ball.setLinearVelocity(new THREE.Vector3(power * 2, 0, 70 * -arrow.rotation.z));
                 rolling = true;
+                audioRoll.play();
             }
             break;
 

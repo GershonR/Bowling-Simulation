@@ -37,8 +37,9 @@ function loadBall() {
         new THREE.MeshPhysicalMaterial({color: 0x000000, clearCoat: 1.0}),
         15
     );
-    ball.name = "Bowling Ball";
     ball.collided = false;
+    ball.name = "ball";
+
 
     var boxgeometry = new THREE.BoxGeometry(7, 10, 7);
     boxgeometry.translate(0, 2, 0);
@@ -78,82 +79,29 @@ function loadPins() {
             }
             //geometry.merge(boxgeometry);
 
-            var shape;
+            var pin;
 
             for (x = 0; x < 4; x++) {
-                shape = new Physijs.ConvexMesh(
-                    geometry,
-                    materialsL,
-                    2
-                );
-                shape.position.y = 10;
-                shape.position.z = -26 + 18 * x;
-                shape.position.x = 15;
-                shape.castShadow = true;
-                shape.collided = false;
-                shape.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                    if (other_object.name == "bottom" && !shape.collided) {
-                        collisions++;
-                        shape.collided = true;
-                    }
-                });
-                scene.add(shape);
+                pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
+                pin.position.set(15, 0, -26 + 18 * x);
+                scene.add(pin);
             }
+
             for (x = 0; x < 3; x++) {
-                shape = new Physijs.ConvexMesh(
-                    geometry,
-                    materialsL,
-                    2
-                );
-                shape.position.y = 10;
-                shape.position.z = -18 + 18 * x;
-                shape.position.x = 0;
-                shape.castShadow = true;
-                shape.collided = false;
-                shape.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                    if (other_object.name == "bottom" && !shape.collided) {
-                        collisions++;
-                        shape.collided = true;
-                    }
-                });
-                scene.add(shape);
+                    pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
+                    pin.position.set(0, 0, -18 + 18 * x);
+                    scene.add(pin);
             }
-            for (x = 0; x < 3; x++) {
-                shape = new Physijs.ConvexMesh(
-                    geometry,
-                    materialsL,
-                    2
-                );
-                shape.position.y = 10;
-                shape.position.z = -10 + 18 * x;
-                shape.position.x = -15;
-                shape.castShadow = true;
-                shape.collided = false;
-                shape.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                    if (other_object.name == "bottom" && !shape.collided) {
-                        collisions++;
-                        shape.collided = true;
-                    }
-                });
-                scene.add(shape);
+
+            for (x = 0; x < 2; x++) {
+                pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
+                pin.position.set(-15, 0, -10 + 18 * x);
+                scene.add(pin);
             }
-            hape = new Physijs.ConvexMesh(
-                geometry,
-                materialsL,
-                2
-            );
-            shape.position.y = 10;
-            shape.position.z = 0;
-            shape.position.x = -32;
-            shape.castShadow = true;
-            shape.collided = false;
-            shape.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                if (other_object.name == "bottom" && !shape.collided) {
-                    collisions++;
-                    shape.collided = true;
-                }
-            });
-            scene.add(shape);
+
+            pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
+            pin.position.set(-32, 0, 0);
+            scene.add(pin);
 
             var width = 1000;
             var laneWidth = 115;
@@ -163,7 +111,7 @@ function loadPins() {
             for (var laneNum = 0; laneNum < laneAmount; laneNum++) {
                 if (laneNum !== 3) {
                     var pins = createPins(geometry, materialsL);
-                    pins.position.set(0, 10, (-width / 2 + laneSeparation / 2 + laneWidth / 2) + laneNum * (laneWidth + laneSeparation));
+                    pins.position.set(0, 0, (-width / 2 + laneSeparation / 2 + laneWidth / 2) + laneNum * (laneWidth + laneSeparation));
                     scene.add(pins);
                 }
             }

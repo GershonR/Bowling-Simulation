@@ -203,7 +203,6 @@ function createCollectionBox(width, depth, height) {
     return boxBottom;
 }
 
-
 function createEnclosing(width, length, height) {
     var frontPanelHeight = 110;
     var frontPanelDisplacement = 80;
