@@ -14,8 +14,10 @@ function dropClearer() {
     clearer.setAngularVelocity(new THREE.Vector3(0, 0, 0));
 
     function animateClearerDown() {
+		clearer.rotation.set(0, 0, 0);
         clearer.position.add(direction); // add to position
         clearer.__dirtyPosition = true;
+		clearer.__dirtyRotation = true;
         renderer.render(scene, camera);
         if (clearer.position.y <= 20) {
             return moveClearer();
@@ -29,10 +31,12 @@ function dropClearer() {
 function moveClearer() {
     var direction = new THREE.Vector3(0.5, 0, 0); // amount to move per frame
     function animateClearerBack() {
+		clearer.rotation.set(0, 0, 0);
         clearer.setLinearVelocity(new THREE.Vector3(0, 0, 0));
         clearer.setAngularVelocity(new THREE.Vector3(0, 0, 0));
         clearer.position.add(direction); // add to position
         clearer.__dirtyPosition = true;
+		clearer.__dirtyRotation = true;
         renderer.render(scene, camera);
         if (clearer.position.x >= 30) {
             return moveUp();
@@ -61,10 +65,12 @@ function moveUp() {
 function moveClearerBack() {
     var direction = new THREE.Vector3(-0.5, 0, 0); // amount to move per frame
     function animateClearer() {
+		clearer.rotation.set(0, 0, 0);
         clearer.setLinearVelocity(new THREE.Vector3(0, 0, 0));
         clearer.setAngularVelocity(new THREE.Vector3(0, 0, 0));
         clearer.position.add(direction); // add to position
         clearer.__dirtyPosition = true;
+		clearer.__dirtyRotation = true;
         renderer.render(scene, camera);
         if (clearer.position.x <= -50) {
             clearer.setLinearVelocity(new THREE.Vector3(0, 0, 0));
