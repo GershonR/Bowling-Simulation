@@ -19,6 +19,8 @@ var pinsModel, pinMaterial;
 var pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
 var ball, ballSet, wallLeft, wallRight;
 var stopArrow = false;
+var rolling = false;
+var cameraNeedsReset = false;
 
 function fillScene() {
     scene = new Physijs.Scene;
@@ -33,7 +35,7 @@ function fillScene() {
     loadBall();
     loadPins();
     drawBowlingBall();
-    WALL();
+    //WALL();
     //loadCeiling();
     loadClearer();
     loadSetter();
@@ -91,16 +93,36 @@ function addToDOM() {
 
 function animate() {
     requestAnimationFrame(animate);
+    keyboard.update();
 
 
-    /*
+
+    if (keyboard.down("R")) {
+        cameraNeedsReset = true;
+    }
+
+    if (keyboard.down("T")) {
+        rolling = true;
+    }
+
+    if (rolling) {
+        camera.position.x = ball.position.x - 150;
+        cameraControls.target.set(ball.position.x, ball.position.y, ball.position.z);
+    } else if (cameraNeedsReset) {
+        camera.position.set(-650, 80, 0);
+        camera.lookAt(0,0,0);
+        cameraControls.target.set(0,0,0);
+        cameraNeedsReset = false;
+    }
+
+
     camera.position.y = (camera.position.y < 20) ? 20 : camera.position.y;
-    camera.position.y = (camera.position.y > 300) ? 300 : camera.position.y;
-    camera.position.x = (camera.position.x > 0) ? 0 : camera.position.x;
-    camera.position.x = (camera.position.x < -1000) ? -1000 : camera.position.x;
-    camera.position.z = (camera.position.z > 500) ? 500 : camera.position.z;
-    camera.position.z = (camera.position.z < -500) ? -500 : camera.position.z;
-    */
+    camera.position.y = (camera.position.y > 280) ? 280 : camera.position.y;
+    camera.position.x = (camera.position.x > -150) ? -150 : camera.position.x;
+    camera.position.x = (camera.position.x < -975) ? -975 : camera.position.x;
+    camera.position.z = (camera.position.z > 490) ? 490 : camera.position.z;
+    camera.position.z = (camera.position.z < -490) ? -490 : camera.position.z;
+
 
     /*
 
@@ -118,7 +140,6 @@ function animate() {
 
     */
 
-    //camera.position.x = ball.position.x - 150;
 
 
     render();

@@ -12,16 +12,8 @@ function createBowlingAlly(width, length, height) {
     var baseGeometry = new THREE.BoxGeometry(length, 0.25, width);
     var base = new Physijs.BoxMesh(baseGeometry, baseMaterial, 0);
 
-    var topTexture = new THREE.TextureLoader().load("textures/ceiling.jpg");
-    topTexture.wrapS = topTexture.wrapT = THREE.RepeatWrapping;
-    //topTexture.repeat.set(20, 20);
-    var topMaterial = new THREE.MeshLambertMaterial({
-        map: topTexture,
-        color: 0x212428
-    });
-    var top = new Physijs.BoxMesh(baseGeometry, topMaterial, 0);
-    top.position.y = height;
-    base.add(top);
+    var enclosing = createEnclosing(width, length, height);
+    base.add(enclosing);
 
     for (var laneNum = 0; laneNum < laneAmount; laneNum++) {
         var bowlingLane = createBowlingLane(laneWidth, laneLength, guardHeight, thickness);
@@ -212,67 +204,47 @@ function createCollectionBox(width, depth, height) {
 }
 
 
-function WALL() {
+function createEnclosing(width, length, height) {
+    var frontPanelHeight = 110;
+    var frontPanelDisplacement = 80;
+    var frontPanelHeightFromBase = 75;
 
-    var wallMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
-    var wallTexture = new THREE.TextureLoader().load("textures/wall10.jpg");
-    var frontwallTexture = new THREE.TextureLoader().load("textures/109.jpg");
-    var basetop = new THREE.MeshLambertMaterial({map: wallTexture});
-    var basefront = new THREE.MeshBasicMaterial({
-        map: frontwallTexture
-        //refractionRatio: 0.01,
-        //reflectivity: 0.01,
-        //combine: THREE.MixOperation,
-        //clearCoat: 0.5
+    var topTexture = new THREE.TextureLoader().load("textures/ceiling.jpg");
+    topTexture.wrapS = topTexture.wrapT = THREE.RepeatWrapping;
+    topTexture.repeat.set(20, 20);
+    var topMaterial = new THREE.MeshLambertMaterial({
+        map: topTexture,
+        color: 0x212428
     });
+    var topGeometry = new THREE.BoxGeometry(length, 0.25, width);
+    var top = new Physijs.BoxMesh(topGeometry, topMaterial, 0);
+    top.position.y = height;
 
-//    //wallLeft, wallRight
-//    wallLeft = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);
-//    wallLeft.position.x = 30;
-//    wallLeft.position.y = 72.5;
-//    wallLeft.position.z = 305;
-//    scene.add(wallLeft);
+    var wallTexture = new THREE.TextureLoader().load("textures/wall10.jpg");
+    var sideWallMaterial = new THREE.MeshLambertMaterial({map: wallTexture});
 
-//    wallRight = new THREE.Mesh(new THREE.BoxGeometry(10, 200, 400), basetop);
-//    wallRight.position.x = 30;
-//    wallRight.position.y = 72.5;
-//    wallRight.position.z = -305;
-//    scene.add(wallRight);
+    var leftWall = new Physijs.BoxMesh(new THREE.BoxGeometry(length, height, 1), sideWallMaterial);
+    leftWall.position.set(0, -height/2, -width/2);
+    top.add(leftWall);
 
+    var rightWall = new Physijs.BoxMesh(new THREE.BoxGeometry(length, height, 1), sideWallMaterial);
+    rightWall.position.set(0, -height/2, width/2);
+    top.add(rightWall);
 
-    //wallLeft, wallRight
-    var leftWall = new THREE.Mesh(new THREE.BoxGeometry(1000, 200, 10), basetop);
-    leftWall.position.x = -1000 / 2 + 25;
-    leftWall.position.y = 72.5;
-    leftWall.position.z = 1000 / 2;
-    scene.add(leftWall);
+    var frontPanelTexture = new THREE.TextureLoader().load("textures/109.jpg");
+    var frontPanelMaterial = new THREE.MeshBasicMaterial({ map: frontPanelTexture });
+    var frontPanel = new THREE.Mesh(new THREE.BoxGeometry(1, frontPanelHeight, width), frontPanelMaterial);
+    frontPanel.position.set(length/2 - frontPanelDisplacement, -height + frontPanelHeightFromBase + frontPanelHeight/2, 0);
+    top.add(frontPanel);
 
-    var rightWall = new THREE.Mesh(new THREE.BoxGeometry(1000, 200, 10), basetop);
-    rightWall.position.x = -1000 / 2 + 25;
-    rightWall.position.y = 72.5;
-    rightWall.position.z = -1000 / 2;
-    scene.add(rightWall);
+    var frontUpperPanelTexture = new THREE.TextureLoader().load("textures/space.jpg");
+    var frontUpperPanelMaterial = new THREE.MeshBasicMaterial({ map: frontUpperPanelTexture });
+    var frontUpperPanel = new THREE.Mesh(new THREE.BoxGeometry(1, 300, width), frontUpperPanelMaterial);
+    frontUpperPanel.position.set(length/2 - frontPanelDisplacement - 100, -50, 0);
+    frontUpperPanel.rotation.z = Math.PI/3;
+    top.add(frontUpperPanel);
 
-
-    //main walll
-    mainwall = new THREE.Mesh(new THREE.BoxGeometry(5, 110, 1000), basefront);
-    mainwall.position.x = -60;
-    mainwall.position.y = 120;
-    scene.add(mainwall);
-
-}
-
-function loadCeiling() {
-    var ceilMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
-    var ceilTexture = new THREE.TextureLoader().load("textures/ceiling.jpg");
-    ceilTexture.wrapS = ceilTexture.wrapT = THREE.RepeatWrapping;
-    ceilTexture.repeat.set(20, 20);
-    var ceilTop = new THREE.MeshLambertMaterial({map: ceilTexture});
-    var cieling = new THREE.Mesh(new THREE.BoxGeometry(1050, 1000, 5, 10), ceilTop);
-    cieling.position.y = 165;
-    cieling.position.x = -500;
-    cieling.rotation.x = -(Math.PI / 2);
-    scene.add(cieling);
+    return top;
 }
 
 function loadClearer() {
