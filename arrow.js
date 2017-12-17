@@ -1,67 +1,81 @@
 var arrow;
 var right = 0;
 var left = 0;
+
 function drawArrow() {
-	addedArrow = true;
+    addedArrow = true;
     var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
-        map:THREE.ImageUtils.loadTexture('textures/arrow.png')
+        map: THREE.ImageUtils.loadTexture('textures/arrow.png')
     });
     img.map.needsUpdate = true; //ADDED
 
     // plane	
-	geometry = new THREE.PlaneGeometry(40, 20);
-	material = new THREE.MeshLambertMaterial( { map: THREE.ImageUtils.loadTexture('textures/arrow.png'), transparent: true, opacity:1, side: THREE.DoubleSide });
-	arrow = new THREE.Mesh(geometry, material);
-	arrow.position.y = 3;
-	arrow.position.z = ball.position.z;
-	arrow.rotation.x = -(Math.PI / 2);
-	arrow.position.x = -475;
+    geometry = new THREE.PlaneGeometry(40, 20);
+    material = new THREE.MeshLambertMaterial({
+        map: THREE.ImageUtils.loadTexture('textures/arrow.png'),
+        transparent: true,
+        opacity: 1,
+        side: THREE.DoubleSide
+    });
+    arrow = new THREE.Mesh(geometry, material);
+    arrow.position.y = 3;
+    arrow.position.z = ball.position.z;
+    arrow.rotation.x = -(Math.PI / 2);
+    arrow.position.x = -475;
     scene.add(arrow);
-	right = arrow.rotation.z;
-	rotateRight();
+    right = arrow.rotation.z;
+    rotateRight();
 
-    var audio = document.createElement( 'audio' );
+    var audio = document.createElement('audio');
     audio.src = "http://www.moviewavs.com/0053148414/MP3S/Movies/Big_Lebowski/lebowski.mp3";
     audio.load(); // must call after setting/changing source
     audio.play();
 }
 
 function rotateRight() {
-	left = 0;
+    left = 0;
+
     function animateRight() {
-	  right += 0.005;
-	  arrow.rotation.set(arrow.rotation.x, arrow.rotation.y, arrow.rotation.z + right);
-      renderer.render(scene, camera);
-      if(arrow.rotation.z >= 0.7) {
-    	 return rotateLeft();
-	  }
-	  if(stopArrow || glowing)
-	  {
-		//scene.remove(arrow);
-		return;
-	  }
-      setTimeout(function() { requestAnimationFrame(animateRight); }, 10);
-      
+        right += 0.005;
+        arrow.rotation.set(arrow.rotation.x, arrow.rotation.y, arrow.rotation.z + right);
+        renderer.render(scene, camera);
+        if (arrow.rotation.z >= 0.7) {
+            return rotateLeft();
+        }
+        if (stopArrow || glowing) {
+            //scene.remove(arrow);
+            return;
+        }
+        setTimeout(function () {
+            requestAnimationFrame(animateRight);
+        }, 10);
+
     }
+
     requestAnimationFrame(animateRight);
 }
 
 function rotateLeft() {
-	right = 0;
+    right = 0;
+
     function animateLeft() {
-	  left += 0.005;
-	  arrow.rotation.set(arrow.rotation.x, arrow.rotation.y, arrow.rotation.z - left);
-      renderer.render(scene, camera);
-      if(arrow.rotation.z <= -0.7) {
-    	 return rotateRight();
-	  }
-	  if(stopArrow || glowing)
-	  {
-		//scene.remove(arrow);
-		return;
-	  }
-	  setTimeout(function() { requestAnimationFrame(animateLeft); }, 10);
-      
+        left += 0.005;
+        arrow.rotation.set(arrow.rotation.x, arrow.rotation.y, arrow.rotation.z - left);
+        renderer.render(scene, camera);
+        if (arrow.rotation.z <= -0.7) {
+            return rotateRight();
+        }
+        if (stopArrow || glowing) {
+            //scene.remove(arrow);
+            return;
+        }
+        setTimeout(function () {
+            requestAnimationFrame(animateLeft);
+        }, 10);
+
     }
+
     requestAnimationFrame(animateLeft);
 }
+
+

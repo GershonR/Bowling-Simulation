@@ -1,8 +1,5 @@
-Physijs.scripts.worker = 'js/physijs_worker.js';
-Physijs.scripts.ammo = 'ammo.js';
-
 var collisions = 0;
-var container, stats;
+var stats;
 var clearer;
 var setter;
 var clearerPlane;
@@ -21,222 +18,256 @@ var ball;
 var pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
 var ball, ballSet, wallLeft, wallRight;
 var stopArrow = false;
-unloadScrollBars();
 
 function fillScene() {
-	scene = new Physijs.Scene;
-	scene.setGravity(new THREE.Vector3( 0, -50, 0 ));
-	scene.fog = new THREE.Fog( 0x808080, 2000, 4000 );
-    scene.add( new THREE.AmbientLight( 0x222222 ) );
-
+    scene = new Physijs.Scene;
+    //scene.setGravity(new THREE.Vector3( 0, -50, 0 ));
+    //scene.fog = new THREE.Fog( 0x808080, 2000, 4000 );
+    scene.add(new THREE.AmbientLight(0x222222));
     //scene.add( new THREE.AmbientLight( 0x404040 ) );
 
-	var lightL = new THREE.PointLight(0xffffff, 2, 300);
-	lightL.position.x = -150;
-	lightL.position.y = 50;
-	lightL.position.z = -400;
-	lightL.rotation.set(90,0, 180);
-	//scene.add(lightL);
-	var backLight = new THREE.PointLight(0xffffff, 1, 300);
-	backLight.position.x = 0;
-	backLight.position.z = 0;
-	backLight.position.y = 190;
-	scene.add(backLight);
 
-	backLight = new THREE.PointLight(0xffffff, 1, 300);
-	backLight.position.x = -100;
-	backLight.position.z = 0;
-	backLight.position.y = 190;
-	scene.add(backLight);
+    var lightL = new THREE.PointLight(0xffffff, 2, 300);
+    lightL.position.x = -150;
+    lightL.position.y = 50;
+    lightL.position.z = -400;
+    lightL.rotation.set(90, 0, 180);
+    //scene.add(lightL);
 
-	backLight = new THREE.PointLight(0xffffff, 1, 300);
-	backLight.position.x = -250;
-	backLight.position.z = 0;
-	backLight.position.y = 190;
-	scene.add(backLight);
+    var backLight = new THREE.PointLight(0xffffff, 1, 300);
+    backLight.position.x = 0;
+    backLight.position.z = 0;
+    backLight.position.y = 190;
+    //scene.add(backLight);
 
-	backLight = new THREE.PointLight(0xffffff, 1, 300);
-	backLight.position.x = -400;
-	backLight.position.z = 0;
-	backLight.position.y = 190;
-	scene.add(backLight);
+    /*
 
+    backLight = new THREE.PointLight(0xffffff, 1, 300);
+    backLight.position.x = -100;
+    backLight.position.z = 0;
+    backLight.position.y = 190;
+    scene.add(backLight);
 
-	backLight = new THREE.PointLight(0xffffff, 1, 300);
-	backLight.position.x = -550;
-	backLight.position.z = 0;
-	backLight.position.y = 190;
-	scene.add(backLight);
+    backLight = new THREE.PointLight(0xffffff, 1, 300);
+    backLight.position.x = -250;
+    backLight.position.z = 0;
+    backLight.position.y = 190;
+    scene.add(backLight);
 
-	backLight = new THREE.PointLight(0xffffff, 1, 300);
-	backLight.position.x = -700;
-	backLight.position.z = 0;
-	backLight.position.y = 190;
-	scene.add(backLight);
-
-	// var sideLight = new THREE.PointLight(0xffffff, 2, 300);
-	// sideLight.position.x = -100;
-	// sideLight.position.z = 200;
-	// sideLight.position.y = 190;
-	// scene.add(sideLight);
-
-	// var sideLight2 = new THREE.PointLight(0xffffff, 2, 300);
-	// sideLight2.position.x = -100;
-	// sideLight2.position.z = -200;
-	// sideLight2.position.y = 190;
-	// scene.add(sideLight2);
-
-	var collight = new THREE.PointLight( 0xff0000, 1, 300 );
-	collight.position.set( -500, 100, -400 );
-	scene.add( collight );
-
-	collight = new THREE.PointLight( 0xff0000, 1, 300 );
-	collight.position.set( -500, 100, 170 );
-	scene.add( collight );
-
-	collight = new THREE.PointLight( 0x0000ff, 1, 300 );
-	collight.position.set( -250, 100, -400 );
-	scene.add( collight );
-
-	collight = new THREE.PointLight( 0x0000ff, 1, 300 );
-	collight.position.set( -250, 100, 170 );
-	scene.add( collight );
+    backLight = new THREE.PointLight(0xffffff, 1, 300);
+    backLight.position.x = -400;
+    backLight.position.z = 0;
+    backLight.position.y = 190;
+    scene.add(backLight);
 
 
+    backLight = new THREE.PointLight(0xffffff, 1, 300);
+    backLight.position.x = -550;
+    backLight.position.z = 0;
+    backLight.position.y = 190;
+    scene.add(backLight);
 
-	// var light = new THREE.DirectionalLight( 0xffffff, 0.2 );
-	// light.position.set( 200, 500, 500 );
+    backLight = new THREE.PointLight(0xffffff, 1, 300);
+    backLight.position.x = -700;
+    backLight.position.z = 0;
+    backLight.position.y = 190;
+    scene.add(backLight);
 
-	light = new THREE.DirectionalLight( 0xffffff, 0.2 );
-	light.position.set( -200, -100, -400 );
+    // var sideLight = new THREE.PointLight(0xffffff, 2, 300);
+    // sideLight.position.x = -100;
+    // sideLight.position.z = 200;
+    // sideLight.position.y = 190;
+    // scene.add(sideLight);
 
-	//scene.add( light );
-   
+    // var sideLight2 = new THREE.PointLight(0xffffff, 2, 300);
+    // sideLight2.position.x = -100;
+    // sideLight2.position.z = -200;
+    // sideLight2.position.y = 190;
+    // scene.add(sideLight2);
+
+    var collight = new THREE.PointLight( 0xff0000, 1, 300 );
+    collight.position.set( -500, 100, -400 );
+    scene.add( collight );
+
+    collight = new THREE.PointLight( 0xff0000, 1, 300 );
+    collight.position.set( -500, 100, 170 );
+    scene.add( collight );
+
+    collight = new THREE.PointLight( 0x0000ff, 1, 300 );
+    collight.position.set( -250, 100, -400 );
+    scene.add( collight );
+
+    collight = new THREE.PointLight( 0x0000ff, 1, 300 );
+    collight.position.set( -250, 100, 170 );
+    scene.add( collight );
+
+
+
+    // var light = new THREE.DirectionalLight( 0xffffff, 0.2 );
+    // light.position.set( 200, 500, 500 );
+
+    light = new THREE.DirectionalLight( 0xffffff, 0.2 );
+    light.position.set( -200, -100, -400 );
+
+    //scene.add( light );
+
     // var axes = new THREE.AxisHelper(150);
     // axes.position.y = 1;
-	// scene.add(axes);
+    // scene.add(axes);
 //var x = -1020;
     //var z = 100;
     //var y = 13;
 
-	var laneLength = 600;
-	var laneWidth = 115;
-	var guardHeight = 10;
-	var space = 25;
+    */
+
+    var laneLength = 600;
+    var laneWidth = 115;
+    var guardHeight = 10;
+    var space = 25;
 
     var bowlingLane = createBowlingLane(laneWidth, laneLength, guardHeight, space);
-    bowlingLane.position.set(-laneLength/2 +25,0, 0);
+    bowlingLane.position.set(-laneLength / 2 + 25, 0, 0);
     scene.add(bowlingLane);
 
     var bowlingLaneL1 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
-    bowlingLaneL1.position.set(-laneLength/2 +25,0, -(laneWidth+space));
+    bowlingLaneL1.position.set(-laneLength / 2 + 25, 0, -(laneWidth + space));
     scene.add(bowlingLaneL1);
 
     var bowlingLaneL2 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
-    bowlingLaneL2.position.set(-laneLength/2 +25,0, -(laneWidth+space)*2);
+    bowlingLaneL2.position.set(-laneLength / 2 + 25, 0, -(laneWidth + space) * 2);
     scene.add(bowlingLaneL2);
 
     var bowlingLaneL3 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
-    bowlingLaneL3.position.set(-laneLength/2 +25,0, -(laneWidth+space)*3);
+    bowlingLaneL3.position.set(-laneLength / 2 + 25, 0, -(laneWidth + space) * 3);
     scene.add(bowlingLaneL3);
 
     var bowlingLaneR1 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
-    bowlingLaneR1.position.set(-laneLength/2 +25,0, (laneWidth+space));
+    bowlingLaneR1.position.set(-laneLength / 2 + 25, 0, (laneWidth + space));
     scene.add(bowlingLaneR1);
 
     var bowlingLaneR2 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
-    bowlingLaneR2.position.set(-laneLength/2 +25,0, (laneWidth+space)*2);
+    bowlingLaneR2.position.set(-laneLength / 2 + 25, 0, (laneWidth + space) * 2);
     scene.add(bowlingLaneR2);
 
     var bowlingLaneR3 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
-    bowlingLaneR3.position.set(-laneLength/2 +25,0, (laneWidth+space)*3);
+    bowlingLaneR3.position.set(-laneLength / 2 + 25, 0, (laneWidth + space) * 3);
     scene.add(bowlingLaneR3);
 
     //github not working?
-	var backFloor = createBack(1000, 400);
-    backFloor.position.set(-775,0,0);
-	scene.add(backFloor);
+    var backFloor = createBack(1000, 400);
+    backFloor.position.set(-775, 0, 0);
+    scene.add(backFloor);
 
 
     //loadFloor();
-	loadModels();
-	drawBowlingBall();
-	//loadCollectionBox();
-	WALL();
-	//loadGuard();
-	//loadCeiling();
-	loadClearer();
-	loadSetter();
+    loadModels();
+
+    /*
+    drawBowlingBall();
+    //loadCollectionBox();
+    WALL();
+    //loadGuard();
+    //loadCeiling();
+    loadClearer();
+    loadSetter();
 
 
     var audio = document.createElement( 'audio' );
     audio.src = "http://www.moviewavs.com/0053148414/MP3S/Movies/Big_Lebowski/bowling.mp3\n";
     audio.load(); // must call after setting/changing source
-	audio.play();
+    audio.play();
 
-	dropSetter();
+    dropSetter();
+    */
 }
 
 function init() {
-	var canvasWidth = window.innerWidth;
-	var canvasHeight = innerHeight;
-	var canvasRatio = canvasWidth / canvasHeight;
-	textureLoader = new THREE.TextureLoader();
-	
-	container = document.createElement( 'div' );
-	document.body.appendChild( container );
-	renderer = new THREE.WebGLRenderer( { antialias: true } );
+    Physijs.scripts.worker = 'js/physijs_worker.js';
+    Physijs.scripts.ammo = 'ammo.js';
 
-	renderer.gammaInput = true;
-	renderer.gammaOutput = true;
-	renderer.setSize(canvasWidth, canvasHeight);
-	renderer.setClearColor( 0xAAAAAA, 1.0 );
+    var canvasWidth = innerWidth;
+    var canvasHeight = innerHeight;
+    var canvasRatio = canvasWidth / canvasHeight;
 
-	camera = new THREE.PerspectiveCamera( 45, canvasRatio, 1, 4000 );
-	cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
-	camera.position.set( -650, 80, 0);
-	camera.lookAt(0,0,0);
-	cameraControls.target.set(0,0,0);
-	cameraControls.noKeys = true;
-	// performance monitor
-	container.appendChild( renderer.domElement );
-	stats = new Stats();
-	container.appendChild( stats.dom );
-	
+    // Set up renderer. Allows WebGL to make scene appear
+    renderer = new THREE.WebGLRenderer({antialias: true});
+    renderer.gammaInput = true;
+    renderer.gammaOutput = true;
+    renderer.setSize(canvasWidth, canvasHeight);
+    //changes to make background black
+    renderer.setClearColor(0x000000, 1.0);
+    //renderer.setClearColor( 0xAAAAAA, 1.0 ); //old color
+
+    camera = new THREE.PerspectiveCamera(45, canvasRatio, 1, 4000);
+    camera.position.set(-650, 80, 0);
+    camera.lookAt(0, 0, 0);
+
+    cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
+    cameraControls.target.set(0, 0, 0);
+    cameraControls.noKeys = true;
 }
 
 function addToDOM() {
+    document.documentElement.style.overflow = 'hidden';  // firefox, chrome
+    document.body.scroll = "no"; // ie only
+
     var canvas = document.getElementById('canvas');
     canvas.appendChild(renderer.domElement);
+
+    // performance monitor
+    stats = new Stats();
+    var container = document.createElement('div');
+    container.appendChild(renderer.domElement);
+    container.appendChild(stats.dom);
+    document.body.appendChild(container);
 }
 
 function animate() {
+    requestAnimationFrame(animate);
 
-    window.requestAnimationFrame(animate);
-	scene.simulate(undefined, 2);
-    stats.update();
+    camera.position.y = (camera.position.y < 20) ? 20 : camera.position.y;
+    camera.position.y = (camera.position.y > 300) ? 300 : camera.position.y;
+    camera.position.x = (camera.position.x > 0) ? 0 : camera.position.x;
+    camera.position.x = (camera.position.x < -1000) ? -1000 : camera.position.x;
+    camera.position.z = (camera.position.z > 500) ? 500 : camera.position.z;
+    camera.position.z = (camera.position.z < -500) ? -500 : camera.position.z;
+
+
+    /*
+
+    // Change the object's position
+    mesh.position.set( 0, 0, 0 );
+    mesh.__dirtyPosition = true;
+
+    // Change the object's rotation
+    mesh.rotation.set(0, 90, 180);
+    mesh.__dirtyRotation = true;
+
+    // You may also want to cancel the object's velocity
+    mesh.setLinearVelocity(new THREE.Vector3(0, 0, 0));
+    mesh.setAngularVelocity(new THREE.Vector3(0, 0, 0));
+
+    */
 
     //camera.position.x = ball.position.x - 150;
 
 
     render();
-
 }
 
 function render() {
-	var delta = clock.getDelta();
-	cameraControls.update(delta);
+    stats.update();
 
-	renderer.render(scene, camera);
+    scene.simulate();  //previously (undefined, 2);
+
+    var delta = clock.getDelta();
+    cameraControls.update(delta);
+
+    renderer.render(scene, camera);
 }
 
-function unloadScrollBars() {
-    document.documentElement.style.overflow = 'hidden';  // firefox, chrome
-    document.body.scroll = "no"; // ie only
-}
 
-
-
+/*
 document.addEventListener('keydown', function( ev ) {
 	switch ( ev.keyCode ) {
 		case 37: // left
@@ -297,14 +328,14 @@ document.addEventListener('keydown', function( ev ) {
 			break;
 	}
 });
-
+*/
 
 try {
-  init();
-  fillScene();
-  addToDOM();
-  animate();
-} catch(error) {
+    init();
+    fillScene();
+    addToDOM();
+    animate();
+} catch (error) {
     console.log("You did something bordering on utter madness. Error was:");
     console.log(error);
 }
