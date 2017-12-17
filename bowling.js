@@ -27,115 +27,16 @@ function fillScene() {
     //scene.add( new THREE.AmbientLight( 0x404040 ) );
 
 
-    var lightL = new THREE.PointLight(0xffffff, 2, 300);
-    lightL.position.x = -150;
-    lightL.position.y = 50;
-    lightL.position.z = -400;
-    lightL.rotation.set(90, 0, 180);
-    //scene.add(lightL);
-
-    var backLight = new THREE.PointLight(0xffffff, 1, 300);
-    backLight.position.x = 0;
-    backLight.position.z = 0;
-    backLight.position.y = 190;
-    //scene.add(backLight);
-
-    /*
-
-    backLight = new THREE.PointLight(0xffffff, 1, 300);
-    backLight.position.x = -100;
-    backLight.position.z = 0;
-    backLight.position.y = 190;
-    scene.add(backLight);
-
-    backLight = new THREE.PointLight(0xffffff, 1, 300);
-    backLight.position.x = -250;
-    backLight.position.z = 0;
-    backLight.position.y = 190;
-    scene.add(backLight);
-
-    backLight = new THREE.PointLight(0xffffff, 1, 300);
-    backLight.position.x = -400;
-    backLight.position.z = 0;
-    backLight.position.y = 190;
-    scene.add(backLight);
-
-
-    backLight = new THREE.PointLight(0xffffff, 1, 300);
-    backLight.position.x = -550;
-    backLight.position.z = 0;
-    backLight.position.y = 190;
-    scene.add(backLight);
-
-    backLight = new THREE.PointLight(0xffffff, 1, 300);
-    backLight.position.x = -700;
-    backLight.position.z = 0;
-    backLight.position.y = 190;
-    scene.add(backLight);
-
-    // var sideLight = new THREE.PointLight(0xffffff, 2, 300);
-    // sideLight.position.x = -100;
-    // sideLight.position.z = 200;
-    // sideLight.position.y = 190;
-    // scene.add(sideLight);
-
-    // var sideLight2 = new THREE.PointLight(0xffffff, 2, 300);
-    // sideLight2.position.x = -100;
-    // sideLight2.position.z = -200;
-    // sideLight2.position.y = 190;
-    // scene.add(sideLight2);
-
-    var collight = new THREE.PointLight( 0xff0000, 1, 300 );
-    collight.position.set( -500, 100, -400 );
-    scene.add( collight );
-
-    collight = new THREE.PointLight( 0xff0000, 1, 300 );
-    collight.position.set( -500, 100, 170 );
-    scene.add( collight );
-
-    collight = new THREE.PointLight( 0x0000ff, 1, 300 );
-    collight.position.set( -250, 100, -400 );
-    scene.add( collight );
-
-    collight = new THREE.PointLight( 0x0000ff, 1, 300 );
-    collight.position.set( -250, 100, 170 );
-    scene.add( collight );
-
-
-
-    // var light = new THREE.DirectionalLight( 0xffffff, 0.2 );
-    // light.position.set( 200, 500, 500 );
-
-    light = new THREE.DirectionalLight( 0xffffff, 0.2 );
-    light.position.set( -200, -100, -400 );
-
-    //scene.add( light );
-
-    // var axes = new THREE.AxisHelper(150);
-    // axes.position.y = 1;
-    // scene.add(axes);
-    //var x = -1020;
-    //var z = 100;
-    //var y = 13;
-
-    */
-
     var bowlingAlly = createBowlingAlly(1000, 1000, 500);
-    bowlingAlly.position.set(-75, 0, 0);
+    bowlingAlly.position.set(-475, 0, 0);
     scene.add(bowlingAlly);
 
-    //loadFloor();
     loadModels();
-
-
     drawBowlingBall();
-    //loadCollectionBox();
     WALL();
-    //loadGuard();
     //loadCeiling();
     loadClearer();
     loadSetter();
-
 
     var audio = document.createElement('audio');
     audio.src = "http://www.moviewavs.com/0053148414/MP3S/Movies/Big_Lebowski/bowling.mp3\n";
@@ -143,7 +44,6 @@ function fillScene() {
     audio.play();
 
     dropSetter();
-
 }
 
 function init() {

@@ -5,61 +5,46 @@ function createBowlingAlly(width, length, height) {
     var guardHeight = 10;
     var laneAmount = 7;
     var laneSeparation = (width - (laneWidth*laneAmount)) / laneAmount;
+    var thickness = 1;
+    var spacersAmount = laneAmount + 1;
 
     var baseMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
     var baseGeometry = new THREE.BoxGeometry(length, 0.25, width);
     var base = new Physijs.BoxMesh(baseGeometry, baseMaterial, 0);
 
-
     for (var laneNum = 0; laneNum < laneAmount; laneNum++) {
-        var bowlingLane = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
-        bowlingLane.position.set(-length/2 + laneLength/2, 10, (-width/2 + laneSeparation/2 + laneWidth/2) + laneNum * (laneWidth + laneSeparation) );
+        var bowlingLane = createBowlingLane(laneWidth, laneLength, guardHeight, thickness);
+        bowlingLane.position.set(length/2 - laneLength/2, 10, (-width/2 + laneSeparation/2 + laneWidth/2) + laneNum * (laneWidth + laneSeparation) );
         base.add(bowlingLane);
     }
 
-    /*
-    var bowlingLane = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
-    bowlingLane.position.set(-laneLength / 2 + 25, 0, 0);
-    scene.add(bowlingLane);
+    var sideTexture = new THREE.TextureLoader().load('textures/fun.jpg');
+    sideTexture.wrapT = sideTexture.wrapS = THREE.RepeatWrapping;
+    sideTexture.repeat.set(20, 1);
+    var sideMaterial = new THREE.MeshPhysicalMaterial({
+        map: sideTexture,
+        clearCoat: 1.0
+    });
+    var sideGeometry = new THREE.BoxGeometry(laneLength, thickness, laneSeparation);
 
-    var bowlingLaneL1 = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
-    bowlingLaneL1.position.set(-laneLength / 2 + 25, 0, -(laneWidth + laneSeparation));
-    scene.add(bowlingLaneL1);
+    for (var spaceNum = 0; spaceNum < spacersAmount; spaceNum++) {
+        var space = new Physijs.BoxMesh(sideGeometry, sideMaterial, 0);
+        space.position.set(length/2 - laneLength/2, 10, (-width/2) + spaceNum * (laneWidth + laneSeparation));
+        base.add(space);
+    }
 
-    var bowlingLaneL2 = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
-    bowlingLaneL2.position.set(-laneLength / 2 + 25, 0, -(laneWidth + laneSeparation) * 2);
-    scene.add(bowlingLaneL2);
-
-    var bowlingLaneL3 = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
-    bowlingLaneL3.position.set(-laneLength / 2 + 25, 0, -(laneWidth + laneSeparation) * 3);
-    scene.add(bowlingLaneL3);
-
-    var bowlingLaneR1 = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
-    bowlingLaneR1.position.set(-laneLength / 2 + 25, 0, (laneWidth + laneSeparation));
-    scene.add(bowlingLaneR1);
-
-    var bowlingLaneR2 = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
-    bowlingLaneR2.position.set(-laneLength / 2 + 25, 0, (laneWidth + laneSeparation) * 2);
-    scene.add(bowlingLaneR2);
-
-    var bowlingLaneR3 = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
-    bowlingLaneR3.position.set(-laneLength / 2 + 25, 0, (laneWidth + laneSeparation) * 3);
-    scene.add(bowlingLaneR3);
-    */
-
-    var backFloor = createBack(1000, 400);
-    backFloor.position.set(-length/2 + backLength/2, 0, 0);
+    var backFloor = createBack(width, backLength);
+    backFloor.position.set(-length/2 + backLength/2, 10, 0);
     base.add(backFloor);
 
     return base;
 }
 
-function createBowlingLane(width, length, guardHeight, sideWidth) {
-    var gutterAndRailThickness = 1;
+function createBowlingLane(width, length, guardHeight, gutterAndRailThickness) {
     var collectionBoxHeight = 200;
     var collectionBoxDepth = 100;
 
-    var laneFloor = createLaneBase(width, length, gutterAndRailThickness, sideWidth);
+    var laneFloor = createLaneBase(width, length, gutterAndRailThickness);
 
     var leftGuard = createGuardRail(guardHeight, length, gutterAndRailThickness);
     leftGuard.position.set(0, guardHeight, -(width / 2 - gutterAndRailThickness / 2));
@@ -85,11 +70,10 @@ function createBowlingLane(width, length, guardHeight, sideWidth) {
     return laneFloor;
 }
 
-function createLaneBase(width, length, thickness, sideWidth) {
+function createLaneBase(width, length, thickness) {
     var gutterSize = 20;
 
     var floorTexture = new THREE.TextureLoader().load('textures/floor.png');
-
     var floorMaterial = new THREE.MeshPhysicalMaterial({
         map: floorTexture,
         clearCoat: 1.0
@@ -97,24 +81,6 @@ function createLaneBase(width, length, thickness, sideWidth) {
 
     var floorGeometry = new THREE.BoxGeometry(length, thickness, width - (gutterSize * 2) + thickness * 2);
     var floor = new Physijs.BoxMesh(floorGeometry, floorMaterial, 0);
-
-    var sideTexture = new THREE.TextureLoader().load('textures/fun.jpg');
-    sideTexture.wrapT = sideTexture.wrapS = THREE.RepeatWrapping;
-    sideTexture.repeat.set(20, 1);
-
-    var sideMaterial = new THREE.MeshPhysicalMaterial({
-        map: sideTexture,
-        clearCoat: 1.0
-    });
-    var sideGeometry = new THREE.BoxGeometry(length, thickness, sideWidth);
-
-    var leftSide = new Physijs.BoxMesh(sideGeometry, sideMaterial, 0);
-    leftSide.position.set(0, 0, -width / 2 - sideWidth / 2);
-    floor.add(leftSide);
-
-    //var rightSide = new Physijs.BoxMesh(sideGeometry, sideMaterial, 0);
-    //rightSide.position.set(0,0, width/2 + sideWidth/2);
-    //floor.add(rightSide);
 
     var gutterLeft = createGutter(length, gutterSize, thickness);
     gutterLeft.position.z = -(width / 2 - gutterSize / 2);
