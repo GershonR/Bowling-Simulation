@@ -46,7 +46,7 @@ function fillScene() {
     loadClearer();
     loadSetter();
 	createTV();
-	laneNumbers();
+	//laneNumbers();
 
     /*
     var audio = document.createElement('audio');

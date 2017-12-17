@@ -4,7 +4,7 @@ function createBowlingAlly(width, length, height) {
     var laneWidth = 115;
     var guardHeight = 10;
     var laneAmount = 7;
-    var laneSeparation = (width - (laneWidth*laneAmount)) / laneAmount;
+    var laneSeparation = (width - (laneWidth * laneAmount)) / laneAmount;
     var thickness = 1;
     var spacersAmount = laneAmount + 1;
 
@@ -17,7 +17,7 @@ function createBowlingAlly(width, length, height) {
 
     for (var laneNum = 0; laneNum < laneAmount; laneNum++) {
         var bowlingLane = createBowlingLane(laneWidth, laneLength, guardHeight, thickness);
-        bowlingLane.position.set(length/2 - laneLength/2, 10, (-width/2 + laneSeparation/2 + laneWidth/2) + laneNum * (laneWidth + laneSeparation) );
+        bowlingLane.position.set(length / 2 - laneLength / 2, 10, (-width / 2 + laneSeparation / 2 + laneWidth / 2) + laneNum * (laneWidth + laneSeparation));
         base.add(bowlingLane);
     }
 
@@ -41,17 +41,19 @@ function createBowlingAlly(width, length, height) {
 
     for (var spaceNum = 0; spaceNum < spacersAmount; spaceNum++) {
         var space = new Physijs.BoxMesh(sideGeometry, sideMaterial, 0);
-        space.position.set(length/2 - laneLength/2, 10, (-width/2) + spaceNum * (laneWidth + laneSeparation));
+        space.position.set(length / 2 - laneLength / 2, 10, (-width / 2) + spaceNum * (laneWidth + laneSeparation));
         base.add(space);
 
         var column = new Physijs.BoxMesh(columnGeometry, columnMaterial, 0);
-        column.position.set(length/2, height/2, (-width/2) + spaceNum * (laneWidth + laneSeparation));
+        column.position.set(length / 2, height / 2, (-width / 2) + spaceNum * (laneWidth + laneSeparation));
         base.add(column);
     }
 
     var backFloor = createBack(width, backLength);
-    backFloor.position.set(-length/2 + backLength/2, 10, 0);
+    backFloor.position.set(-length / 2 + backLength / 2, 10, 0);
     base.add(backFloor);
+
+    createLaneNumbers();
 
     return base;
 }
@@ -206,11 +208,11 @@ function createCollectionBox(width, depth, height) {
     boxBottom.add(boxBack);
 
     var boxLeft = new Physijs.BoxMesh(new THREE.BoxGeometry(depth, height, 1), collectBoxMaterial, 0);
-    boxLeft.position.set(0, height / 2, -width / 2 +0.5);
+    boxLeft.position.set(0, height / 2, -width / 2 + 0.5);
     boxBottom.add(boxLeft);
 
     var boxRight = new Physijs.BoxMesh(new THREE.BoxGeometry(depth, height, 1), collectBoxMaterial, 0);
-    boxRight.position.set(0, height / 2, width / 2 -0.5);
+    boxRight.position.set(0, height / 2, width / 2 - 0.5);
     boxBottom.add(boxRight);
 
     return boxBottom;
@@ -236,24 +238,24 @@ function createEnclosing(width, length, height) {
     var sideWallMaterial = new THREE.MeshLambertMaterial({map: wallTexture});
 
     var leftWall = new Physijs.BoxMesh(new THREE.BoxGeometry(length, height, 1), sideWallMaterial);
-    leftWall.position.set(0, -height/2, -width/2);
+    leftWall.position.set(0, -height / 2, -width / 2);
     top.add(leftWall);
 
     var rightWall = new Physijs.BoxMesh(new THREE.BoxGeometry(length, height, 1), sideWallMaterial);
-    rightWall.position.set(0, -height/2, width/2);
+    rightWall.position.set(0, -height / 2, width / 2);
     top.add(rightWall);
 
     var frontPanelTexture = new THREE.TextureLoader().load("textures/109.jpg");
-    var frontPanelMaterial = new THREE.MeshBasicMaterial({ map: frontPanelTexture });
+    var frontPanelMaterial = new THREE.MeshBasicMaterial({map: frontPanelTexture});
     var frontPanel = new THREE.Mesh(new THREE.BoxGeometry(1, frontPanelHeight, width), frontPanelMaterial);
-    frontPanel.position.set(length/2 - frontPanelDisplacement, -height + frontPanelHeightFromBase + frontPanelHeight/2, 0);
+    frontPanel.position.set(length / 2 - frontPanelDisplacement, -height + frontPanelHeightFromBase + frontPanelHeight / 2, 0);
     top.add(frontPanel);
 
     var frontUpperPanelTexture = new THREE.TextureLoader().load("textures/space.jpg");
-    var frontUpperPanelMaterial = new THREE.MeshBasicMaterial({ map: frontUpperPanelTexture });
+    var frontUpperPanelMaterial = new THREE.MeshBasicMaterial({map: frontUpperPanelTexture});
     var frontUpperPanel = new THREE.Mesh(new THREE.BoxGeometry(1, 300, width), frontUpperPanelMaterial);
-    frontUpperPanel.position.set(length/2 - frontPanelDisplacement - 100, -50, 0);
-    frontUpperPanel.rotation.z = Math.PI/3;
+    frontUpperPanel.position.set(length / 2 - frontPanelDisplacement - 100, -50, 0);
+    frontUpperPanel.rotation.z = Math.PI / 3;
     top.add(frontUpperPanel);
 
     return top;
@@ -294,71 +296,72 @@ function loadSetter() {
 }
 
 function createTV() {
-	var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
-        map:THREE.ImageUtils.loadTexture('textures/TV.jpg')
+    var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
+        map: THREE.ImageUtils.loadTexture('textures/TV.jpg')
     });
     img.map.needsUpdate = true; //ADDED
 
     // plane
-    var plane = new THREE.Mesh(new THREE.PlaneGeometry(80, 35),img);
+    var plane = new THREE.Mesh(new THREE.PlaneGeometry(80, 35), img);
     plane.overdraw = true;
-	plane.position.y = 110;
-	plane.position.x = -60;
-	plane.rotation.y = (-Math.PI / 2);
+    plane.position.y = 110;
+    plane.position.x = -60;
+    plane.rotation.y = (-Math.PI / 2);
     scene.add(plane);
 
-	video = document.createElement( 'video' );
+    video = document.createElement('video');
 
-	video.src = "videos/doublestrike.mp4";
-	video.load();
-	video.play();
-	
-	videoImage = document.createElement( 'canvas' );
-	videoImage.width = 400;
-	videoImage.height = 250;
-	videoImageContext = videoImage.getContext( '2d' );
-	videoImageContext.fillStyle = '#ffffff';
-	videoImageContext.fillRect( 0, 0, videoImage.width, videoImage.height );
-	videoTexture = new THREE.Texture( videoImage );
-	videoTexture.minFilter = THREE.LinearFilter;
-	videoTexture.magFilter = THREE.LinearFilter;
-	
-	var movieMaterial = new THREE.MeshBasicMaterial( { map: videoTexture, overdraw: true, side:THREE.DoubleSide } );
-	var movieGeometry = new THREE.PlaneGeometry( 75, 30, 4, 4 );
-	var movieScreen = new THREE.Mesh( movieGeometry, movieMaterial );
-	movieScreen.position.set(-61,110,0);
-	movieScreen.rotation.y = (-Math.PI / 2);
-	scene.add(movieScreen);
+    video.src = "videos/doublestrike.mp4";
+    video.load();
+    video.play();
+
+    videoImage = document.createElement('canvas');
+    videoImage.width = 400;
+    videoImage.height = 250;
+    videoImageContext = videoImage.getContext('2d');
+    videoImageContext.fillStyle = '#ffffff';
+    videoImageContext.fillRect(0, 0, videoImage.width, videoImage.height);
+    videoTexture = new THREE.Texture(videoImage);
+    videoTexture.minFilter = THREE.LinearFilter;
+    videoTexture.magFilter = THREE.LinearFilter;
+
+    var movieMaterial = new THREE.MeshBasicMaterial({map: videoTexture, overdraw: true, side: THREE.DoubleSide});
+    var movieGeometry = new THREE.PlaneGeometry(75, 30, 4, 4);
+    var movieScreen = new THREE.Mesh(movieGeometry, movieMaterial);
+    movieScreen.position.set(-61, 110, 0);
+    movieScreen.rotation.y = (-Math.PI / 2);
+    scene.add(movieScreen);
 }
 
-function laneNumbers() {
-		var loader = new THREE.FontLoader();
-		loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
-			var xMid, text;
-			var textShape = new THREE.BufferGeometry();
-			var color = 0xFFFFFF;
-			var matLite = new THREE.MeshBasicMaterial( {
-				color: color,
-				transparent: true,
-				opacity: 0.8,
-				side: THREE.DoubleSide
-			} );
-			var message = "4";
 
-			var shapes = font.generateShapes( message, 20, 2 );
-			var geometry = new THREE.ShapeGeometry( shapes );
-			geometry.computeBoundingBox();
+function createLaneNumbers() {
+    var loader = new THREE.FontLoader();
+    loader.load('fonts/helvetiker_regular.typeface.json', function (font) {
+        for (var laneNum = 1; laneNum <= 7; laneNum++) {
+            var xMid, text;
+            var textShape = new THREE.BufferGeometry();
+            var color = 0xFFFFFF;
+            var matLite = new THREE.MeshBasicMaterial({
+                color: color,
+                transparent: true,
+                opacity: 0.8,
+                side: THREE.DoubleSide
+            });
+            var message = "" + laneNum;
 
-			xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
+            var shapes = font.generateShapes(message, 18, 2);
+            var geometry = new THREE.ShapeGeometry(shapes);
+            geometry.computeBoundingBox();
 
-			textShape.fromGeometry( geometry );
-			text = new THREE.Mesh( textShape, matLite );
-			text.rotation.y = (-Math.PI / 2);
-			text.position.x = 24;
-			text.position.z = -80;
-			text.position.y = 30;
-			scene.add( text );
-		});
+            xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+
+            textShape.fromGeometry(geometry);
+            text = new THREE.Mesh(textShape, matLite);
+            text.rotation.y = (-Math.PI / 2);
+            text.position.set(1000/2 - 476, 30, (-1000 / 2) - 3 + (laneNum-1) * (115 + 28));
+            scene.add(text);
+        }
+    });
 }
 
 
