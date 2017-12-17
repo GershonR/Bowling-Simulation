@@ -158,7 +158,7 @@ function loadPins() {
             var width = 1000;
             var laneWidth = 115;
             var laneAmount = 7;
-            var laneSeparation = (width - (laneWidth*laneAmount)) / laneAmount;
+            var laneSeparation = (width - (laneWidth * laneAmount)) / laneAmount;
 
             for (var laneNum = 0; laneNum < laneAmount; laneNum++) {
                 if (laneNum !== 3) {
@@ -172,107 +172,38 @@ function loadPins() {
 }
 
 function createPins(geometry, materialsL) {
-    var shape;
-    var shapeFront;
-
-    shapeFront = new Physijs.ConvexMesh(
+    var middlePin = new Physijs.ConvexMesh(
         geometry,
         materialsL,
         2
     );
-    shapeFront.position.y = 0;
-    shapeFront.position.z = 0;
-    shapeFront.position.x = 0;
-    shapeFront.castShadow = true;
-    shapeFront.collided = false;
-    shapeFront.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-        if (other_object.name == "bottom" && !shapeFront.collided) {
-            collisions++;
-            shapeFront.collided = true;
-        }
-    });
+    var pin;
 
     for (x = 0; x < 4; x++) {
-        shape = new Physijs.ConvexMesh(
-            geometry,
-            materialsL,
-            2
-        );
-        shape.position.y = 0;
-        shape.position.z = -26 + 18 * x;
-        shape.position.x = 15;
-        shape.castShadow = true;
-        shape.collided = false;
-        shape.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-            if (other_object.name == "bottom" && !shape.collided) {
-                collisions++;
-                shape.collided = true;
-            }
-        });
-        shapeFront.add(shape);
+        pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
+        pin.position.set(15, 0, -26 + 18 * x);
+        middlePin.add(pin);
     }
+
     for (x = 0; x < 3; x++) {
         if (x !== 1) {
-            shape = new Physijs.ConvexMesh(
-                geometry,
-                materialsL,
-                2
-            );
-            shape.position.y = 0;
-            shape.position.z = -18 + 18 * x;
-            shape.position.x = 0;
-            shape.castShadow = true;
-            shape.collided = false;
-            shape.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-                if (other_object.name == "bottom" && !shape.collided) {
-                    collisions++;
-                    shape.collided = true;
-                }
-            });
-            shapeFront.add(shape);
+            pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
+            pin.position.set(0, 0, -18 + 18 * x);
+            middlePin.add(pin);
         }
     }
 
     for (x = 0; x < 2; x++) {
-        shape = new Physijs.ConvexMesh(
-            geometry,
-            materialsL,
-            2
-        );
-        shape.position.y = 0;
-        shape.position.z = -10 + 18 * x;
-        shape.position.x = -15;
-        shape.castShadow = true;
-        shape.collided = false;
-        shape.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-            if (other_object.name == "bottom" && !shape.collided) {
-                collisions++;
-                shape.collided = true;
-            }
-        });
-        shapeFront.add(shape);
+        pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
+        pin.position.set(-15, 0, -10 + 18 * x);
+        middlePin.add(pin);
     }
 
-    shape = new Physijs.ConvexMesh(
-        geometry,
-        materialsL,
-        2
-    );
+    pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
+    pin.position.set(-32, 0, 0);
+    middlePin.add(pin);
 
-    shape.position.y = 0;
-    shape.position.z = 0;
-    shape.position.x = -32;
-    shape.castShadow = true;
-    shape.collided = false;
-    shape.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-        if (other_object.name == "bottom" && !shape.collided) {
-            collisions++;
-            shape.collided = true;
-        }
-    });
-    shapeFront.add(shape);
-
-    return shapeFront;
+    return middlePin;
 }
 
 
