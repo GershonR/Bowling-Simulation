@@ -1,7 +1,58 @@
-function createBowlingAlly() {
+function createBowlingAlly(width, length, height) {
+    var laneLength = 600;
+    var backLength = length - laneLength;
+    var laneWidth = 115;
+    var guardHeight = 10;
+    var laneAmount = 7;
+    var laneSeparation = (width - (laneWidth*laneAmount)) / laneAmount;
 
+    var baseMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
+    var baseGeometry = new THREE.BoxGeometry(length, 0.25, width);
+    var base = new Physijs.BoxMesh(baseGeometry, baseMaterial, 0);
+
+
+    for (var laneNum = 0; laneNum < laneAmount; laneNum++) {
+        var bowlingLane = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
+        bowlingLane.position.set(-length/2 + laneLength/2, 10, (-width/2 + laneSeparation/2 + laneWidth/2) + laneNum * (laneWidth + laneSeparation) );
+        base.add(bowlingLane);
+    }
+
+    /*
+    var bowlingLane = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
+    bowlingLane.position.set(-laneLength / 2 + 25, 0, 0);
+    scene.add(bowlingLane);
+
+    var bowlingLaneL1 = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
+    bowlingLaneL1.position.set(-laneLength / 2 + 25, 0, -(laneWidth + laneSeparation));
+    scene.add(bowlingLaneL1);
+
+    var bowlingLaneL2 = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
+    bowlingLaneL2.position.set(-laneLength / 2 + 25, 0, -(laneWidth + laneSeparation) * 2);
+    scene.add(bowlingLaneL2);
+
+    var bowlingLaneL3 = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
+    bowlingLaneL3.position.set(-laneLength / 2 + 25, 0, -(laneWidth + laneSeparation) * 3);
+    scene.add(bowlingLaneL3);
+
+    var bowlingLaneR1 = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
+    bowlingLaneR1.position.set(-laneLength / 2 + 25, 0, (laneWidth + laneSeparation));
+    scene.add(bowlingLaneR1);
+
+    var bowlingLaneR2 = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
+    bowlingLaneR2.position.set(-laneLength / 2 + 25, 0, (laneWidth + laneSeparation) * 2);
+    scene.add(bowlingLaneR2);
+
+    var bowlingLaneR3 = createBowlingLane(laneWidth, laneLength, guardHeight, laneSeparation);
+    bowlingLaneR3.position.set(-laneLength / 2 + 25, 0, (laneWidth + laneSeparation) * 3);
+    scene.add(bowlingLaneR3);
+    */
+
+    var backFloor = createBack(1000, 400);
+    backFloor.position.set(-length/2 + backLength/2, 0, 0);
+    base.add(backFloor);
+
+    return base;
 }
-
 
 function createBowlingLane(width, length, guardHeight, sideWidth) {
     var gutterAndRailThickness = 1;

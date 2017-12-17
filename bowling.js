@@ -114,50 +114,15 @@ function fillScene() {
     // var axes = new THREE.AxisHelper(150);
     // axes.position.y = 1;
     // scene.add(axes);
-//var x = -1020;
+    //var x = -1020;
     //var z = 100;
     //var y = 13;
 
     */
 
-    var laneLength = 600;
-    var laneWidth = 115;
-    var guardHeight = 10;
-    var space = 25;
-
-    var bowlingLane = createBowlingLane(laneWidth, laneLength, guardHeight, space);
-    bowlingLane.position.set(-laneLength / 2 + 25, 0, 0);
-    scene.add(bowlingLane);
-
-    var bowlingLaneL1 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
-    bowlingLaneL1.position.set(-laneLength / 2 + 25, 0, -(laneWidth + space));
-    scene.add(bowlingLaneL1);
-
-    var bowlingLaneL2 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
-    bowlingLaneL2.position.set(-laneLength / 2 + 25, 0, -(laneWidth + space) * 2);
-    scene.add(bowlingLaneL2);
-
-    var bowlingLaneL3 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
-    bowlingLaneL3.position.set(-laneLength / 2 + 25, 0, -(laneWidth + space) * 3);
-    scene.add(bowlingLaneL3);
-
-    var bowlingLaneR1 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
-    bowlingLaneR1.position.set(-laneLength / 2 + 25, 0, (laneWidth + space));
-    scene.add(bowlingLaneR1);
-
-    var bowlingLaneR2 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
-    bowlingLaneR2.position.set(-laneLength / 2 + 25, 0, (laneWidth + space) * 2);
-    scene.add(bowlingLaneR2);
-
-    var bowlingLaneR3 = createBowlingLane(laneWidth, laneLength, guardHeight, space);
-    bowlingLaneR3.position.set(-laneLength / 2 + 25, 0, (laneWidth + space) * 3);
-    scene.add(bowlingLaneR3);
-
-    //github not working?
-    var backFloor = createBack(1000, 400);
-    backFloor.position.set(-775, 0, 0);
-    scene.add(backFloor);
-
+    var bowlingAlly = createBowlingAlly(1000, 1000, 500);
+    bowlingAlly.position.set(-75, 0, 0);
+    scene.add(bowlingAlly);
 
     //loadFloor();
     loadModels();
@@ -172,7 +137,7 @@ function fillScene() {
     loadSetter();
 
 
-    var audio = document.createElement( 'audio' );
+    var audio = document.createElement('audio');
     audio.src = "http://www.moviewavs.com/0053148414/MP3S/Movies/Big_Lebowski/bowling.mp3\n";
     audio.load(); // must call after setting/changing source
     audio.play();
@@ -267,66 +232,67 @@ function render() {
 }
 
 
+document.addEventListener('keydown', function (ev) {
+    switch (ev.keyCode) {
+        case 37: // left
+            //ball.position.z -= 3;
+            //ball.setLinearVelocity(new THREE.Vector3(0, 0, -300));
+            if (ballSet.position.z > -24) {
+                ballSet.translateZ(-2);
+            }
+            //ball.__dirtyPosition = true;
+            break;
 
-document.addEventListener('keydown', function( ev ) {
-	switch ( ev.keyCode ) {
-		case 37: // left
-			//ball.position.z -= 3;
-			//ball.setLinearVelocity(new THREE.Vector3(0, 0, -300));
-			if(ballSet.position.z > -24) {
-			ballSet.translateZ(-2);
-			}
-		    //ball.__dirtyPosition = true;
-			break;
+        case 38: // forward
+            //ball.position.x += 3;
+            //ball.__dirtyPosition = true;
+            ball.setLinearVelocity(new THREE.Vector3(200, 0, 50 * -arrow.rotation.z));
+            stopArrow = true;
+            break;
 
-		case 38: // forward
-			//ball.position.x += 3;
-		    //ball.__dirtyPosition = true;
-			ball.setLinearVelocity(new THREE.Vector3(200, 0, 50 * -arrow.rotation.z));
-			stopArrow = true;
-			break;
+        case 39: // right
+            //ball.position.z += 3;
+            //ball.__dirtyPosition = true;
+            //ball.setLinearVelocity(new THREE.Vector3(0, 0, 300));
+            if (ballSet.position.z < 24) {
+                ballSet.translateZ(2);
+            }
+            break;
 
-		case 39: // right
-			//ball.position.z += 3;
-		    //ball.__dirtyPosition = true;
-			//ball.setLinearVelocity(new THREE.Vector3(0, 0, 300));
-			if(ballSet.position.z < 24) {
-			ballSet.translateZ(2);
-			}
-			break;
+        case 40: // back
+            //drawPower();
+            break;
 
-		case 40: // back
-			//drawPower();
-			break;
+        case 32: // space
+            if (!addedArrow) {
+                ball.position.y = ballSet.position.y;
+                ball.position.x = ballSet.position.x;
+                ball.position.z = ballSet.position.z;
+                scene.add(ball);
+                scene.remove(ballSet);
+                setTimeout(function () {
+                    drawArrow();
+                }, 500);
+                return;
+            }
+            if (glowing) {
+                stopPower = true;
+            }
 
-		case 32: // space
-			if(!addedArrow) {
-			    ball.position.y = ballSet.position.y;
-			    ball.position.x = ballSet.position.x;
-			    ball.position.z = ballSet.position.z;
-			    scene.add(ball);
-			    scene.remove(ballSet);
-				setTimeout(function() { drawArrow(); }, 500);
-				return;
-			}
-			if(glowing) {
-				stopPower = true;
-			}
+            if (!stopPower) {
+                drawPower();
+                return;
+            }
+            if (stopPower) {
+                ball.setLinearVelocity(new THREE.Vector3(power * 2, 0, 70 * -arrow.rotation.z));
+            }
+            break;
 
-			if(!stopPower) {
-				drawPower();
-				return;
-			}
-			if(stopPower) {
-				ball.setLinearVelocity(new THREE.Vector3(power * 2, 0, 70 * -arrow.rotation.z));
-			}
-			break;
-
-		case 67: // c
-			scene.remove(clearerPlane);
-			dropClearer();
-			break;
-	}
+        case 67: // c
+            scene.remove(clearerPlane);
+            dropClearer();
+            break;
+    }
 });
 
 
