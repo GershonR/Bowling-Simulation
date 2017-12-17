@@ -148,7 +148,6 @@ function animate() {
 
     if (rolling && ball.position.y < -10) {
         resetPins();
-        drawBowlingBall();
         cameraNeedsReset = true;
         rolling = false;
     }
