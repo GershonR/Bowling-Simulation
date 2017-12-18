@@ -41,8 +41,7 @@ function loadBall() {
     ball.name = "ball";
 
 
-    var boxgeometry = new THREE.BoxGeometry(7, 10, 7);
-    boxgeometry.translate(0, 2, 0);
+
 }
 
 function loadPins() {
@@ -77,38 +76,59 @@ function loadPins() {
             for (var i = 0; i < geometry.faces.length; i++) {
                 geometry.faces[i].materialIndex = materialsL.length - 1;
             }
-            //geometry.merge(boxgeometry);
+            var boxGeometry = new THREE.BoxGeometry(2, 2, 2);
+            ///boxGeometry.translate(0, 2, 0);
+            //geometry.merge(boxGeometry);
+            var upBoxMaterial = new THREE.MeshBasicMaterial({color: 0x000000});
+            //var box = Physijs.BoxMesh(boxGeometry, new THREE.MeshBasicMaterial());
+            //box.position.set(0, 10, 0);
+
             pinsModel = geometry;
             pinMaterial = materialsL;
 
 
             var pin;
+            var box;
+            var grav = 1;
+            var height = 20;
 
             for (x = 0; x < 4; x++) {
-                pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
-                pin.position.set(15, 0, -26 + 18 * x);
-                pin.name = "pin";
-                scene.add(pin);
+                pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
+                pin.position.set(0, -height, 0);
+                box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, grav);
+                box.name = "pin";
+                box.position.set(15, height, -26 + 18 * x);
+                box.add(pin);
+                scene.add(box);
             }
 
             for (x = 0; x < 3; x++) {
-                pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
-                pin.position.set(0, 0, -18 + 18 * x);
-                pin.name = "pin";
-                scene.add(pin);
+                pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
+                pin.position.set(0, -height, 0);
+                box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, grav);
+                box.name = "pin";
+                box.position.set(0, height, -18 + 18 * x);
+                box.add(pin);
+                scene.add(box);
             }
 
             for (x = 0; x < 2; x++) {
-                pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
-                pin.position.set(-15, 0, -10 + 18 * x);
-                pin.name = "pin";
-                scene.add(pin);
+                pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
+                pin.position.set(0, -height, 0);
+                box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, grav);
+                box.name = "pin";
+                box.position.set(-15, height, -10 + 18 * x);
+                box.add(pin);
+                scene.add(box);
             }
 
-            pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
-            pin.position.set(-32, 0, 0);
-            pin.name = "pin";
-            scene.add(pin);
+            pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
+            pin.position.set(0, -height, 0);
+            box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, grav);
+            box.name = "pin";
+            box.position.set(-32, height, 0);
+            box.add(pin);
+            scene.add(box);
 
             var width = 1000;
             var laneWidth = 115;
@@ -146,32 +166,52 @@ function resetPins() {
     }
 
    // pins.clear();
+    var boxGeometry = new THREE.BoxGeometry(2, 2, 2);
+    ///boxGeometry.translate(0, 2, 0);
+    //geometry.merge(boxGeometry);
+    var upBoxMaterial = new THREE.MeshBasicMaterial({color: 0x000000});
+    var pin;
+    var box;
+    var grav = 1;
+    var height = 20;
 
     for (x = 0; x < 4; x++) {
-        pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
-        pin.position.set(15, 0, -26 + 18 * x);
-        pin.name = "pin";
-        scene.add(pin);
+        pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
+        pin.position.set(0, -height, 0);
+        box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, grav);
+        box.name = "pin";
+        box.position.set(15, height, -26 + 18 * x);
+        box.add(pin);
+        scene.add(box);
     }
 
     for (x = 0; x < 3; x++) {
-        pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
-        pin.position.set(0, 0, -18 + 18 * x);
-        pin.name = "pin";
-        scene.add(pin);
+        pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
+        pin.position.set(0, -height, 0);
+        box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, grav);
+        box.name = "pin";
+        box.position.set(0, height, -18 + 18 * x);
+        box.add(pin);
+        scene.add(box);
     }
 
     for (x = 0; x < 2; x++) {
-        pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
-        pin.position.set(-15, 0, -10 + 18 * x);
-        pin.name = "pin";
-        scene.add(pin);
+        pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
+        pin.position.set(0, -height, 0);
+        box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, grav);
+        box.name = "pin";
+        box.position.set(-15, height, -10 + 18 * x);
+        box.add(pin);
+        scene.add(box);
     }
 
-    pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
-    pin.position.set(-32, 0, 0);
-    pin.name = "pin";
-    scene.add(pin);
+    pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
+    pin.position.set(0, -height, 0);
+    box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, grav);
+    box.name = "pin";
+    box.position.set(-32, height, 0);
+    box.add(pin);
+    scene.add(box);
 }
 
 function createPins(geometry, materialsL) {
