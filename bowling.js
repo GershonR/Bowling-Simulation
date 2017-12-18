@@ -27,6 +27,7 @@ var audioHit;
 var pins = new Array();
 var tries = 1;
 var video;
+var delta = 0;
 
 function fillScene() {
     scene = new Physijs.Scene;
@@ -65,6 +66,22 @@ function fillScene() {
     audioHit = document.createElement('audio');
     audioHit.src = "textures/hit.mp3";
     audioHit.load(); // must call after setting/changing source
+	
+	smokeTexture = THREE.ImageUtils.loadTexture('textures/smoke.png');
+    smokeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, map: smokeTexture, transparent: true, opacity: 0.5});
+    smokeGeo = new THREE.PlaneGeometry(120,120); // SIZE OF PARTICLES BIGGER -> PLANES MORE OBVIOUS
+    smokeParticles = [];
+
+
+    for (p = 0; p < 150; p++) { //HOW MANY PARTICLES
+        var particle = new THREE.Mesh(smokeGeo,smokeMaterial);
+        particle.position.set(Math.random()*300-250,Math.random()*100 + 30,Math.random()*850-400); // PARTICLE SPREAD X, Y, Z
+        particle.rotation.z = Math.random() * 360;
+		particle.rotation.y = -Math.PI / 2;
+        scene.add(particle);
+        smokeParticles.push(particle);
+		
+    }
 }
 
 function init() {
@@ -91,6 +108,14 @@ function init() {
     cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
     cameraControls.target.set(0, 0, 0);
     cameraControls.noKeys = true;
+
+}
+
+function evolveSmoke() {
+    var sp = smokeParticles.length;
+    while(sp--) {
+        smokeParticles[sp].rotation.z += (delta * 0.2);
+    }
 }
 
 function addToDOM() {
@@ -111,7 +136,7 @@ function addToDOM() {
 function animate() {
     requestAnimationFrame(animate);
     keyboard.update();
-
+	evolveSmoke();
 
 
     if (keyboard.down("R")) {
@@ -195,9 +220,8 @@ function render() {
 
     scene.simulate();  //previously (undefined, 2);
 
-    var delta = clock.getDelta();
+    delta = clock.getDelta();
     cameraControls.update(delta);
-
     renderer.render(scene, camera);
 	
 	if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
