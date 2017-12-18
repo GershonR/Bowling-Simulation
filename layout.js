@@ -54,7 +54,7 @@ function createBowlingAlly(width, length, height) {
     base.add(backFloor);
 
     createLaneNumbers();
-
+	base.castShadow = true;
     return base;
 }
 
@@ -78,11 +78,14 @@ function createBowlingLane(width, length, guardHeight, gutterAndRailThickness) {
 
     var middleLight = new THREE.SpotLight(0xffffff, 0.5, collectionBoxHeight * 2, Math.PI);
     middleLight.position.set(0, collectionBoxHeight / 2, 0);
-    laneFloor.add(middleLight);
+	middleLight.castShadow = true;
 
+    laneFloor.add(middleLight);
+	
     var pinLight = new THREE.SpotLight(0xffffff, 1, collectionBoxHeight * 2, Math.PI * 3 / 4);
     pinLight.position.set(length / 3, collectionBoxHeight, 0);
     pinLight.rotation.y = Math.PI / 4;
+	pinLight.castShadow = true;
     laneFloor.add(pinLight);
 
     return laneFloor;
@@ -99,7 +102,7 @@ function createLaneBase(width, length, thickness) {
 
     var floorGeometry = new THREE.BoxGeometry(length, thickness, width - (gutterSize * 2) + thickness * 2);
     var floor = new Physijs.BoxMesh(floorGeometry, floorMaterial, 0);
-
+	floor.recieveShadow = true;
     var gutterLeft = createGutter(length, gutterSize, thickness);
     gutterLeft.position.z = -(width / 2 - gutterSize / 2);
     floor.add(gutterLeft);
@@ -214,7 +217,7 @@ function createCollectionBox(width, depth, height) {
     var boxRight = new Physijs.BoxMesh(new THREE.BoxGeometry(depth, height, 1), collectBoxMaterial, 0);
     boxRight.position.set(0, height / 2, width / 2 - 0.5);
     boxBottom.add(boxRight);
-
+	boxBottom.recieveShadow = true;
     return boxBottom;
 }
 

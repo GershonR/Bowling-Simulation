@@ -76,7 +76,7 @@ function fillScene() {
     for (p = 0; p < 25; p++) { //HOW MANY PARTICLES
         var particle = new THREE.Mesh(smokeGeo,smokeMaterial);
         particle.position.set(Math.random()*100-55,Math.random()*100 + 15,Math.random()*950-500); // PARTICLE SPREAD X, Y, Z
-        particle.rotation.z = Math.random() * 360;
+		particle.rotation.z = Math.random() * 360;
 		particle.rotation.y = -Math.PI / 2;
         scene.add(particle);
         smokeParticles.push(particle);
@@ -97,6 +97,9 @@ function init() {
     renderer.gammaInput = true;
     renderer.gammaOutput = true;
     renderer.setSize(canvasWidth, canvasHeight);
+	renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+	renderer.shadowMapDebug = true;
     //changes to make background black
     renderer.setClearColor(0x000000, 1.0);
     //renderer.setClearColor( 0xAAAAAA, 1.0 ); //old color

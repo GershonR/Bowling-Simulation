@@ -39,6 +39,7 @@ function loadBall() {
     );
     ball.collided = false;
     ball.name = "ball";
+	ball.castShadow = true;
 
 
 
@@ -119,6 +120,7 @@ function loadPins() {
                 box.name = "pin";
                 box.position.set(-15, height, -10 + 18 * x);
                 box.add(pin);
+				box.castShadow = true;
                 scene.add(box);
             }
 
@@ -128,6 +130,7 @@ function loadPins() {
             box.name = "pin";
             box.position.set(-32, height, 0);
             box.add(pin);
+			box.castShadow = true;
             scene.add(box);
 
             var width = 1000;
