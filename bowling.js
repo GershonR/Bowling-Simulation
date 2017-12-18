@@ -67,15 +67,15 @@ function fillScene() {
     audioHit.src = "textures/hit.mp3";
     audioHit.load(); // must call after setting/changing source
 	
-	smokeTexture = THREE.ImageUtils.loadTexture('textures/smoke.png');
-    smokeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, map: smokeTexture, transparent: true, opacity: 0.5});
-    smokeGeo = new THREE.PlaneGeometry(120,120); // SIZE OF PARTICLES BIGGER -> PLANES MORE OBVIOUS
+	smokeTexture = THREE.ImageUtils.loadTexture('textures/smokeparticle.png');
+    smokeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, map: smokeTexture, transparent: true, opacity: 0.4});
+    smokeGeo = new THREE.PlaneGeometry(60,60); // SIZE OF PARTICLES BIGGER -> PLANES MORE OBVIOUS
     smokeParticles = [];
 
 
-    for (p = 0; p < 150; p++) { //HOW MANY PARTICLES
+    for (p = 0; p < 200; p++) { //HOW MANY PARTICLES
         var particle = new THREE.Mesh(smokeGeo,smokeMaterial);
-        particle.position.set(Math.random()*300-250,Math.random()*100 + 30,Math.random()*850-400); // PARTICLE SPREAD X, Y, Z
+        particle.position.set(Math.random()*300-250,Math.random()*100 + 15,Math.random()*850-400); // PARTICLE SPREAD X, Y, Z
         particle.rotation.z = Math.random() * 360;
 		particle.rotation.y = -Math.PI / 2;
         scene.add(particle);
