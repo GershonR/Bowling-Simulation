@@ -281,7 +281,7 @@ function countPins() {
 
     for (var i in scene._objects) {
         if (scene._objects[i].name === "pin") {
-            if (scene._objects[i].position.y < 0 || scene._objects[i].rotation.x > 0.1 || scene._objects[i].rotation.z > 0.1) {
+            if (scene._objects[i].position.y < 18 || scene._objects[i].rotation.x > 0.1 || scene._objects[i].rotation.z > 0.1) {
                 score++;
             }
         }
