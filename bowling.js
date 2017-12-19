@@ -66,7 +66,8 @@ function fillScene() {
     audioHit = document.createElement('audio');
     audioHit.src = "textures/hit.mp3";
     audioHit.load(); // must call after setting/changing source
-	
+
+    /*
 	smokeTexture = THREE.ImageUtils.loadTexture('textures/smokeparticle.png');
     smokeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, map: smokeTexture, transparent: true, opacity: 0.4});
     smokeGeo = new THREE.PlaneGeometry(120,120); // SIZE OF PARTICLES BIGGER -> PLANES MORE OBVIOUS
@@ -82,6 +83,7 @@ function fillScene() {
         smokeParticles.push(particle);
 		
     }
+    */
 }
 
 function init() {
@@ -139,7 +141,7 @@ function addToDOM() {
 function animate() {
     requestAnimationFrame(animate);
     keyboard.update();
-	evolveSmoke();
+	//evolveSmoke();
 
 
     if (keyboard.down("R")) {
