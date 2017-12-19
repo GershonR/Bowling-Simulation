@@ -196,7 +196,8 @@ function animate() {
         scene.remove(ball);
         scene.add(ballSet);
         cameraNeedsReset = true;
-        rolling = false;
+		rolling = false;
+		document.getElementById("arrowKeys").style.display = 'block-inline';
 
     }
 
@@ -271,7 +272,10 @@ document.addEventListener('keydown', function (ev) {
             //drawPower();
             break;
 
-        case 32: // space
+		case 32: // space
+		
+			document.getElementById("arrowKeys").style.display = 'none';
+
             if (!addedArrow) {
                 ball.position.y = ballSet.position.y;
                 ball.position.x = ballSet.position.x;
