@@ -79,9 +79,8 @@ function createBowlingLane(width, length, guardHeight, gutterAndRailThickness) {
     var middleLight = new THREE.SpotLight(0xffffff, 0.5, collectionBoxHeight * 2, Math.PI);
     middleLight.position.set(0, collectionBoxHeight / 2, 0);
 	middleLight.castShadow = true;
-
     laneFloor.add(middleLight);
-	
+
     var pinLight = new THREE.SpotLight(0xffffff, 1, collectionBoxHeight * 2, Math.PI * 3 / 4);
     pinLight.position.set(length / 3, collectionBoxHeight, 0);
     pinLight.rotation.y = Math.PI / 4;

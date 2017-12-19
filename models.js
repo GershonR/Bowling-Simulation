@@ -1,45 +1,26 @@
 function loadBall() {
-    var redMaterial = new THREE.MeshLambertMaterial();
-    redMaterial.color.setHex(0xff3333);
+    var ballMaterial = new THREE.MeshPhongMaterial({color: 0xff3333});
+    var ballGeometry = new THREE.SphereGeometry(8, 32, 32);
 
-    // Ball
-    geometry = new THREE.SphereGeometry(8, 32, 32);
-
-
-    var subMaterial = new THREE.MeshPhongMaterial({color: 0x000000});
+    var subMaterial = new THREE.MeshBasicMaterial({color: 0x000000});
     var cylinderSubtract = new THREE.CylinderGeometry(1, 1, 10, 32);
     var hole1 = new THREE.Mesh(cylinderSubtract, subMaterial);
-    hole1.position.x = 0;
-    hole1.position.y = 10;
-    hole1.position.z = 0;
+    hole1.position.set(2, 6, 2);
     var hole2 = new THREE.Mesh(cylinderSubtract, subMaterial);
-    hole2.position.x = -5;
-    hole2.position.y = 10;
-    hole2.position.z = -2;
+    hole2.position.set(2, 6, -2);
     var hole3 = new THREE.Mesh(cylinderSubtract, subMaterial);
-    hole3.position.x = -5;
-    hole3.position.y = 10;
-    hole3.position.z = 2;
+    hole3.position.set(-2, 6, 0);
 
-    var result = new THREE.Mesh(geometry, subMaterial);
+    var result = new ThreeBSP(new THREE.Mesh(ballGeometry, subMaterial));
+    result = result.subtract(new ThreeBSP(hole1));
+    result = result.subtract(new ThreeBSP(hole2));
+    result = result.subtract(new ThreeBSP(hole3)).toMesh();
 
-    var ballSub = new ThreeBSP(result);
-    var subHole1 = new ThreeBSP(hole1);
-    var subHole2 = new ThreeBSP(hole2);
-    var subHole3 = new ThreeBSP(hole3);
-    var ballSub = ballSub.subtract(subHole1);
-    var ballSub = ballSub.subtract(subHole2);
-    var ballSub = ballSub.subtract(subHole3);
-    result = ballSub.toMesh();
-
-    ball = new Physijs.ConvexMesh(
-        result.geometry,
-        new THREE.MeshPhysicalMaterial({color: 0x000000, clearCoat: 1.0}),
-        15
-    );
-    ball.collided = false;
+    //set global ball
+    ball = new Physijs.ConvexMesh(result.geometry, ballMaterial, 15);
+    ball.rotation.z = Math.PI / 16;
     ball.name = "ball";
-	ball.castShadow = true;
+    ball.castShadow = true;
 }
 
 function loadPins() {
@@ -54,8 +35,6 @@ function loadPins() {
         objLoader.setMaterials(materials);
         objLoader.setPath('models/pins/');
         objLoader.load('Pin.obj', function (object) {
-            //object.position.y = 600;
-            //object.scale.set(0.2,0.2,0.2);
             object.updateMatrix();
             geometry = new THREE.Geometry();
             object.traverse(function (child) {
@@ -74,16 +53,11 @@ function loadPins() {
             for (var i = 0; i < geometry.faces.length; i++) {
                 geometry.faces[i].materialIndex = materialsL.length - 1;
             }
-            var boxGeometry = new THREE.BoxGeometry(2, 2, 2);
-            ///boxGeometry.translate(0, 2, 0);
-            //geometry.merge(boxGeometry);
-            var upBoxMaterial = new THREE.MeshBasicMaterial({color: 0x000000});
-            //var box = Physijs.BoxMesh(boxGeometry, new THREE.MeshBasicMaterial());
-            //box.position.set(0, 10, 0);
 
             pinsModel = geometry;
             pinMaterial = materialsL;
 
+            //create center pins
             resetPins();
 
             var width = 1000;
@@ -91,6 +65,7 @@ function loadPins() {
             var laneAmount = 7;
             var laneSeparation = (width - (laneWidth * laneAmount)) / laneAmount;
 
+            //create pins in other lanes for looks
             for (var laneNum = 0; laneNum < laneAmount; laneNum++) {
                 if (laneNum !== 3) {
                     var pins = createPins(geometry, materialsL);
@@ -105,7 +80,11 @@ function loadPins() {
 function resetPins() {
     var geometry = pinsModel;
     var materialsL = pinMaterial;
-    var pin;
+    var boxGeometry = new THREE.BoxGeometry(2, 2, 2);
+    var upBoxMaterial = new THREE.MeshBasicMaterial({color: 0x000000});
+    var box, pin;
+    var gravity = 3;
+    var height = 15;
 
     //remove old pins
     for (var i in scene._objects) {
@@ -114,17 +93,10 @@ function resetPins() {
         }
     }
 
-    var boxGeometry = new THREE.BoxGeometry(2, 2, 2);
-    var upBoxMaterial = new THREE.MeshBasicMaterial({color: 0x000000});
-    var pin;
-    var box;
-    var grav = 3;
-    var height = 15;
-
     for (x = 0; x < 4; x++) {
         pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
         pin.position.set(0, -height, 0);
-        box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, grav);
+        box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, gravity);
         box.name = "pin";
         box.position.set(15, height, -26 + 18 * x);
         box.add(pin);
@@ -134,7 +106,7 @@ function resetPins() {
     for (x = 0; x < 3; x++) {
         pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
         pin.position.set(0, -height, 0);
-        box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, grav);
+        box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, gravity);
         box.name = "pin";
         box.position.set(0, height, -18 + 18 * x);
         box.add(pin);
@@ -144,7 +116,7 @@ function resetPins() {
     for (x = 0; x < 2; x++) {
         pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
         pin.position.set(0, -height, 0);
-        box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, grav);
+        box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, gravity);
         box.name = "pin";
         box.position.set(-15, height, -10 + 18 * x);
         box.add(pin);
@@ -153,7 +125,7 @@ function resetPins() {
 
     pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
     pin.position.set(0, -height, 0);
-    box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, grav);
+    box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, gravity);
     box.name = "pin";
     box.position.set(-32, height, 0);
     box.add(pin);

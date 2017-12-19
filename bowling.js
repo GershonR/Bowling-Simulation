@@ -38,6 +38,10 @@ function fillScene() {
     bowlingAlly.position.set(-475, -10, 0);
     scene.add(bowlingAlly);
 
+    var ballLight = new THREE.SpotLight(0xffffff, 0.25, 60, Math.PI);
+    ballLight.position.set(-500, 50, 0);
+    scene.add(ballLight);
+
     loadBall();
     loadPins();
     drawBowlingBall();
