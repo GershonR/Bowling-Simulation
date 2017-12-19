@@ -114,8 +114,8 @@ function createLaneBase(width, length, thickness) {
     var floorGeometry = new THREE.BoxGeometry(length, thickness, width - (gutterSize * 2) + thickness * 2);
     var floor = new Physijs.BoxMesh(floorGeometry, floorMaterial, 0);
 	floor.receiveShadow = true;
+    var gutterLeft = createGutter(length, gutterSize, thickness);
 
-	var gutterLeft = createGutter(length, gutterSize, thickness);
     gutterLeft.position.z = -(width / 2 - gutterSize / 2);
     gutterLeft.receiveShadow = true;
     floor.add(gutterLeft);
@@ -231,7 +231,6 @@ function createCollectionBox(width, depth, height) {
     var boxRight = new Physijs.BoxMesh(new THREE.BoxGeometry(depth, height, 1), collectBoxMaterial, 0);
     boxRight.position.set(0, height / 2, width / 2 - 0.5);
     boxBottom.add(boxRight);
-	boxBottom.recieveShadow = true;
     return boxBottom;
 }
 
@@ -379,6 +378,37 @@ function createLaneNumbers() {
             scene.add(text);
         }
     });
+}
+
+function createScore() {
+	
+	    var loader = new THREE.FontLoader();
+			loader.load('fonts/helvetiker_regular.typeface.json', function (font) {
+            var xMid, text;
+            var textShape = new THREE.BufferGeometry();
+            var color = 0xFFFFFF;
+            var matLite = new THREE.MeshBasicMaterial({
+                color: color,
+                transparent: true,
+                opacity: 0.95,
+                side: THREE.DoubleSide
+            });
+            var message = "Score: " + points;
+
+            var shapes = font.generateShapes(message, 50, 5);
+            var geometry = new THREE.ShapeGeometry(shapes);
+            geometry.computeBoundingBox();
+
+            xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+
+            textShape.fromGeometry(geometry);
+            text = new THREE.Mesh(textShape, matLite);
+            text.rotation.y = (-Math.PI / 2);
+            text.position.set(-80, 30, -120);
+            scene.add(text);
+    });
+	
+	
 }
 
 

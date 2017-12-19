@@ -24,6 +24,7 @@ var audioHit;
 var tries = 1;
 var video;
 var delta = 0;
+var points = 0;
 
 function fillScene() {
     scene = new Physijs.Scene;
@@ -35,24 +36,26 @@ function fillScene() {
     bowlingAlly.position.set(-475, -10, 0);
     scene.add(bowlingAlly);
 
+
     var ballLight = new THREE.SpotLight(0xffffff, 4, 60, Math.PI/4);
     ballLight.position.set(-500, 300, 0);
-    //ballLight.castShadow = true;
+    ballLight.castShadow = true;
     //scene.add(ballLight.target);
     //scene.add(ballLight);
 
     //var spotLightHelper = new THREE.SpotLightHelper( ballLight );
     //scene.add( spotLightHelper );
 
-    //var pinLight = new THREE.SpotLight(0xffffff, 0.5, length, Math.PI/4, 0.5);
-    //pinLight.position.set(0, 300, 0);
+
+    var pinLight = new THREE.SpotLight(0xffffff, 0.5, length, Math.PI/4, 0.5);
+    pinLight.position.set(0, 300, 0);
     //pinLight.target = collectionBox;
-    //pinLight.castShadow = true;
+    pinLight.castShadow = true;
     //scene.add(pinLight);
 
-    //var light = new THREE.PointLight(0xffffff);
-    //light.position.set(-475, 300, 0);
-    //light.castShadow = true;
+    var light = new THREE.PointLight(0xffffff);
+    light.position.set(-475, 300, 0);
+    light.castShadow = true;
     //scene.add(light);
 
     loadBall();
@@ -63,6 +66,7 @@ function fillScene() {
     loadClearer();
     loadSetter();
 	createTV();
+	createScore();
 	//laneNumbers();
 
     /*
@@ -211,7 +215,9 @@ function animate() {
         scene.remove(ball);
         scene.add(ballSet);
         cameraNeedsReset = true;
-        rolling = false;
+		rolling = false;
+		document.getElementById("arrowKeys").style.display = 'block-inline';
+
     }
 
 
@@ -253,6 +259,7 @@ function render() {
 	}
 }
 
+
 document.addEventListener('keydown', function (ev) {
     switch (ev.keyCode) {
         case 37: // left
@@ -284,7 +291,10 @@ document.addEventListener('keydown', function (ev) {
             //drawPower();
             break;
 
-        case 32: // space
+		case 32: // space
+		
+			document.getElementById("arrowKeys").style.display = 'none';
+
             if (!addedArrow) {
                 ball.position.y = ballSet.position.y;
                 ball.position.x = ballSet.position.x;
@@ -319,6 +329,7 @@ document.addEventListener('keydown', function (ev) {
     }
 });
 
+
 function countPins() {
     var score = 0;
 
@@ -329,6 +340,7 @@ function countPins() {
             }
         }
     }
+
 
     alert(score);
 }

@@ -1,4 +1,5 @@
 function loadBall() {
+
     var ballMaterial = new THREE.MeshPhongMaterial({color: 0xff3333});
     var ballGeometry = new THREE.SphereGeometry(8, 32, 32);
 
