@@ -37,7 +37,7 @@ function createBowlingAlly(width, length, height) {
         map: columnTexture,
         clearCoat: 1.0
     });
-    var columnGeometry = new THREE.BoxGeometry(50, height, laneSeparation);
+    var columnGeometry = new THREE.BoxGeometry(thickness, height, laneSeparation);
 
     for (var spaceNum = 0; spaceNum < spacersAmount; spaceNum++) {
         var space = new Physijs.BoxMesh(sideGeometry, sideMaterial, 0);
@@ -405,7 +405,10 @@ function createScore() {
             text = new THREE.Mesh(textShape, matLite);
             text.rotation.y = (-Math.PI / 2);
             text.position.set(-80, 30, -120);
-            //scene.add(text);
+            scene.add(text);
+			setTimeout(function () {
+				scene.remove(text);
+			}, 3000);
     });
 	
 	

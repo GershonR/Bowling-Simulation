@@ -66,7 +66,6 @@ function fillScene() {
     loadClearer();
     loadSetter();
 	createTV();
-	createScore();
 	//laneNumbers();
 
     /*
@@ -198,7 +197,9 @@ function animate() {
     }
 
     if (rolling && ball.position.y < -10) {
-        countPins();
+		setTimeout(function () {
+            countPins();
+        }, 1000);
         if (tries < 3) {
             tries++;
         } else {
@@ -216,6 +217,7 @@ function animate() {
 
         var arrows = document.getElementById("arrowKeys");
         arrows.style.display = 'block';
+        points = 0;
     }
 
 
@@ -329,17 +331,15 @@ document.addEventListener('keydown', function (ev) {
 
 
 function countPins() {
-    var score = 0;
 
     for (var i in scene._objects) {
         if (scene._objects[i].name === "pin") {
             if (scene._objects[i].position.y < 15 || scene._objects[i].rotation.x > 0.1 || scene._objects[i].rotation.z > 0.1) {
-                score++;
+                points++;
             }
         }
     }
-
-
+	createScore();
     //alert(score);
 }
 
