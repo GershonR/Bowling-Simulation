@@ -24,7 +24,6 @@ var cameraNeedsReset = false;
 var pinsAndBallNeedReset = false;
 var audioRoll;
 var audioHit;
-var pins = new Array();
 var tries = 1;
 var video;
 var delta = 0;
@@ -113,7 +112,6 @@ function init() {
     cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
     cameraControls.target.set(0, 0, 0);
     cameraControls.noKeys = true;
-
 }
 
 function evolveSmoke() {

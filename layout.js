@@ -336,7 +336,6 @@ function createTV() {
     scene.add(movieScreen);
 }
 
-
 function createLaneNumbers() {
     var loader = new THREE.FontLoader();
     loader.load('fonts/helvetiker_regular.typeface.json', function (font) {
