@@ -27,6 +27,7 @@ var audioHit;
 var tries = 1;
 var video;
 var delta = 0;
+var points = 0;
 
 function fillScene() {
     scene = new Physijs.Scene;
@@ -50,6 +51,7 @@ function fillScene() {
     loadClearer();
     loadSetter();
 	createTV();
+	createScore();
 	//laneNumbers();
 
     /*
