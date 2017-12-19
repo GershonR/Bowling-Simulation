@@ -3,8 +3,8 @@ var size = 0;
 function drawPower() {
     var spriteMaterial = new THREE.SpriteMaterial(
         {
-            map: new THREE.ImageUtils.loadTexture('textures/glow2.png'),
-            useScreenCoordinates: false,
+            map: new THREE.TextureLoader().load('textures/glow2.png'),
+            //useScreenCoordinates: false,
             color: 0x8baaaa, transparent: false, blending: THREE.AdditiveBlending
         });
     sprite = new THREE.Sprite(spriteMaterial);

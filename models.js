@@ -42,11 +42,10 @@ function loadPins() {
                     geometry.merge(new THREE.Geometry().fromBufferGeometry(child.geometry));
                     geometry.mergeVertices();
                     materialsL.push(child.material);
-                    console.log("Mesh name: " + child.name);
-                    console.log("Texture: " + child.material);
-                    console.log("Mesh's geometry has " + geometry.vertices.length + " vertices.");
-                    console.log("Mesh's geometry has " + geometry.faces.length + " faces.");
-                    console.log("");
+                    //console.log("Mesh name: " + child.name);
+                    //console.log("Texture: " + child.material);
+                    //console.log("Mesh's geometry has " + geometry.vertices.length + " vertices.");
+                    //console.log("Mesh's geometry has " + geometry.faces.length + " faces.");
                 }
             });
             //set the material index of each face so a merge knows which material to apply
@@ -93,9 +92,10 @@ function resetPins() {
         }
     }
 
-    for (x = 0; x < 4; x++) {
+    for (var x = 0; x < 4; x++) {
         pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
         pin.position.set(0, -height, 0);
+        pin.castShadow = true;
         box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, gravity);
         box.name = "pin";
         box.position.set(15, height, -26 + 18 * x);
@@ -103,9 +103,10 @@ function resetPins() {
         scene.add(box);
     }
 
-    for (x = 0; x < 3; x++) {
+    for (var x = 0; x < 3; x++) {
         pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
         pin.position.set(0, -height, 0);
+        pin.castShadow = true;
         box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, gravity);
         box.name = "pin";
         box.position.set(0, height, -18 + 18 * x);
@@ -113,9 +114,10 @@ function resetPins() {
         scene.add(box);
     }
 
-    for (x = 0; x < 2; x++) {
+    for (var x = 0; x < 2; x++) {
         pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
         pin.position.set(0, -height, 0);
+        pin.castShadow = true;
         box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, gravity);
         box.name = "pin";
         box.position.set(-15, height, -10 + 18 * x);
@@ -125,6 +127,7 @@ function resetPins() {
 
     pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
     pin.position.set(0, -height, 0);
+    pin.castShadow = true;
     box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, gravity);
     box.name = "pin";
     box.position.set(-32, height, 0);
@@ -136,28 +139,32 @@ function createPins(geometry, materialsL) {
     var middlePin = new Physijs.ConvexMesh(geometry, materialsL, 2);
     var pin;
 
-    for (x = 0; x < 4; x++) {
+    for (var x = 0; x < 4; x++) {
         pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
         pin.position.set(15, 0, -26 + 18 * x);
+        pin.castShadow = true;
         middlePin.add(pin);
     }
 
-    for (x = 0; x < 3; x++) {
+    for (var x = 0; x < 3; x++) {
         if (x !== 1) {
             pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
+            pin.castShadow = true;
             pin.position.set(0, 0, -18 + 18 * x);
             middlePin.add(pin);
         }
     }
 
-    for (x = 0; x < 2; x++) {
+    for (var x = 0; x < 2; x++) {
         pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
         pin.position.set(-15, 0, -10 + 18 * x);
+        pin.castShadow = true;
         middlePin.add(pin);
     }
 
     pin = new Physijs.ConvexMesh(geometry, materialsL, 2);
     pin.position.set(-32, 0, 0);
+    pin.castShadow = true;
     middlePin.add(pin);
 
     return middlePin;

@@ -1,4 +1,3 @@
-var collisions = 0;
 var stats;
 var clearer;
 var setter;
@@ -10,14 +9,12 @@ var addedArrow = false;
 var glowing = false;
 var camera, scene, renderer;
 var cameraControls;
-var stick, button;
+var button;
 var clock = new THREE.Clock();
 var mesh = null;
 var keyboard = new KeyboardState();
-var ball;
 var pinsModel, pinMaterial;
-var pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10;
-var ball, ballSet, wallLeft, wallRight;
+var ball, ballSet;
 var stopArrow = false;
 var rolling = false;
 var cameraNeedsReset = false;
@@ -38,9 +35,27 @@ function fillScene() {
     bowlingAlly.position.set(-475, -10, 0);
     scene.add(bowlingAlly);
 
-    var ballLight = new THREE.SpotLight(0xffffff, 4, 60, Math.PI);
-    ballLight.position.set(-500, 50, 0);
-    scene.add(ballLight);
+
+    var ballLight = new THREE.SpotLight(0xffffff, 4, 60, Math.PI/4);
+    ballLight.position.set(-500, 300, 0);
+    ballLight.castShadow = true;
+    //scene.add(ballLight.target);
+    //scene.add(ballLight);
+
+    //var spotLightHelper = new THREE.SpotLightHelper( ballLight );
+    //scene.add( spotLightHelper );
+
+
+    var pinLight = new THREE.SpotLight(0xffffff, 0.5, length, Math.PI/4, 0.5);
+    pinLight.position.set(0, 300, 0);
+    //pinLight.target = collectionBox;
+    pinLight.castShadow = true;
+    //scene.add(pinLight);
+
+    var light = new THREE.PointLight(0xffffff);
+    light.position.set(-475, 300, 0);
+    light.castShadow = true;
+    //scene.add(light);
 
     loadBall();
     loadPins();
@@ -71,7 +86,7 @@ function fillScene() {
     audioHit.load(); // must call after setting/changing source
 
     /*
-	smokeTexture = THREE.ImageUtils.loadTexture('textures/smokeparticle.png');
+	smokeTexture = THREE.TextureLoader.load('textures/smokeparticle.png');
     smokeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, map: smokeTexture, transparent: true, opacity: 0.4});
     smokeGeo = new THREE.PlaneGeometry(120,120); // SIZE OF PARTICLES BIGGER -> PLANES MORE OBVIOUS
     smokeParticles = [];
@@ -118,12 +133,14 @@ function init() {
     cameraControls.noKeys = true;
 }
 
+/*
 function evolveSmoke() {
     var sp = smokeParticles.length;
     while(sp--) {
         smokeParticles[sp].rotation.z += (delta * 0.2);
     }
 }
+*/
 
 function addToDOM() {
     document.documentElement.style.overflow = 'hidden';  // firefox, chrome
@@ -234,7 +251,7 @@ function render() {
 	if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
 	{
 		videoImageContext.drawImage( video, 0, 0 );
-		if ( videoTexture ) 
+		if ( videoTexture )
 			videoTexture.needsUpdate = true;
 	}
 }
