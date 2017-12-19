@@ -406,6 +406,9 @@ function createScore() {
             text.rotation.y = (-Math.PI / 2);
             text.position.set(-80, 30, -120);
             scene.add(text);
+			setTimeout(function () {
+				scene.remove(text);
+			}, 3000);
     });
 	
 	
