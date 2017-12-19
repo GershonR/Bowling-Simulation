@@ -35,26 +35,24 @@ function fillScene() {
     bowlingAlly.position.set(-475, -10, 0);
     scene.add(bowlingAlly);
 
-
     var ballLight = new THREE.SpotLight(0xffffff, 4, 60, Math.PI/4);
     ballLight.position.set(-500, 300, 0);
-    ballLight.castShadow = true;
+    //ballLight.castShadow = true;
     //scene.add(ballLight.target);
     //scene.add(ballLight);
 
     //var spotLightHelper = new THREE.SpotLightHelper( ballLight );
     //scene.add( spotLightHelper );
 
-
-    var pinLight = new THREE.SpotLight(0xffffff, 0.5, length, Math.PI/4, 0.5);
-    pinLight.position.set(0, 300, 0);
+    //var pinLight = new THREE.SpotLight(0xffffff, 0.5, length, Math.PI/4, 0.5);
+    //pinLight.position.set(0, 300, 0);
     //pinLight.target = collectionBox;
-    pinLight.castShadow = true;
+    //pinLight.castShadow = true;
     //scene.add(pinLight);
 
-    var light = new THREE.PointLight(0xffffff);
-    light.position.set(-475, 300, 0);
-    light.castShadow = true;
+    //var light = new THREE.PointLight(0xffffff);
+    //light.position.set(-475, 300, 0);
+    //light.castShadow = true;
     //scene.add(light);
 
     loadBall();
@@ -214,7 +212,6 @@ function animate() {
         scene.add(ballSet);
         cameraNeedsReset = true;
         rolling = false;
-
     }
 
 
@@ -255,7 +252,6 @@ function render() {
 			videoTexture.needsUpdate = true;
 	}
 }
-
 
 document.addEventListener('keydown', function (ev) {
     switch (ev.keyCode) {
@@ -323,7 +319,6 @@ document.addEventListener('keydown', function (ev) {
     }
 });
 
-
 function countPins() {
     var score = 0;
 
@@ -334,7 +329,6 @@ function countPins() {
             }
         }
     }
-
 
     alert(score);
 }

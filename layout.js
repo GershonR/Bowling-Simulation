@@ -77,13 +77,13 @@ function createBowlingLane(width, length, guardHeight, gutterAndRailThickness) {
 
     var middleLight = new THREE.SpotLight(0xffffff, 0.5, collectionBoxHeight * 2, Math.PI, 1);
     middleLight.position.set(0, collectionBoxHeight / 2, 0);
-	//middleLight.castShadow = true;
     middleLight.target = laneFloor;
-	//middleLight.shadow.camera.width = 1024;
-    //middleLight.shadow.camera.height = 1024;
-    //middleLight.shadow.camera.near = 10;
-    //middleLight.shadow.camera.far = 1000;
-    //middleLight.shadow.camera.fov = 30;
+    //middleLight.castShadow = true;
+    middleLight.shadow.camera.width = 1024;
+    middleLight.shadow.camera.height = 1024;
+    middleLight.shadow.camera.near = 100;
+    middleLight.shadow.camera.far = 300;
+    middleLight.shadow.camera.fov = 30;
     laneFloor.add(middleLight);
 
 
@@ -96,11 +96,6 @@ function createBowlingLane(width, length, guardHeight, gutterAndRailThickness) {
     //pinLight.shadow.camera.near = 1;
     //pinLight.shadow.camera.far = 1000;
     //pinLight.shadow.camera.fov = 30;
-    //var helper = new THREE.CameraHelper( pinLight.shadow.camera );
-    //scene.add( helper );
-    //var spotLightHelper = new THREE.SpotLightHelper( pinLight );
-    //scene.add( spotLightHelper );
-
     laneFloor.add(pinLight);
 
 
