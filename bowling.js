@@ -193,10 +193,7 @@ function animate() {
     camera.position.z = (camera.position.z > 490) ? 490 : camera.position.z;
     camera.position.z = (camera.position.z < -490) ? -490 : camera.position.z;
 
-
     if (pinsAndBallNeedReset) {
-
-
         pinsAndBallNeedReset = false;
     }
 
@@ -216,8 +213,9 @@ function animate() {
         scene.add(ballSet);
         cameraNeedsReset = true;
 		rolling = false;
-		document.getElementById("arrowKeys").style.display = 'block-inline';
 
+        var arrows = document.getElementById("arrowKeys");
+        arrows.style.display = 'block';
     }
 
 
@@ -342,7 +340,7 @@ function countPins() {
     }
 
 
-    alert(score);
+    //alert(score);
 }
 
 try {
