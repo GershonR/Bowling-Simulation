@@ -54,7 +54,6 @@ function createBowlingAlly(width, length, height) {
     base.add(backFloor);
 
     createLaneNumbers();
-	base.castShadow = true;
     return base;
 }
 
@@ -76,16 +75,34 @@ function createBowlingLane(width, length, guardHeight, gutterAndRailThickness) {
     collectionBox.position.set(collectionBoxDepth / 2 + length / 2, -25, 0);
     laneFloor.add(collectionBox);
 
-    var middleLight = new THREE.SpotLight(0xffffff, 0.5, collectionBoxHeight * 2, Math.PI);
+    var middleLight = new THREE.SpotLight(0xffffff, 0.5, collectionBoxHeight * 2, Math.PI, 1);
     middleLight.position.set(0, collectionBoxHeight / 2, 0);
-	middleLight.castShadow = true;
+	//middleLight.castShadow = true;
+    middleLight.target = laneFloor;
+	//middleLight.shadow.camera.width = 1024;
+    //middleLight.shadow.camera.height = 1024;
+    //middleLight.shadow.camera.near = 10;
+    //middleLight.shadow.camera.far = 1000;
+    //middleLight.shadow.camera.fov = 30;
     laneFloor.add(middleLight);
 
-    var pinLight = new THREE.SpotLight(0xffffff, 1, collectionBoxHeight * 2, Math.PI * 3 / 4);
-    pinLight.position.set(length / 3, collectionBoxHeight, 0);
-    pinLight.rotation.y = Math.PI / 4;
-	pinLight.castShadow = true;
+
+    var pinLight = new THREE.SpotLight(0xffffff, 0.5, length, Math.PI/4, 0.5);
+    pinLight.position.set(0, collectionBoxHeight, 0);
+    pinLight.target = collectionBox;
+	//pinLight.castShadow = true;
+    //pinLight.shadow.camera.width = 1024;
+    //pinLight.shadow.camera.height = 1024;
+    //pinLight.shadow.camera.near = 1;
+    //pinLight.shadow.camera.far = 1000;
+    //pinLight.shadow.camera.fov = 30;
+    //var helper = new THREE.CameraHelper( pinLight.shadow.camera );
+    //scene.add( helper );
+    //var spotLightHelper = new THREE.SpotLightHelper( pinLight );
+    //scene.add( spotLightHelper );
+
     laneFloor.add(pinLight);
+
 
     return laneFloor;
 }
@@ -101,13 +118,16 @@ function createLaneBase(width, length, thickness) {
 
     var floorGeometry = new THREE.BoxGeometry(length, thickness, width - (gutterSize * 2) + thickness * 2);
     var floor = new Physijs.BoxMesh(floorGeometry, floorMaterial, 0);
-	floor.recieveShadow = true;
+	floor.receiveShadow = true;
     var gutterLeft = createGutter(length, gutterSize, thickness);
+
     gutterLeft.position.z = -(width / 2 - gutterSize / 2);
+    gutterLeft.receiveShadow = true;
     floor.add(gutterLeft);
 
     var gutterRight = createGutter(length, gutterSize, thickness);
     gutterRight.position.z = (width / 2 - gutterSize / 2);
+    gutterRight.receiveShadow = true;
     floor.add(gutterRight);
 
     return floor;
@@ -216,7 +236,6 @@ function createCollectionBox(width, depth, height) {
     var boxRight = new Physijs.BoxMesh(new THREE.BoxGeometry(depth, height, 1), collectBoxMaterial, 0);
     boxRight.position.set(0, height / 2, width / 2 - 0.5);
     boxBottom.add(boxRight);
-	boxBottom.recieveShadow = true;
     return boxBottom;
 }
 
@@ -298,10 +317,11 @@ function loadSetter() {
 }
 
 function createTV() {
+    var tvTexture = new THREE.TextureLoader().load("textures/TV.jpg");
     var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
-        map: THREE.ImageUtils.loadTexture('textures/TV.jpg')
+        map: tvTexture
     });
-    img.map.needsUpdate = true; //ADDED
+    //img.map.needsUpdate = true; //ADDED
 
     // plane
     var plane = new THREE.Mesh(new THREE.PlaneGeometry(80, 35), img);
@@ -317,7 +337,7 @@ function createTV() {
     video.load();
     video.play();
 
-    videoImage = document.createElement('canvas');
+    var videoImage = document.createElement('canvas');
     videoImage.width = 400;
     videoImage.height = 250;
     videoImageContext = videoImage.getContext('2d');
@@ -363,6 +383,37 @@ function createLaneNumbers() {
             scene.add(text);
         }
     });
+}
+
+function createScore() {
+	
+	    var loader = new THREE.FontLoader();
+			loader.load('fonts/helvetiker_regular.typeface.json', function (font) {
+            var xMid, text;
+            var textShape = new THREE.BufferGeometry();
+            var color = 0xFFFFFF;
+            var matLite = new THREE.MeshBasicMaterial({
+                color: color,
+                transparent: true,
+                opacity: 0.95,
+                side: THREE.DoubleSide
+            });
+            var message = "Score: " + points;
+
+            var shapes = font.generateShapes(message, 50, 5);
+            var geometry = new THREE.ShapeGeometry(shapes);
+            geometry.computeBoundingBox();
+
+            xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+
+            textShape.fromGeometry(geometry);
+            text = new THREE.Mesh(textShape, matLite);
+            text.rotation.y = (-Math.PI / 2);
+            text.position.set(-80, 30, -120);
+            scene.add(text);
+    });
+	
+	
 }
 
 

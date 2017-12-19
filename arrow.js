@@ -4,15 +4,17 @@ var left = 0;
 
 function drawArrow() {
     addedArrow = true;
-    var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
-        map: THREE.ImageUtils.loadTexture('textures/arrow.png')
-    });
-    img.map.needsUpdate = true; //ADDED
+    var arrowTexture = new THREE.TextureLoader().load("textures/arrow.png");
 
-    // plane	
-    geometry = new THREE.PlaneGeometry(40, 20);
-    material = new THREE.MeshLambertMaterial({
-        map: THREE.ImageUtils.loadTexture('textures/arrow.png'),
+    //var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
+    //    map: arrowTexture
+    //});
+    //img.map.needsUpdate = true; //ADDED
+
+    // plane
+    var geometry = new THREE.PlaneGeometry(40, 20);
+    var material = new THREE.MeshLambertMaterial({
+        map: arrowTexture,
         transparent: true,
         opacity: 1,
         side: THREE.DoubleSide
