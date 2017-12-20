@@ -45,6 +45,7 @@ var pinsResetting = false;
 var pinsNeedPlacement = false;
 var ballNeedsReset = false;
 var cameraNeedsReset = false;
+var hitPlayed = false;
 
 //scoring
 var tries = 1;
@@ -244,12 +245,18 @@ function updateGameState() {
     } else if (rolling) {
         rollTime += delta;
 
+        if (!hitPlayed && Math.abs(ball.position.z) < 40 && ball.position.x > -40) {
+            audioHit.play();
+            hitPlayed = true;
+        }
+
         if (ball.position.y < -10 || rollTime > 10) { //ball in collection box or out of time
             rollTime = 0;
             rolling = false;
             resetting = true;
             waitingToScore = true;
             scoreTime = 0;
+            hitPlayed = false;
         }
     } else if (resetting) {
         if (waitingToScore) {
