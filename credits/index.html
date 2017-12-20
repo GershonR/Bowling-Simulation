@@ -6,6 +6,10 @@
   <audio autoplay>
     <source src="../videos/credits.mp3" type="audio/mp3">
   </audio>
+  <div class='playAgain'>Press any key</div>
+  <div class='job'>To play again</div>
+  <div class='movie'></div>
+  <div class='movie'></div>
   <div class='movie'>Bowlingsim.com</div>
   <div class='movie'>Let's Go Bowling Inc</div>
   <div class='job'>CEO</div>
@@ -127,5 +131,22 @@ img {
     0% { top:  100%; }
   100% { top: -500%; }
 }
+
+#viewSrcButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 8px;
+  color: #fff;
+  background-color: #555;
+  opacity: 0.7;
+}
+  
 </style>
+<body>
+<div id="canvas" style="width:auto; margin: 0 auto;">
+  <a id="viewSrcButton" target="_blank" href="https://github.com/GershonR/Bowling-Simulation"
+     title="View source code for Bowling Sim on GitHub">View source</a>
+</div>
+</body>
 </html>

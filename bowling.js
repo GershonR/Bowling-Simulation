@@ -39,10 +39,9 @@ var waitingToScore = false;
 var displayingText = false;
 var scoreTime = 0;
 var textTime = 0;
-var pinsReseting = false;
+var pinsResetting = false;
 var pinsNeedPlacement = false;
 var ballNeedsReset = false;
-var pinsNeedReset = false;
 var cameraNeedsReset = false;
 
 //scoring
@@ -293,28 +292,33 @@ function updateGameState() {
 
                 removeScore();
 
-                document.getElementById("spaceBar").style.display = 'block';
-                document.getElementById("arrowKeys").style.display = 'block';
-
                 if (!pinsNeedPlacement) {
+                    document.getElementById("spaceBar").style.display = 'block';
+                    document.getElementById("arrowKeys").style.display = 'block';
+
+
                     ballNeedsReset = true;
                     settingBall = true;
                     settingPosition = true;
                     resetting = false;
                 } else {
                     startCleaner = true;
-                    pinsReseting = true;
+                    pinsResetting = true;
                 }
                 displayingText = false;
             }
-        } else if (pinsReseting) {
+        } else if (pinsResetting) {
             animateCleaner();
             if (cleanDone) {
+                document.getElementById("spaceBar").style.display = 'block';
+                document.getElementById("arrowKeys").style.display = 'block';
+
+
                 ballNeedsReset = true;
                 settingBall = true;
                 settingPosition = true;
                 resetting = false;
-                pinsReseting = false;
+                pinsResetting = false;
             }
         }
 
