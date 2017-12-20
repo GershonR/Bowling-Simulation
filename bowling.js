@@ -39,11 +39,13 @@ var stopArrow = false;
 var rolling = false;
 var cameraNeedsReset = false;
 var pinsAndBallNeedReset = false;
+var laneText;
 
 //scoring
 var tries = 1;
 var delta = 0;
 var points = 0;
+var round = 1;
 
 function fillScene() {
     scene = new Physijs.Scene;
@@ -223,6 +225,12 @@ function animate() {
             tries++;
         } else {
             scene.remove(clearerPlane);
+			round++;
+			if(round == 2) {
+				setTimeout(function () {
+					gameOver();
+				}, 2000);
+			}
             dropClearer();
             tries = 1;
         }
