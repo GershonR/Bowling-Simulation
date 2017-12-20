@@ -280,6 +280,11 @@ function createEnclosing(width, length, height) {
 }
 
 function createTV() {
+    var width = 125;
+    var height = 70;
+    var y = 125;
+    var x = -61;
+
     var tvTexture = new THREE.TextureLoader().load("textures/TV.jpg");
     var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
         map: tvTexture
@@ -287,10 +292,10 @@ function createTV() {
     //img.map.needsUpdate = true; //ADDED
 
     // plane
-    var plane = new THREE.Mesh(new THREE.PlaneGeometry(80, 35), img);
+    var plane = new THREE.Mesh(new THREE.PlaneGeometry(width, height), img);
     plane.overdraw = true;
-    plane.position.y = 110;
-    plane.position.x = -60;
+    plane.position.y = y;
+    plane.position.x = x;
     plane.rotation.y = (-Math.PI / 2);
     scene.add(plane);
 
@@ -299,7 +304,7 @@ function createTV() {
     videoStrike.load();
 
     videoSpare = document.createElement('video');
-    videoSpare.src = "videos/bowlingspare1.mp4";
+    videoSpare.src = "videos/bowlingspare2.mp4";
     videoSpare.load();
 
     var videoImage = document.createElement('canvas');
@@ -313,9 +318,9 @@ function createTV() {
     videoTexture.magFilter = THREE.LinearFilter;
 
     var movieMaterial = new THREE.MeshBasicMaterial({map: videoTexture, overdraw: true, side: THREE.DoubleSide});
-    var movieGeometry = new THREE.PlaneGeometry(75, 30, 4, 4);
+    var movieGeometry = new THREE.PlaneGeometry(width - 5, height - 5, 4, 4);
     var movieScreen = new THREE.Mesh(movieGeometry, movieMaterial);
-    movieScreen.position.set(-61, 110, 0);
+    movieScreen.position.set(x, y, 0);
     movieScreen.rotation.y = (-Math.PI / 2);
     scene.add(movieScreen);
 }
