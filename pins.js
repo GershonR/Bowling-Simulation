@@ -1,4 +1,4 @@
-/* models.js
+/* pins.js
  *
  * COMP 3490 Final Project
  *
@@ -8,33 +8,7 @@
  *  Eric Kulchycki     - 7767961
  */
 
-function loadBall() {
-
-    var ballMaterial = new THREE.MeshPhongMaterial({color: 0xff3333});
-    var ballGeometry = new THREE.SphereGeometry(8, 32, 32);
-
-    var subMaterial = new THREE.MeshBasicMaterial({color: 0x000000});
-    var cylinderSubtract = new THREE.CylinderGeometry(1, 1, 10, 32);
-    var hole1 = new THREE.Mesh(cylinderSubtract, subMaterial);
-    hole1.position.set(2, 6, 2);
-    var hole2 = new THREE.Mesh(cylinderSubtract, subMaterial);
-    hole2.position.set(2, 6, -2);
-    var hole3 = new THREE.Mesh(cylinderSubtract, subMaterial);
-    hole3.position.set(-2, 6, 0);
-
-    var result = new ThreeBSP(new THREE.Mesh(ballGeometry, subMaterial));
-    result = result.subtract(new ThreeBSP(hole1));
-    result = result.subtract(new ThreeBSP(hole2));
-    result = result.subtract(new ThreeBSP(hole3)).toMesh();
-
-    //set global ball
-    ball = new Physijs.ConvexMesh(result.geometry, ballMaterial, 15);
-    ball.rotation.z = Math.PI / 16;
-    ball.name = "ball";
-    ball.castShadow = true;
-}
-
-function loadPins() {
+function loadPinsModel() {
     THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setPath('models/pins/');
@@ -42,7 +16,7 @@ function loadPins() {
         materials.preload();
         var manager = new THREE.LoadingManager();
         var objLoader = new THREE.OBJLoader(manager);
-        var materialsL = new Array();
+        var materialsL = [];
         objLoader.setMaterials(materials);
         objLoader.setPath('models/pins/');
         objLoader.load('Pin.obj', function (object) {
@@ -67,7 +41,6 @@ function loadPins() {
             pinsModel = geometry;
             pinMaterial = materialsL;
 
-            //create center pins
             resetPins();
 
             var width = 1000;

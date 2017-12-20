@@ -8,6 +8,9 @@
  *  Eric Kulchycki     - 7767961
  */
 
+var cross1;
+var cross2;
+
 function createBowlingAlly(width, length, height) {
     var laneLength = 600;
     var backLength = length - laneLength;
@@ -379,7 +382,6 @@ function createLaneNumbers() {
 }
 
 function createScore() {
-
     var loader = new THREE.FontLoader();
     loader.load('fonts/helvetiker_regular.typeface.json', function (font) {
         var xMid;
@@ -391,8 +393,20 @@ function createScore() {
             opacity: 0.95,
             side: THREE.DoubleSide
         });
-        var message = "Score: " + points;
-
+        var message;
+        if (points === 10) {
+            if (tries === 2) {
+                message = "Strike!";
+                loadStrike();
+                loadSmoke();
+            } else {
+                message = "Spare!";
+                loadSpare();
+                loadSmoke();
+            }
+        } else {
+            message = "Score: " + points;
+        }
         var shapes = font.generateShapes(message, 50, 5);
         var geometry = new THREE.ShapeGeometry(shapes);
         geometry.computeBoundingBox();
@@ -402,11 +416,19 @@ function createScore() {
         textShape.fromGeometry(geometry);
         laneText = new THREE.Mesh(textShape, matLite);
         laneText.rotation.y = (-Math.PI / 2);
-        laneText.position.set(-80, 30, -120);
+        if (points === 10) {
+            laneText.position.set(-425, 50, -90);
+        } else {
+            laneText.position.set(-80, 30, -120);
+        }
+
         scene.add(laneText);
         setTimeout(function () {
             scene.remove(laneText);
-        }, 3000);
+            scene.remove(cross1);
+            scene.remove(cross2);
+            removeStrike();
+        }, 5000);
     });
 }
 
@@ -440,4 +462,62 @@ function gameOver() {
             window.location.href = 'credits/index.html';
         }, 3000);
     });
+}
+
+function loadStrike() {
+    var crossMaterial = new THREE.MeshBasicMaterial({ color: 0xFF0000 });
+    var crossGeometry = new THREE.BoxGeometry(1,150,10);
+
+    cross1 = new Physijs.BoxMesh(crossGeometry, crossMaterial, 0);
+    cross1.position.set(-400, 75, 0);
+    cross1.rotation.x = Math.PI / 4;
+    scene.add(cross1);
+
+    cross2 = new Physijs.BoxMesh(crossGeometry, crossMaterial, 0);
+    cross2.position.set(-400, 75, 0);
+    cross2.rotation.x = -Math.PI / 4;
+    scene.add(cross2);
+}
+
+function loadSpare() {
+    var crossMaterial = new THREE.MeshBasicMaterial({ color: 0xFF0000 });
+    var crossGeometry = new THREE.BoxGeometry(1,150,10);
+
+    cross1 = new Physijs.BoxMesh(crossGeometry, crossMaterial, 0);
+    cross1.position.set(-400, 75, 0);
+    cross1.rotation.x = Math.PI / 4;
+    scene.add(cross1);
+}
+
+
+function removeStrike() {
+    for (var i in smokeParticles) {
+        scene.remove(smokeParticles[i]);
+    }
+    smokeParticles = [];
+
+    for (var i in scene._objects) {
+        if (scene._objects[i].name === "shard") {
+            scene.remove(scene._objects[i]);
+        }
+    }
+
+}
+
+function loadSmoke() {
+	smokeTexture = new THREE.TextureLoader().load('textures/smokeparticle.png');
+    smokeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, map: smokeTexture, transparent: true, opacity: 0.4});
+    smokeGeo = new THREE.PlaneGeometry(120,120); // SIZE OF PARTICLES BIGGER -> PLANES MORE OBVIOUS
+    smokeParticles = [];
+
+
+    for (p = 0; p < 70; p++) { //HOW MANY PARTICLES
+        var particle = new THREE.Mesh(smokeGeo,smokeMaterial);
+        particle.position.set(-300 - Math.random()*50 ,Math.random()*30 + 50,Math.random()*950-500); // PARTICLE SPREAD X, Y, Z
+		particle.rotation.z = Math.random() * 360;
+		particle.rotation.y = -Math.PI / 2;
+        particle.name = "smoke";
+		scene.add(particle);
+        smokeParticles.push(particle);
+    }
 }

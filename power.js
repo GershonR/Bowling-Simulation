@@ -8,9 +8,12 @@
  *  Eric Kulchycki     - 7767961
  */
 
-var size = 0;
+var power = 75;
+var powerMax = 100;
+var powerMin = 35;
+var powerDelta = 0.8;
 
-function drawPower() {
+function createPowerSprite() {
     var spriteMaterial = new THREE.SpriteMaterial(
         {
             map: new THREE.TextureLoader().load('textures/glow2.png'),
@@ -19,48 +22,20 @@ function drawPower() {
         });
     sprite = new THREE.Sprite(spriteMaterial);
     sprite.scale.set(100, 100, 1000);
-    ball.add(sprite); // this centers the glow at the mesh
-    glowing = true;
-    powerUp();
+
+    return sprite;
 }
 
-function powerUp() {
-    function animateUp() {
-        power += 0.8;
-        sprite.scale.set(power, power, 1000);
-        renderer.render(scene, camera);
-        if (power >= 100) {
-            return powerDown();
-        }
-        if (stopPower) {
-            ball.remove(sprite);
-            return;
-        }
-        requestAnimationFrame(animateUp);
+function animatePower() {
+    power += powerDelta;
+    sprite.scale.set(power, power, 1000);
 
+    if (power >= powerMax || power <= powerMin) {
+        powerDelta = -powerDelta;
     }
-
-    requestAnimationFrame(animateUp);
 }
 
-function powerDown() {
-    function animateDown() {
-        power -= 0.8;
-        sprite.scale.set(power, power, 1000);
-        renderer.render(scene, camera);
-        if (power <= 35) {
-            return powerUp();
-        }
-        if (stopPower) {
-            ball.remove(sprite);
-            return;
-        }
-        requestAnimationFrame(animateDown);
 
-    }
-
-    requestAnimationFrame(animateDown);
-}
 
 
 
