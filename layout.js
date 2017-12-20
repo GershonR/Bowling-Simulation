@@ -294,11 +294,13 @@ function createTV() {
     plane.rotation.y = (-Math.PI / 2);
     scene.add(plane);
 
-    video = document.createElement('video');
+    videoStrike = document.createElement('video');
+    videoStrike.src = "videos/bowlingstrike1.mp4";
+    videoStrike.load();
 
-    video.src = "videos/doublestrike.mp4";
-    video.load();
-    video.play();
+    videoSpare = document.createElement('video');
+    videoSpare.src = "videos/bowlingspare1.mp4";
+    videoSpare.load();
 
     var videoImage = document.createElement('canvas');
     videoImage.width = 400;

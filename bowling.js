@@ -24,6 +24,8 @@ var font;
 var audioRoll;
 var audioHit;
 var video;
+var videoStrike;
+var videoSpare;
 
 //game state
 var debugMode = false;
@@ -138,12 +140,14 @@ function animate() {
         evolveSmoke();
     }
 
-    /*
-    if (video.readyState === video.HAVE_ENOUGH_DATA) {
-        videoImageContext.drawImage(video, 0, 0);
-        if (videoTexture)
-            videoTexture.needsUpdate = true;
-    }*/
+
+    if (video != null) {
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+            videoImageContext.drawImage(video, 0, 0);
+            if (videoTexture)
+                videoTexture.needsUpdate = true;
+        }
+    }
 
     render();
 }
@@ -275,6 +279,12 @@ function updateGameState() {
                         }, 2000);
                     }
 
+                    if (points === 10 && tries === 1) {
+                        video = videoStrike;
+                    } else if (points === 10) {
+                        video = videoSpare;
+                    }
+
                     tries = 1;
                     round++;
                     pinsNeedPlacement = true;
@@ -302,6 +312,12 @@ function updateGameState() {
                     settingPosition = true;
                     resetting = false;
                 } else {
+                    if (points === 10) {
+                        if (video != null) {
+                            video.play();
+                        }
+                    }
+
                     startCleaner = true;
                     pinsResetting = true;
                 }
@@ -326,7 +342,6 @@ function updateGameState() {
     } else {
         console.log("Game in unknown state.");
     }
-
 
     if (ballNeedsReset) {
         scene.remove(ball);
