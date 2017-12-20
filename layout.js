@@ -8,6 +8,9 @@
  *  Eric Kulchycki     - 7767961
  */
 
+var cross1;
+var cross2;
+
 function createBowlingAlly(width, length, height) {
     var laneLength = 600;
     var backLength = length - laneLength;
@@ -393,9 +396,15 @@ function createScore() {
         });
         var message;
         if (points === 10) {
-            message = "Strike!";
-            loadStrike();
-            loadSmoke();
+            if (tries === 2) {
+                message = "Strike!";
+                loadStrike();
+                loadSmoke();
+            } else {
+                message = "Spare!";
+                loadSpare();
+                loadSmoke();
+            }
         } else {
             message = "Score: " + points;
         }
@@ -417,6 +426,8 @@ function createScore() {
         scene.add(laneText);
         setTimeout(function () {
             scene.remove(laneText);
+            scene.remove(cross1);
+            scene.remove(cross2);
             removeStrike();
         }, 5000);
     });
@@ -454,70 +465,32 @@ function gameOver() {
     });
 }
 
-var cross1;
-var cross2;
-var strikeUp = true;
 
 function loadStrike() {
-
     var crossMaterial = new THREE.MeshBasicMaterial({ color: 0xFF0000 });
     var crossGeometry = new THREE.BoxGeometry(1,150,10);
-    var crossPlank1 = new Physijs.BoxMesh(crossGeometry, crossMaterial, 0);
-    crossPlank1.position.set(-400, 100, 0);
-    crossPlank1.rotation.x = Math.PI / 4;
-    scene.add(crossPlank1);
-    var crossPlank2 = new Physijs.BoxMesh(crossGeometry, crossMaterial, 0);
-    crossPlank2.position.set(-400, 100, 0);
-    crossPlank2.rotation.x = -Math.PI / 4;
-    scene.add(crossPlank2);
 
+    cross1 = new Physijs.BoxMesh(crossGeometry, crossMaterial, 0);
+    cross1.position.set(-400, 75, 0);
+    cross1.rotation.x = Math.PI / 4;
+    scene.add(cross1);
 
-    var convexBreaker = new THREE.ConvexObjectBreaker();
-
-    convexBreaker.prepareBreakableObject( crossPlank1, 5, new THREE.Vector3(), new THREE.Vector3(), true );
-    convexBreaker.prepareBreakableObject( crossPlank2, 5, new THREE.Vector3(), new THREE.Vector3(), true );
-
-
-    var debris = convexBreaker.subdivideByImpact( crossPlank1, new THREE.Vector3(0,0,0), new THREE.Vector3(-1,0,0), 80, 2, 2);
-
-    var numObjects = debris.length;
-
-    for ( var j = 0; j < numObjects; j++ ) {
-        var thing1 = new Physijs.ConvexMesh(debris[ j ].geometry, debris[ j ].material, 2);
-        thing1.position.set(-400, 100, 0);
-        thing1.rotation.x = Math.PI / 4;
-        thing1.name = "shard";
-        //thing.rotation.y = (-Math.PI / 2);
-        //thing.position.set(-100, 50, -200);
-        //thing.position.set(-100,100,0);
-        //thing.__dirtyPosition = true;
-        scene.add( thing1 );
-    }
-
-    var debris2 = convexBreaker.subdivideByImpact( crossPlank2, new THREE.Vector3(0,0,0), new THREE.Vector3(-1,0,0), 80, 2, 2 );
-
-    var numObjects2 = debris.length;
-
-    for ( var j = 0; j < numObjects2; j++ ) {
-        var thing2 = new Physijs.ConvexMesh(debris[ j ].geometry, debris[ j ].material, 2);
-        thing2.position.set(-400, 100, 0);
-        thing2.rotation.x = -Math.PI / 4;
-        thing2.name = "shard";
-        //thing.rotation.y = (-Math.PI / 2);
-        //thing.position.set(-100, 50, -200);
-        //thing.position.set(-100,100,0);
-        //thing.__dirtyPosition = true;
-        scene.add( thing2 );
-    }
-
-    cross1 = crossPlank1;
-    cross2 = crossPlank2;
-
-    setTimeout(function () {
-        scene.remove(cross1);
-        scene.remove(cross2);
-    },500);
+    cross2 = new Physijs.BoxMesh(crossGeometry, crossMaterial, 0);
+    cross2.position.set(-400, 75, 0);
+    cross2.rotation.x = -Math.PI / 4;
+    scene.add(cross2);
 }
+
+function loadSpare() {
+    var crossMaterial = new THREE.MeshBasicMaterial({ color: 0xFF0000 });
+    var crossGeometry = new THREE.BoxGeometry(1,150,10);
+
+    cross1 = new Physijs.BoxMesh(crossGeometry, crossMaterial, 0);
+    cross1.position.set(-400, 75, 0);
+    cross1.rotation.x = Math.PI / 4;
+    scene.add(cross1);
+}
+
 
 function removeStrike() {
     for (var i in smokeParticles) {
@@ -534,7 +507,6 @@ function removeStrike() {
 }
 
 function loadSmoke() {
-
 	smokeTexture = new THREE.TextureLoader().load('textures/smokeparticle.png');
     smokeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, map: smokeTexture, transparent: true, opacity: 0.4});
     smokeGeo = new THREE.PlaneGeometry(120,120); // SIZE OF PARTICLES BIGGER -> PLANES MORE OBVIOUS
@@ -550,5 +522,4 @@ function loadSmoke() {
 		scene.add(particle);
         smokeParticles.push(particle);
     }
-
 }
