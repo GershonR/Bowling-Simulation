@@ -283,7 +283,7 @@ function createTV() {
     var width = 125;
     var height = 70;
     var y = 125;
-    var x = -62;
+    var x = -61;
 
     var tvTexture = new THREE.TextureLoader().load("textures/TV.jpg");
     var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
@@ -320,7 +320,7 @@ function createTV() {
     var movieMaterial = new THREE.MeshBasicMaterial({map: videoTexture, overdraw: true, side: THREE.DoubleSide});
     var movieGeometry = new THREE.PlaneGeometry(width - 5, height - 5, 4, 4);
     var movieScreen = new THREE.Mesh(movieGeometry, movieMaterial);
-    movieScreen.position.set(x, y, 0);
+    movieScreen.position.set(x - 1, y, 0);
     movieScreen.rotation.y = (-Math.PI / 2);
     scene.add(movieScreen);
 }
