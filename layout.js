@@ -382,7 +382,6 @@ function createLaneNumbers() {
 }
 
 function createScore() {
-
     var loader = new THREE.FontLoader();
     loader.load('fonts/helvetiker_regular.typeface.json', function (font) {
         var xMid;
@@ -464,7 +463,6 @@ function gameOver() {
         }, 3000);
     });
 }
-
 
 function loadStrike() {
     var crossMaterial = new THREE.MeshBasicMaterial({ color: 0xFF0000 });
