@@ -12,9 +12,10 @@ var smoking = false;
 var smokeParticles;
 
 function evolveSmoke() {
-    var sp = smokeParticles.length;
-    while(sp--) {
+    var sp = smokeParticles.length - 1;
+    while(sp > 0) {
         smokeParticles[sp].rotation.z += (delta * 0.2);
+        sp--;
     }
 }
 

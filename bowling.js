@@ -13,15 +13,12 @@ var keyboard = new KeyboardState();
 var clock = new THREE.Clock();
 var stats = new Stats();
 
-var clearer;
-var setter;
-var clearerPlane;
 var sprite;
 var button;
 var mesh = null;
 var pinsModel, pinMaterial;
 var ball, ballSet, arrow, powerSprite;
-var laneText;
+var font;
 
 //audio and video
 var audioRoll;
@@ -38,11 +35,15 @@ var settingPower = false;
 var rolling = false;
 var rollTime = 0;
 var resetting = false;
+var waitingToScore = false;
+var displayingText = false;
+var scoreTime = 0;
+var textTime = 0;
+var pinsReseting = false;
 var pinsNeedPlacement = false;
 var ballNeedsReset = false;
 var pinsNeedReset = false;
 var cameraNeedsReset = false;
-var pinsAndBallNeedReset = false;
 
 //scoring
 var tries = 1;
@@ -61,10 +62,16 @@ function fillScene() {
     bowlingAlly.position.set(-475, -10, 0);
     scene.add(bowlingAlly);
 
-
     loadClearer();
     loadSetter();
     createTV();
+
+    ball = createBowlingBall();
+    ballSet = createSetBall();
+    arrow = createArrow();
+    powerSprite = createPowerSprite();
+    loadPinsModel();
+    loadFont();
 }
 
 function init() {
@@ -127,7 +134,7 @@ function animate() {
     updateGameState();
 
     updateCamera();
-    
+
     if (smoking) {
         evolveSmoke();
     }
@@ -160,13 +167,11 @@ function updateControls() {
     if (keyboard.down("R")) {
         rolling = false;
         cameraNeedsReset = true;
-        pinsAndBallNeedReset = true;
         resetPins();
     }
 
     if (keyboard.down("C")) {
-        scene.remove(clearerPlane);
-        dropClearer();
+        //scene.remove(clearerPlane);
     }
 
     if (settingPosition && keyboard.pressed("left")) {
@@ -203,6 +208,7 @@ function updateControls() {
         } else if (settingPower) {
             ball.setLinearVelocity(new THREE.Vector3(power * 2, 0, 70 * -arrow.rotation.z));
             rolling = true;
+            rollTime = 0;
             scene.remove(arrow);
             ball.remove(powerSprite);
             audioRoll.play();
@@ -218,12 +224,6 @@ function updateControls() {
 
 function updateGameState() {
     if (startUp) {
-        ball = createBowlingBall();
-        ballSet = createSetBall();
-        arrow = createArrow();
-        powerSprite = createPowerSprite();
-        loadPinsModel();
-
         ballNeedsReset = true;
         startUp = false;
         settingBall = true;
@@ -242,49 +242,88 @@ function updateGameState() {
         rollTime += delta;
 
         if (ball.position.y < -10 || rollTime > 10) { //ball in collection box or out of time
-            if (tries < 3) {
-                tries++;
-            } else { //end of round
-                scene.remove(clearerPlane);
-                if (round === amountOfRounds) {
-                    setTimeout(function () {
-                        gameOver();
-                    }, 2000);
-                }
-
-                tries = 1;
-                round++;
-                pinsNeedReset = true;
-            }
-
-            setTimeout(function () {
-                countPins();
-            }, 1000);
-
             rollTime = 0;
             rolling = false;
             resetting = true;
-            ballNeedsReset = true;
+            waitingToScore = true;
+            scoreTime = 0;
         }
     } else if (resetting) {
-        document.getElementById("spaceBar").style.display = 'block';
-        document.getElementById("arrowKeys").style.display = 'block';
+        if (waitingToScore) {
+            scoreTime += delta;
 
-        settingBall = true;
-        settingPosition = true;
-        resetting = false;
+            if (scoreTime > 1) {
+                //count pins
+                points = 0;
+
+                for (var i in scene._objects) {
+                    if (scene._objects[i].name === "pin") {
+                        if (scene._objects[i].position.y < 15 || scene._objects[i].rotation.x > 0.1 || scene._objects[i].rotation.z > 0.1) {
+                            points++;
+                        }
+                    }
+                }
+
+                if (points < 10 && tries < 3) {
+                    tries++;
+                } else { //end of round
+                    if (round === amountOfRounds) {
+                        setTimeout(function () {
+                            gameOver();
+                        }, 2000);
+                    }
+
+
+                    tries = 1;
+                    round++;
+                    pinsNeedPlacement = true;
+                }
+
+                createScore();
+                createRound();
+
+                cameraNeedsReset = true;
+                waitingToScore = false;
+                textTime = 0;
+                displayingText = true;
+            }
+        } else if (displayingText) {
+            textTime += delta;
+
+            if (textTime > 5) {
+
+                removeScore();
+
+                document.getElementById("spaceBar").style.display = 'block';
+                document.getElementById("arrowKeys").style.display = 'block';
+
+                if (!pinsNeedPlacement) {
+                    ballNeedsReset = true;
+                    settingBall = true;
+                    settingPosition = true;
+                    resetting = false;
+                } else {
+                    droppingState = true;
+                    scene.remove(clearerPlane);
+                    pinsReseting = true;
+                }
+                displayingText = false;
+            }
+        } else if (pinsReseting) {
+            animateCleaner();
+            if (cleanDone) {
+                ballNeedsReset = true;
+                settingBall = true;
+                settingPosition = true;
+                resetting = false;
+                pinsReseting = false;
+            }
+        }
+
     } else {
         console.log("Game in unknown state.");
     }
 
-    if (pinsNeedReset) {
-        dropClearer();
-        pinsNeedReset = false;
-    }
-
-    if (pinsNeedPlacement) {
-
-    }
 
     if (ballNeedsReset) {
         scene.remove(ball);
@@ -295,7 +334,6 @@ function updateGameState() {
     }
 
 }
-
 
 function updateCamera() {
     //camera follows ball when rolling
@@ -331,19 +369,6 @@ function render() {
     delta = clock.getDelta();
     cameraControls.update(delta);
     renderer.render(scene, camera);
-}
-
-function countPins() {
-    points = 0;
-
-    for (var i in scene._objects) {
-        if (scene._objects[i].name === "pin") {
-            if (scene._objects[i].position.y < 15 || scene._objects[i].rotation.x > 0.1 || scene._objects[i].rotation.z > 0.1) {
-                points++;
-            }
-        }
-    }
-    createScore();
 }
 
 try {

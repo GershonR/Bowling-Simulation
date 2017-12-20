@@ -41,7 +41,7 @@ function loadPinsModel() {
             pinsModel = geometry;
             pinMaterial = materialsL;
 
-            resetPins();
+            drawMainPins();
 
             var width = 1000;
             var laneWidth = 115;
@@ -61,6 +61,16 @@ function loadPinsModel() {
 }
 
 function resetPins() {
+    //remove old pins
+    for (var i in scene._objects) {
+        if (scene._objects[i].name === "pin") {
+            scene.remove(scene._objects[i]);
+        }
+    }
+    drawMainPins();
+}
+
+function drawMainPins() {
     var geometry = pinsModel;
     var materialsL = pinMaterial;
     var boxGeometry = new THREE.BoxGeometry(2, 2, 2);
@@ -68,13 +78,6 @@ function resetPins() {
     var box, pin;
     var gravity = 3;
     var height = 15;
-
-    //remove old pins
-    for (var i in scene._objects) {
-        if (scene._objects[i].name === "pin") {
-            scene.remove(scene._objects[i]);
-        }
-    }
 
     for (var x = 0; x < 4; x++) {
         pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
