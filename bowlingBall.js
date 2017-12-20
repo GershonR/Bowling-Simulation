@@ -42,7 +42,7 @@ function createSetBall() {
     var ballGeometry = new THREE.SphereGeometry(ballRadius, 32, 32);
 
     var ball = new THREE.Mesh(ballGeometry, ballMaterial);
-    ball.position.set(-500, ballRadius, 0);
+    ball.position.set(-500, ballRadius + 1, 0);
 
     return ball;
 }

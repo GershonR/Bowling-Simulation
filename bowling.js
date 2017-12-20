@@ -127,7 +127,7 @@ function animate() {
     updateGameState();
 
     updateCamera();
-
+    
     if (smoking) {
         evolveSmoke();
     }
@@ -185,6 +185,7 @@ function updateControls() {
         //in the middle of...
         if (settingPosition) {
             ball.position.copy(ballSet.position);
+            ball.__dirtyPosition = true;
             arrow.position.z = ballSet.position.z;
             scene.remove(ballSet);
             scene.add(ball);
@@ -201,7 +202,6 @@ function updateControls() {
             settingPower = true;
         } else if (settingPower) {
             ball.setLinearVelocity(new THREE.Vector3(power * 2, 0, 70 * -arrow.rotation.z));
-            //ball.__dirtyPosition = true;
             rolling = true;
             scene.remove(arrow);
             ball.remove(powerSprite);
@@ -334,6 +334,8 @@ function render() {
 }
 
 function countPins() {
+    points = 0;
+
     for (var i in scene._objects) {
         if (scene._objects[i].name === "pin") {
             if (scene._objects[i].position.y < 15 || scene._objects[i].rotation.x > 0.1 || scene._objects[i].rotation.z > 0.1) {
