@@ -1,3 +1,13 @@
+/* clearer.js
+ *
+ * COMP 3490 Final Project
+ *
+ * Created by:
+ *  Nicholas Josephson - 7791547
+ *  Gershon Reydman    - 7763541
+ *  Eric Kulchycki     - 7767961
+ */
+
 function dropClearer() {
     //clearer.setLinearVelocity(new THREE.Vector3(120, 0, 0));
     //setTimeout(function() {

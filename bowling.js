@@ -1,35 +1,54 @@
+/* bowling.js
+ *
+ * COMP 3490 Final Project
+ *
+ * Created by:
+ *  Nicholas Josephson - 7791547
+ *  Gershon Reydman    - 7763541
+ *  Eric Kulchycki     - 7767961
+ */
+
+var camera, scene, renderer;
+var cameraControls;
+var keyboard = new KeyboardState();
+var clock = new THREE.Clock();
+
 var stats;
 var clearer;
 var setter;
 var clearerPlane;
 var power = 75;
-var stopPower = false;
 var sprite;
-var addedArrow = false;
-var glowing = false;
-var camera, scene, renderer;
-var cameraControls;
+
 var button;
-var clock = new THREE.Clock();
 var mesh = null;
-var keyboard = new KeyboardState();
 var pinsModel, pinMaterial;
 var ball, ballSet;
+
+//audio and video
+var audioRoll;
+var audioHit;
+var video;
+
+//game state
+var stopPower = false;
+var addedArrow = false;
+var glowing = false;
+
 var stopArrow = false;
 var rolling = false;
 var cameraNeedsReset = false;
 var pinsAndBallNeedReset = false;
-var audioRoll;
-var audioHit;
+
+//scoring
 var tries = 1;
-var video;
 var delta = 0;
 var points = 0;
 
 function fillScene() {
     scene = new Physijs.Scene;
-    scene.setGravity(new THREE.Vector3( 0, -50, 0 ));
-    scene.fog = new THREE.Fog( 0x808080, 2000, 4000 );
+    scene.setGravity(new THREE.Vector3(0, -50, 0));
+    scene.fog = new THREE.Fog(0x808080, 2000, 4000);
     scene.add(new THREE.AmbientLight(0x222222));
 
     var bowlingAlly = createBowlingAlly(1000, 1000, 300);
@@ -37,7 +56,7 @@ function fillScene() {
     scene.add(bowlingAlly);
 
 
-    var ballLight = new THREE.SpotLight(0xffffff, 4, 60, Math.PI/4);
+    var ballLight = new THREE.SpotLight(0xffffff, 4, 60, Math.PI / 4);
     ballLight.position.set(-500, 300, 0);
     ballLight.castShadow = true;
     //scene.add(ballLight.target);
@@ -47,7 +66,7 @@ function fillScene() {
     //scene.add( spotLightHelper );
 
 
-    var pinLight = new THREE.SpotLight(0xffffff, 0.5, length, Math.PI/4, 0.5);
+    var pinLight = new THREE.SpotLight(0xffffff, 0.5, length, Math.PI / 4, 0.5);
     pinLight.position.set(0, 300, 0);
     //pinLight.target = collectionBox;
     pinLight.castShadow = true;
@@ -65,8 +84,8 @@ function fillScene() {
     //loadCeiling();
     loadClearer();
     loadSetter();
-	createTV();
-	//laneNumbers();
+    createTV();
+    //laneNumbers();
 
     /*
     var audio = document.createElement('audio');
@@ -118,9 +137,9 @@ function init() {
     renderer.gammaInput = true;
     renderer.gammaOutput = true;
     renderer.setSize(canvasWidth, canvasHeight);
-	renderer.shadowMap.enabled = true;
-	renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
-	renderer.shadowMapDebug = true;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+    renderer.shadowMapDebug = true;
     //changes to make background black
     renderer.setClearColor(0x000000, 1.0);
     //renderer.setClearColor( 0xAAAAAA, 1.0 ); //old color
@@ -161,7 +180,7 @@ function addToDOM() {
 function animate() {
     requestAnimationFrame(animate);
     keyboard.update();
-	//evolveSmoke();
+    //evolveSmoke();
 
 
     if (keyboard.down("R")) {
@@ -180,8 +199,8 @@ function animate() {
         cameraControls.target.set(ball.position.x, ball.position.y, ball.position.z);
     } else if (cameraNeedsReset) {
         camera.position.set(-650, 80, 0);
-        camera.lookAt(0,0,0);
-        cameraControls.target.set(0,0,0);
+        camera.lookAt(0, 0, 0);
+        cameraControls.target.set(0, 0, 0);
         cameraNeedsReset = false;
     }
 
@@ -197,7 +216,7 @@ function animate() {
     }
 
     if (rolling && ball.position.y < -10) {
-		setTimeout(function () {
+        setTimeout(function () {
             countPins();
         }, 1000);
         if (tries < 3) {
@@ -213,7 +232,7 @@ function animate() {
         scene.remove(ball);
         scene.add(ballSet);
         cameraNeedsReset = true;
-		rolling = false;
+        rolling = false;
 
         var arrows = document.getElementById("arrowKeys");
         arrows.style.display = 'block';
@@ -238,7 +257,6 @@ function animate() {
     */
 
 
-
     render();
 }
 
@@ -250,15 +268,13 @@ function render() {
     delta = clock.getDelta();
     cameraControls.update(delta);
     renderer.render(scene, camera);
-	
-	if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
-	{
-		videoImageContext.drawImage( video, 0, 0 );
-		if ( videoTexture )
-			videoTexture.needsUpdate = true;
-	}
-}
 
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        videoImageContext.drawImage(video, 0, 0);
+        if (videoTexture)
+            videoTexture.needsUpdate = true;
+    }
+}
 
 document.addEventListener('keydown', function (ev) {
     switch (ev.keyCode) {
@@ -291,9 +307,9 @@ document.addEventListener('keydown', function (ev) {
             //drawPower();
             break;
 
-		case 32: // space
-		
-			document.getElementById("arrowKeys").style.display = 'none';
+        case 32: // space
+
+            document.getElementById("arrowKeys").style.display = 'none';
 
             if (!addedArrow) {
                 ball.position.y = ballSet.position.y;
@@ -329,7 +345,6 @@ document.addEventListener('keydown', function (ev) {
     }
 });
 
-
 function countPins() {
 
     for (var i in scene._objects) {
@@ -339,7 +354,7 @@ function countPins() {
             }
         }
     }
-	createScore();
+    createScore();
     //alert(score);
 }
 

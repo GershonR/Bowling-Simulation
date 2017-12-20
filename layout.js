@@ -1,3 +1,13 @@
+/* layout.js
+ *
+ * COMP 3490 Final Project
+ *
+ * Created by:
+ *  Nicholas Josephson - 7791547
+ *  Gershon Reydman    - 7763541
+ *  Eric Kulchycki     - 7767961
+ */
+
 function createBowlingAlly(width, length, height) {
     var laneLength = 600;
     var backLength = length - laneLength;
@@ -5,20 +15,27 @@ function createBowlingAlly(width, length, height) {
     var guardHeight = 10;
     var laneAmount = 7;
     var laneSeparation = (width - (laneWidth * laneAmount)) / laneAmount;
-    var thickness = 1;
     var spacersAmount = laneAmount + 1;
 
-    var baseMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
-    var baseGeometry = new THREE.BoxGeometry(length, 0.25, width);
-    var base = new Physijs.BoxMesh(baseGeometry, baseMaterial, 0);
-
     var enclosing = createEnclosing(width, length, height);
-    base.add(enclosing);
+
+    addLanes(enclosing, width, length, height, laneLength, laneWidth, laneSeparation, guardHeight);
+
+    var backFloor = createBack(width, backLength);
+    backFloor.position.set(-length / 2 + backLength / 2, 10, 0);
+    enclosing.add(backFloor);
+
+    createLaneNumbers();
+    return enclosing;
+}
+
+function addLanes(parent, width, length, height, laneLength, laneWidth, laneSeparation, guardHeight) {
+    var thickness = 1;
 
     for (var laneNum = 0; laneNum < laneAmount; laneNum++) {
         var bowlingLane = createBowlingLane(laneWidth, laneLength, guardHeight, thickness);
-        bowlingLane.position.set(length / 2 - laneLength / 2, 10, (-width / 2 + laneSeparation / 2 + laneWidth / 2) + laneNum * (laneWidth + laneSeparation));
-        base.add(bowlingLane);
+        bowlingLane.position.set(length / 2 - laneLength / 2, guardHeight, (-width / 2 + laneSeparation / 2 + laneWidth / 2) + laneNum * (laneWidth + laneSeparation));
+        parent.add(bowlingLane);
     }
 
     var sideTexture = new THREE.TextureLoader().load('textures/fun.jpg');
@@ -41,20 +58,13 @@ function createBowlingAlly(width, length, height) {
 
     for (var spaceNum = 0; spaceNum < spacersAmount; spaceNum++) {
         var space = new Physijs.BoxMesh(sideGeometry, sideMaterial, 0);
-        space.position.set(length / 2 - laneLength / 2, 10, (-width / 2) + spaceNum * (laneWidth + laneSeparation));
-        base.add(space);
+        space.position.set(length / 2 - laneLength / 2, guardHeight, (-width / 2) + spaceNum * (laneWidth + laneSeparation));
+        parent.add(space);
 
         var column = new Physijs.BoxMesh(columnGeometry, columnMaterial, 0);
         column.position.set(length / 2, height / 2, (-width / 2) + spaceNum * (laneWidth + laneSeparation));
-        base.add(column);
+        parent.add(column);
     }
-
-    var backFloor = createBack(width, backLength);
-    backFloor.position.set(-length / 2 + backLength / 2, 10, 0);
-    base.add(backFloor);
-
-    createLaneNumbers();
-    return base;
 }
 
 function createBowlingLane(width, length, guardHeight, gutterAndRailThickness) {
@@ -87,10 +97,10 @@ function createBowlingLane(width, length, guardHeight, gutterAndRailThickness) {
     laneFloor.add(middleLight);
 
 
-    var pinLight = new THREE.SpotLight(0xffffff, 0.5, length, Math.PI/4, 0.5);
+    var pinLight = new THREE.SpotLight(0xffffff, 0.5, length, Math.PI / 4, 0.5);
     pinLight.position.set(0, collectionBoxHeight, 0);
     pinLight.target = collectionBox;
-	//pinLight.castShadow = true;
+    //pinLight.castShadow = true;
     //pinLight.shadow.camera.width = 1024;
     //pinLight.shadow.camera.height = 1024;
     //pinLight.shadow.camera.near = 1;
@@ -113,7 +123,7 @@ function createLaneBase(width, length, thickness) {
 
     var floorGeometry = new THREE.BoxGeometry(length, thickness, width - (gutterSize * 2) + thickness * 2);
     var floor = new Physijs.BoxMesh(floorGeometry, floorMaterial, 0);
-	floor.receiveShadow = true;
+    floor.receiveShadow = true;
     var gutterLeft = createGutter(length, gutterSize, thickness);
 
     gutterLeft.position.z = -(width / 2 - gutterSize / 2);
@@ -222,6 +232,10 @@ function createEnclosing(width, length, height) {
     var frontPanelDisplacement = 80;
     var frontPanelHeightFromBase = 75;
 
+    var baseMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
+    var baseGeometry = new THREE.BoxGeometry(length, 0.25, width);
+    var base = new Physijs.BoxMesh(baseGeometry, baseMaterial, 0);
+
     var topTexture = new THREE.TextureLoader().load("textures/ceiling.jpg");
     topTexture.wrapS = topTexture.wrapT = THREE.RepeatWrapping;
     topTexture.repeat.set(20, 20);
@@ -232,6 +246,7 @@ function createEnclosing(width, length, height) {
     var topGeometry = new THREE.BoxGeometry(length, 0.25, width);
     var top = new Physijs.BoxMesh(topGeometry, topMaterial, 0);
     top.position.y = height;
+    base.add(top);
 
     var wallTexture = new THREE.TextureLoader().load("textures/wall10.jpg");
     var sideWallMaterial = new THREE.MeshLambertMaterial({map: wallTexture});
@@ -257,7 +272,7 @@ function createEnclosing(width, length, height) {
     frontUpperPanel.rotation.z = Math.PI / 3;
     top.add(frontUpperPanel);
 
-    return top;
+    return base;
 }
 
 function loadClearer() {
@@ -357,45 +372,42 @@ function createLaneNumbers() {
             textShape.fromGeometry(geometry);
             text = new THREE.Mesh(textShape, matLite);
             text.rotation.y = (-Math.PI / 2);
-            text.position.set(1000/2 - 476, 30, (-1000 / 2) - 3 + (laneNum-1) * (115 + 28));
+            text.position.set(1000 / 2 - 476, 30, (-1000 / 2) - 3 + (laneNum - 1) * (115 + 28));
             scene.add(text);
         }
     });
 }
 
 function createScore() {
-	
-	    var loader = new THREE.FontLoader();
-			loader.load('fonts/helvetiker_regular.typeface.json', function (font) {
-            var xMid, text;
-            var textShape = new THREE.BufferGeometry();
-            var color = 0xFFFFFF;
-            var matLite = new THREE.MeshBasicMaterial({
-                color: color,
-                transparent: true,
-                opacity: 0.95,
-                side: THREE.DoubleSide
-            });
-            var message = "Score: " + points;
 
-            var shapes = font.generateShapes(message, 50, 5);
-            var geometry = new THREE.ShapeGeometry(shapes);
-            geometry.computeBoundingBox();
+    var loader = new THREE.FontLoader();
+    loader.load('fonts/helvetiker_regular.typeface.json', function (font) {
+        var xMid, text;
+        var textShape = new THREE.BufferGeometry();
+        var color = 0xFFFFFF;
+        var matLite = new THREE.MeshBasicMaterial({
+            color: color,
+            transparent: true,
+            opacity: 0.95,
+            side: THREE.DoubleSide
+        });
+        var message = "Score: " + points;
 
-            xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+        var shapes = font.generateShapes(message, 50, 5);
+        var geometry = new THREE.ShapeGeometry(shapes);
+        geometry.computeBoundingBox();
 
-            textShape.fromGeometry(geometry);
-            text = new THREE.Mesh(textShape, matLite);
-            text.rotation.y = (-Math.PI / 2);
-            text.position.set(-80, 30, -120);
-            scene.add(text);
-			setTimeout(function () {
-				scene.remove(text);
-			}, 3000);
+        xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+
+        textShape.fromGeometry(geometry);
+        text = new THREE.Mesh(textShape, matLite);
+        text.rotation.y = (-Math.PI / 2);
+        text.position.set(-80, 30, -120);
+        scene.add(text);
+        setTimeout(function () {
+            scene.remove(text);
+        }, 3000);
     });
-	
-	
+
+
 }
-
-
-
