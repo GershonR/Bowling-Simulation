@@ -261,7 +261,7 @@ function createEnclosing(width, length, height) {
 
     var frontPanelTexture = new THREE.TextureLoader().load("textures/109.jpg");
     var frontPanelMaterial = new THREE.MeshBasicMaterial({map: frontPanelTexture});
-    var frontPanel = new THREE.Mesh(new THREE.BoxGeometry(1, frontPanelHeight, width), frontPanelMaterial);
+    var frontPanel = new Physijs.BoxMesh(new THREE.BoxGeometry(1, frontPanelHeight, width), frontPanelMaterial);
     frontPanel.position.set(length / 2 - frontPanelDisplacement, -height + frontPanelHeightFromBase + frontPanelHeight / 2, 0);
     top.add(frontPanel);
 
@@ -379,7 +379,6 @@ function createLaneNumbers() {
 }
 
 function createScore() {
-
     var loader = new THREE.FontLoader();
     loader.load('fonts/helvetiker_regular.typeface.json', function (font) {
         var xMid, text;
@@ -404,10 +403,31 @@ function createScore() {
         text.rotation.y = (-Math.PI / 2);
         text.position.set(-80, 30, -120);
         scene.add(text);
+
         setTimeout(function () {
             scene.remove(text);
         }, 3000);
     });
 
+}
 
+function loadStrike() {
+
+
+    var convexBreaker = new THREE.ConvexObjectBreaker();
+
+    convexBreaker.prepareBreakableObject( text, 5, new THREE.Vector3(), new THREE.Vector3(), true );
+
+    var debris = convexBreaker.subdivideByImpact( text, new THREE.Vector3(0,0,0), new THREE.Vector3(-1,0,0), 10, 2, 1.5 );
+
+    var numObjects = debris.length;
+
+    for ( var j = 0; j < numObjects; j++ ) {
+        var thing = new Physijs.ConvexMesh(debris[ j ].geometry, debris[ j ].material, 2);
+        thing.rotation.y = (-Math.PI / 2);
+        thing.position.set(-100, 50, -200);
+        //thing.position.set(-100,100,0);
+        thing.__dirtyPosition = true;
+        scene.add( thing );
+    }
 }
