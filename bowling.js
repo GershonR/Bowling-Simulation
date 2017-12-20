@@ -264,6 +264,9 @@ function updateGameState() {
                     }
                 }
 
+                createScore();
+                createRound();
+
                 if (points < 10 && tries < 3) {
                     tries++;
                 } else { //end of round
@@ -273,14 +276,10 @@ function updateGameState() {
                         }, 2000);
                     }
 
-
                     tries = 1;
                     round++;
                     pinsNeedPlacement = true;
                 }
-
-                createScore();
-                createRound();
 
                 cameraNeedsReset = true;
                 waitingToScore = false;

@@ -360,7 +360,7 @@ function createScore() {
     });
     var message;
     if (points === 10) {
-        if (tries === 2) {
+        if (tries === 1) {
             message = "Strike!";
             loadStrike();
             loadSmoke();
@@ -523,7 +523,7 @@ function createRound() {
     textShape.fromGeometry(geometry);
     roundText = new THREE.Mesh(textShape, matLite);
     roundText.rotation.y = (-Math.PI / 2);
-    roundText.position.set(-500, 100, -100);
+    roundText.position.set(-500, 100, -90);
 
     scene.add(roundText);
 }
