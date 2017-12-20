@@ -269,7 +269,7 @@ function updateGameState() {
                 if (points < 10 && tries < 3) {
                     tries++;
                 } else { //end of round
-                    if (round === amountOfRounds) {
+                    if (round >= amountOfRounds) {
                         setTimeout(function () {
                             gameOver();
                         }, 2000);
@@ -319,6 +319,7 @@ function updateGameState() {
                 settingPosition = true;
                 resetting = false;
                 pinsResetting = false;
+                pinsNeedPlacement = false;
             }
         }
 
