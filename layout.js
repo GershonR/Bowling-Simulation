@@ -14,12 +14,10 @@ function createBowlingAlly(width, length, height) {
     var laneWidth = 115;
     var guardHeight = 10;
     var laneAmount = 7;
-    var laneSeparation = (width - (laneWidth * laneAmount)) / laneAmount;
-    var spacersAmount = laneAmount + 1;
 
     var enclosing = createEnclosing(width, length, height);
 
-    addLanes(enclosing, width, length, height, laneLength, laneWidth, laneSeparation, guardHeight);
+    addLanes(enclosing, width, length, height, laneLength, laneWidth, guardHeight, laneAmount);
 
     var backFloor = createBack(width, backLength);
     backFloor.position.set(-length / 2 + backLength / 2, 10, 0);
@@ -29,8 +27,10 @@ function createBowlingAlly(width, length, height) {
     return enclosing;
 }
 
-function addLanes(parent, width, length, height, laneLength, laneWidth, laneSeparation, guardHeight) {
+function addLanes(parent, width, length, height, laneLength, laneWidth, guardHeight, laneAmount) {
     var thickness = 1;
+    var laneSeparation = (width - (laneWidth * laneAmount)) / laneAmount;
+    var spacersAmount = laneAmount + 1;
 
     for (var laneNum = 0; laneNum < laneAmount; laneNum++) {
         var bowlingLane = createBowlingLane(laneWidth, laneLength, guardHeight, thickness);
