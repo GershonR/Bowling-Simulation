@@ -197,28 +197,11 @@ function createBack(width, length) {
 
 function createCollectionBox(width, depth, height) {
     var collectBoxMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0x3c3f44,
+        color: 0x000000, //0x3c3f44,
         clearCoat: 1.0
     });
 
     var boxBottom = new Physijs.BoxMesh(new THREE.BoxGeometry(depth, 1, width), collectBoxMaterial, 0);
-    /*
-    boxBottom.name = "bottom";
-    boxBottom.addEventListener('collision', function (other_object, relative_velocity, relative_rotation, contact_normal) {
-        if (other_object.name == "Bowling Ball" && !other_object.collided) {
-            other_object.collided = true;
-            setTimeout(function () {
-                if (collisions >= 10) {
-                    alert("Strike!");
-                } else {
-                    alert("Score: " + collisions);
-                }
-                scene.remove(clearerPlane);
-                dropClearer();
-            }, 5000);
-        }
-    });
-    */
 
     var boxBack = new Physijs.BoxMesh(new THREE.BoxGeometry(1, height, width), collectBoxMaterial, 0);
     boxBack.position.set(depth / 2, height / 2, 0);
