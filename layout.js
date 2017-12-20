@@ -421,7 +421,7 @@ function gameOver() {
         });
         var message = "Game Over";
 
-        var shapes = font.generateShapes(message, 50, 5);
+        var shapes = font.generateShapes(message, 10, 5);
         var geometry = new THREE.ShapeGeometry(shapes);
         geometry.computeBoundingBox();
 
@@ -430,7 +430,7 @@ function gameOver() {
         textShape.fromGeometry(geometry);
         text = new THREE.Mesh(textShape, matLite);
         text.rotation.y = (-Math.PI / 2);
-        text.position.set(-80, 30, -150);
+        text.position.set(-500, 100, 30);
         scene.add(text);
         setTimeout(function () {
             window.location.href = 'credits/index.html';
@@ -513,7 +513,7 @@ function createRound() {
         opacity: 0.95,
         side: THREE.DoubleSide
     });
-    var message = "Round: "+ round;
+    var message = "Round "+ round + "/"+ amountOfRounds;
     var shapes = font.generateShapes(message, 10, 5);
     var geometry = new THREE.ShapeGeometry(shapes);
     geometry.computeBoundingBox();
