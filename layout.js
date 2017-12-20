@@ -283,7 +283,7 @@ function createTV() {
     var width = 125;
     var height = 70;
     var y = 125;
-    var x = -61;
+    var x = -62;
 
     var tvTexture = new THREE.TextureLoader().load("textures/TV.jpg");
     var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
