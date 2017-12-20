@@ -302,8 +302,7 @@ function updateGameState() {
                     settingPosition = true;
                     resetting = false;
                 } else {
-                    droppingState = true;
-                    scene.remove(clearerPlane);
+                    startCleaner = true;
                     pinsReseting = true;
                 }
                 displayingText = false;

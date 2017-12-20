@@ -23,11 +23,18 @@ var cleanDone = false;
 var downVector = new THREE.Vector3(0, -0.7, 0); // amount to move per frame
 var backVector = new THREE.Vector3(0.7, 0, 0); // amount to move per frame
 var upVector = new THREE.Vector3(0, 0.9, 0); // amount to move per frame
-var forwardVector = new THREE.Vector3(-0.9, 0, 0); // amount to move per frame
+var forwardVector = new THREE.Vector3(-0.7, 0, 0); // amount to move per frame
 var setDownVector = new THREE.Vector3(0, -0.6, 0); // amount to move per frame
 var setUpVector = new THREE.Vector3(0, 0.6, 0); // amount to move per frame;
+var startCleaner = false;
 
 function animateCleaner() {
+    if (startCleaner) {
+        scene.remove(clearerPlane);
+        startCleaner = false;
+        cleanDone = false;
+        droppingState = true;
+    }
 
     if (setterDown) {
         setter.position.add(setDownVector); // add to position
@@ -66,19 +73,19 @@ function animateCleaner() {
             }
         } else if (moveBackState) {
             direction = forwardVector;
-            if (clearer.position.x <= -50) {
+            if (clearer.position.x <= -49) {
                 scene.add(clearerPlane);
                 moveBackState = false;
                 setterDown = true;
             }
         }
-        clearer.setLinearVelocity(new THREE.Vector3(0, 0, 0));
-        clearer.setAngularVelocity(new THREE.Vector3(0, 0, 0));
-        clearer.rotation.set(0, 0, 0);
         clearer.position.add(direction); // add to position
-        clearer.__dirtyPosition = true;
-        clearer.__dirtyRotation = true;
     }
+    clearer.setLinearVelocity(new THREE.Vector3(0, 0, 0));
+    clearer.setAngularVelocity(new THREE.Vector3(0, 0, 0));
+    clearer.rotation.set(0, 0, 0);
+    clearer.__dirtyPosition = true;
+    clearer.__dirtyRotation = true;
 }
 
 function loadClearer() {
