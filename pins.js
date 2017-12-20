@@ -83,6 +83,7 @@ function drawMainPins() {
         pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
         pin.position.set(0, -height, 0);
         pin.castShadow = true;
+        pin.name = "pin";
         box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, gravity);
         box.name = "pin";
         box.position.set(15, height, -26 + 18 * x);
@@ -94,6 +95,7 @@ function drawMainPins() {
         pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
         pin.position.set(0, -height, 0);
         pin.castShadow = true;
+        pin.name = "pin";
         box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, gravity);
         box.name = "pin";
         box.position.set(0, height, -18 + 18 * x);
@@ -105,6 +107,7 @@ function drawMainPins() {
         pin = new Physijs.ConvexMesh(geometry, materialsL, 1);
         pin.position.set(0, -height, 0);
         pin.castShadow = true;
+        pin.name = "pin";
         box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, gravity);
         box.name = "pin";
         box.position.set(-15, height, -10 + 18 * x);
@@ -116,6 +119,7 @@ function drawMainPins() {
     pin.position.set(0, -height, 0);
     pin.castShadow = true;
     box = new Physijs.BoxMesh(boxGeometry, upBoxMaterial, gravity);
+    pin.name = "pin";
     box.name = "pin";
     box.position.set(-32, height, 0);
     box.add(pin);

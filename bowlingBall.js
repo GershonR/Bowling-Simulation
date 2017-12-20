@@ -33,6 +33,12 @@ function createBowlingBall() {
     ball.name = "ball";
     ball.castShadow = true;
 
+    ball.addEventListener('collision', function( other_object, relative_velocity, relative_rotation, contact_normal ) {
+        if (other_object.name === "pin") {
+            audioHit.play();
+        }
+    });
+
     return ball;
 }
 
