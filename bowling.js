@@ -19,11 +19,12 @@ var setter;
 var clearerPlane;
 var power = 75;
 var sprite;
-
+var smokeParticles;
 var button;
 var mesh = null;
 var pinsModel, pinMaterial;
 var ball, ballSet;
+var smoking = false;
 
 //audio and video
 var audioRoll;
@@ -106,24 +107,6 @@ function fillScene() {
     audioHit = document.createElement('audio');
     audioHit.src = "textures/hit.mp3";
     audioHit.load(); // must call after setting/changing source
-
-    /*
-	smokeTexture = THREE.TextureLoader.load('textures/smokeparticle.png');
-    smokeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, map: smokeTexture, transparent: true, opacity: 0.4});
-    smokeGeo = new THREE.PlaneGeometry(120,120); // SIZE OF PARTICLES BIGGER -> PLANES MORE OBVIOUS
-    smokeParticles = [];
-
-
-    for (p = 0; p < 25; p++) { //HOW MANY PARTICLES
-        var particle = new THREE.Mesh(smokeGeo,smokeMaterial);
-        particle.position.set(Math.random()*100-55,Math.random()*100 + 15,Math.random()*950-500); // PARTICLE SPREAD X, Y, Z
-		particle.rotation.z = Math.random() * 360;
-		particle.rotation.y = -Math.PI / 2;
-        scene.add(particle);
-        smokeParticles.push(particle);
-		
-    }
-    */
 }
 
 function init() {
@@ -155,14 +138,14 @@ function init() {
     cameraControls.noKeys = true;
 }
 
-/*
+
 function evolveSmoke() {
     var sp = smokeParticles.length;
     while(sp--) {
         smokeParticles[sp].rotation.z += (delta * 0.2);
     }
 }
-*/
+
 
 function addToDOM() {
     document.documentElement.style.overflow = 'hidden';  // firefox, chrome
@@ -182,7 +165,9 @@ function addToDOM() {
 function animate() {
     requestAnimationFrame(animate);
     keyboard.update();
-    //evolveSmoke();
+    if (smoking) {
+        evolveSmoke();
+    }
 
 
     if (keyboard.down("R")) {

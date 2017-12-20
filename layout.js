@@ -391,8 +391,14 @@ function createScore() {
             opacity: 0.95,
             side: THREE.DoubleSide
         });
-        var message = "Score: " + points;
-
+        var message;
+        if (points === 10) {
+            message = "Strike!";
+            loadStrike();
+            loadSmoke();
+        } else {
+            message = "Score: " + points;
+        }
         var shapes = font.generateShapes(message, 50, 5);
         var geometry = new THREE.ShapeGeometry(shapes);
         geometry.computeBoundingBox();
@@ -402,11 +408,17 @@ function createScore() {
         textShape.fromGeometry(geometry);
         laneText = new THREE.Mesh(textShape, matLite);
         laneText.rotation.y = (-Math.PI / 2);
-        laneText.position.set(-80, 30, -120);
+        if (points === 10) {
+            laneText.position.set(-425, 50, -90);
+        } else {
+            laneText.position.set(-80, 30, -120);
+        }
+
         scene.add(laneText);
         setTimeout(function () {
             scene.remove(laneText);
-        }, 3000);
+            removeStrike();
+        }, 5000);
     });
 }
 
@@ -440,4 +452,103 @@ function gameOver() {
             window.location.href = 'credits/index.html';
         }, 3000);
     });
+}
+
+var cross1;
+var cross2;
+var strikeUp = true;
+
+function loadStrike() {
+
+    var crossMaterial = new THREE.MeshBasicMaterial({ color: 0xFF0000 });
+    var crossGeometry = new THREE.BoxGeometry(1,150,10);
+    var crossPlank1 = new Physijs.BoxMesh(crossGeometry, crossMaterial, 0);
+    crossPlank1.position.set(-400, 100, 0);
+    crossPlank1.rotation.x = Math.PI / 4;
+    scene.add(crossPlank1);
+    var crossPlank2 = new Physijs.BoxMesh(crossGeometry, crossMaterial, 0);
+    crossPlank2.position.set(-400, 100, 0);
+    crossPlank2.rotation.x = -Math.PI / 4;
+    scene.add(crossPlank2);
+
+
+    var convexBreaker = new THREE.ConvexObjectBreaker();
+
+    convexBreaker.prepareBreakableObject( crossPlank1, 5, new THREE.Vector3(), new THREE.Vector3(), true );
+    convexBreaker.prepareBreakableObject( crossPlank2, 5, new THREE.Vector3(), new THREE.Vector3(), true );
+
+
+    var debris = convexBreaker.subdivideByImpact( crossPlank1, new THREE.Vector3(0,0,0), new THREE.Vector3(-1,0,0), 80, 2, 2);
+
+    var numObjects = debris.length;
+
+    for ( var j = 0; j < numObjects; j++ ) {
+        var thing1 = new Physijs.ConvexMesh(debris[ j ].geometry, debris[ j ].material, 2);
+        thing1.position.set(-400, 100, 0);
+        thing1.rotation.x = Math.PI / 4;
+        thing1.name = "shard";
+        //thing.rotation.y = (-Math.PI / 2);
+        //thing.position.set(-100, 50, -200);
+        //thing.position.set(-100,100,0);
+        //thing.__dirtyPosition = true;
+        scene.add( thing1 );
+    }
+
+    var debris2 = convexBreaker.subdivideByImpact( crossPlank2, new THREE.Vector3(0,0,0), new THREE.Vector3(-1,0,0), 80, 2, 2 );
+
+    var numObjects2 = debris.length;
+
+    for ( var j = 0; j < numObjects2; j++ ) {
+        var thing2 = new Physijs.ConvexMesh(debris[ j ].geometry, debris[ j ].material, 2);
+        thing2.position.set(-400, 100, 0);
+        thing2.rotation.x = -Math.PI / 4;
+        thing2.name = "shard";
+        //thing.rotation.y = (-Math.PI / 2);
+        //thing.position.set(-100, 50, -200);
+        //thing.position.set(-100,100,0);
+        //thing.__dirtyPosition = true;
+        scene.add( thing2 );
+    }
+
+    cross1 = crossPlank1;
+    cross2 = crossPlank2;
+
+    setTimeout(function () {
+        scene.remove(cross1);
+        scene.remove(cross2);
+    },500);
+}
+
+function removeStrike() {
+    for (var i in smokeParticles) {
+        scene.remove(smokeParticles[i]);
+    }
+    smokeParticles = [];
+
+    for (var i in scene._objects) {
+        if (scene._objects[i].name === "shard") {
+            scene.remove(scene._objects[i]);
+        }
+    }
+
+}
+
+function loadSmoke() {
+
+	smokeTexture = new THREE.TextureLoader().load('textures/smokeparticle.png');
+    smokeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, map: smokeTexture, transparent: true, opacity: 0.4});
+    smokeGeo = new THREE.PlaneGeometry(120,120); // SIZE OF PARTICLES BIGGER -> PLANES MORE OBVIOUS
+    smokeParticles = [];
+
+
+    for (p = 0; p < 70; p++) { //HOW MANY PARTICLES
+        var particle = new THREE.Mesh(smokeGeo,smokeMaterial);
+        particle.position.set(-300 - Math.random()*50 ,Math.random()*30 + 50,Math.random()*950-500); // PARTICLE SPREAD X, Y, Z
+		particle.rotation.z = Math.random() * 360;
+		particle.rotation.y = -Math.PI / 2;
+        particle.name = "smoke";
+		scene.add(particle);
+        smokeParticles.push(particle);
+    }
+
 }

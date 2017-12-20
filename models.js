@@ -42,7 +42,7 @@ function loadPins() {
         materials.preload();
         var manager = new THREE.LoadingManager();
         var objLoader = new THREE.OBJLoader(manager);
-        var materialsL = new Array();
+        var materialsL = [];
         objLoader.setMaterials(materials);
         objLoader.setPath('models/pins/');
         objLoader.load('Pin.obj', function (object) {
