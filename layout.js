@@ -10,6 +10,7 @@
 
 var cross1;
 var cross2;
+var laneText, roundText;
 
 function createBowlingAlly(width, length, height) {
     var laneLength = 600;
@@ -278,40 +279,6 @@ function createEnclosing(width, length, height) {
     return base;
 }
 
-function loadClearer() {
-    var clearerWidth = 8;
-    var clearerHeight = 30;
-    var clearerLength = 100;
-    var x = -50;
-    var z = 0;
-    var y = 105;
-    var clearerMaterial = new THREE.MeshPhongMaterial({color: 0x212428});
-    var clearerGeometry = new THREE.BoxGeometry(clearerWidth, clearerHeight, clearerLength);
-    clearer = new Physijs.ConvexMesh(clearerGeometry, clearerMaterial, 1000);
-    clearer.position.x = x;
-    clearer.position.y = y;
-    clearer.position.z = z;
-    clearer.setLinearVelocity(new THREE.Vector3(0, 0, 0));
-    clearer.setAngularVelocity(new THREE.Vector3(0, 0, 0));
-    scene.add(clearer);
-    var clearerPlaneGeometry = new THREE.BoxGeometry(clearerWidth, 0.5, clearerLength);
-    clearerPlane = new Physijs.ConvexMesh(clearerPlaneGeometry, clearerMaterial, 0);
-    clearerPlane.position.x = x;
-    clearerPlane.position.y = 90;
-    clearerPlane.position.z = z;
-    scene.add(clearerPlane);
-}
-
-function loadSetter() {
-    var setterMaterial = new THREE.MeshLambertMaterial({color: 0x212428});
-    setter = new THREE.Mesh(new THREE.BoxGeometry(60, 40, 70), setterMaterial);
-
-    setter.position.x = -15;
-    setter.position.y = 90;
-    setter.position.z = 0;
-    scene.add(setter);
-}
-
 function createTV() {
     var tvTexture = new THREE.TextureLoader().load("textures/TV.jpg");
     var img = new THREE.MeshBasicMaterial({ //CHANGED to MeshBasicMaterial
@@ -382,54 +349,61 @@ function createLaneNumbers() {
 }
 
 function createScore() {
-    var loader = new THREE.FontLoader();
-    loader.load('fonts/helvetiker_regular.typeface.json', function (font) {
-        var xMid;
-        var textShape = new THREE.BufferGeometry();
-        var color = 0xFFFFFF;
-        var matLite = new THREE.MeshBasicMaterial({
-            color: color,
-            transparent: true,
-            opacity: 0.95,
-            side: THREE.DoubleSide
-        });
-        var message;
-        if (points === 10) {
-            if (tries === 2) {
-                message = "Strike!";
-                loadStrike();
-                loadSmoke();
-            } else {
-                message = "Spare!";
-                loadSpare();
-                loadSmoke();
-            }
-        } else {
-            message = "Score: " + points;
-        }
-        var shapes = font.generateShapes(message, 50, 5);
-        var geometry = new THREE.ShapeGeometry(shapes);
-        geometry.computeBoundingBox();
-
-        xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
-
-        textShape.fromGeometry(geometry);
-        laneText = new THREE.Mesh(textShape, matLite);
-        laneText.rotation.y = (-Math.PI / 2);
-        if (points === 10) {
-            laneText.position.set(-425, 50, -90);
-        } else {
-            laneText.position.set(-80, 30, -120);
-        }
-
-        scene.add(laneText);
-        setTimeout(function () {
-            scene.remove(laneText);
-            scene.remove(cross1);
-            scene.remove(cross2);
-            removeStrike();
-        }, 5000);
+    var xMid;
+    var textShape = new THREE.BufferGeometry();
+    var color = 0xFFFFFF;
+    var matLite = new THREE.MeshBasicMaterial({
+        color: color,
+        transparent: true,
+        opacity: 0.95,
+        side: THREE.DoubleSide
     });
+    var message;
+    if (points === 10) {
+        if (tries === 1) {
+            message = "Strike!";
+            loadStrike();
+            loadSmoke();
+        } else {
+            message = "Spare!";
+            loadSpare();
+            loadSmoke();
+        }
+    } else {
+        message = "Score: " + points;
+    }
+    var shapes = font.generateShapes(message, 50, 5);
+    var geometry = new THREE.ShapeGeometry(shapes);
+    geometry.computeBoundingBox();
+
+    xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+
+    textShape.fromGeometry(geometry);
+    laneText = new THREE.Mesh(textShape, matLite);
+    laneText.rotation.y = (-Math.PI / 2);
+    if (points === 10) {
+        laneText.position.set(-425, 50, -90);
+    } else {
+        laneText.position.set(-80, 30, -120);
+    }
+
+    scene.add(laneText);
+}
+
+function removeScore() {
+    try {
+        scene.remove(laneText);
+        scene.remove(roundText);
+    } catch (error) {
+
+    }
+    try {
+        scene.remove(cross1);
+        scene.remove(cross2);
+    } catch (error) {
+
+    }
+    removeStrike();
 }
 
 function gameOver() {
@@ -447,7 +421,7 @@ function gameOver() {
         });
         var message = "Game Over";
 
-        var shapes = font.generateShapes(message, 50, 5);
+        var shapes = font.generateShapes(message, 10, 5);
         var geometry = new THREE.ShapeGeometry(shapes);
         geometry.computeBoundingBox();
 
@@ -456,7 +430,8 @@ function gameOver() {
         textShape.fromGeometry(geometry);
         text = new THREE.Mesh(textShape, matLite);
         text.rotation.y = (-Math.PI / 2);
-        text.position.set(-80, 30, -150);
+        text.position.set(-500, 20, -30);
+
         scene.add(text);
         setTimeout(function () {
             window.location.href = 'credits/index.html';
@@ -489,19 +464,19 @@ function loadSpare() {
     scene.add(cross1);
 }
 
-
 function removeStrike() {
-    for (var i in smokeParticles) {
+    if (smokeParticles != null) {
+        for (var i in smokeParticles) {
         scene.remove(smokeParticles[i]);
     }
-    smokeParticles = [];
+        smokeParticles = [];
+    }
 
     for (var i in scene._objects) {
         if (scene._objects[i].name === "shard") {
             scene.remove(scene._objects[i]);
         }
     }
-
 }
 
 function loadSmoke() {
@@ -520,4 +495,36 @@ function loadSmoke() {
 		scene.add(particle);
         smokeParticles.push(particle);
     }
+}
+
+function loadFont() {
+    var loader = new THREE.FontLoader();
+    loader.load('fonts/helvetiker_regular.typeface.json', function (fontN) {
+        font = fontN
+    });
+}
+
+function createRound() {
+    var xMid;
+    var textShape = new THREE.BufferGeometry();
+    var color = 0xFFFFFF;
+    var matLite = new THREE.MeshBasicMaterial({
+        color: color,
+        transparent: true,
+        opacity: 0.95,
+        side: THREE.DoubleSide
+    });
+    var message = "Round "+ round + "/"+ amountOfRounds;
+    var shapes = font.generateShapes(message, 10, 5);
+    var geometry = new THREE.ShapeGeometry(shapes);
+    geometry.computeBoundingBox();
+
+    xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+
+    textShape.fromGeometry(geometry);
+    roundText = new THREE.Mesh(textShape, matLite);
+    roundText.rotation.y = (-Math.PI / 2);
+    roundText.position.set(-500, 100, -90);
+
+    scene.add(roundText);
 }
