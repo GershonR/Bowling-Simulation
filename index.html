@@ -1,9 +1,19 @@
+<!--
+ index.html
+
+ COMP 3490 Final Project
+
+ Created by:
+ Nicholas Josephson - 7791547
+ Gershon Reydman    - 7763541
+ Eric Kulchycki     - 7767961
+-->
+
 <html>
+
 <head>
     <title>Bowling Simulator</title>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-    <style type="text/css">
-    </style>
     <script src="js/jquery-1.11.3.min.js"></script>
     <script src="three.min.js"></script>
     <script src="js/Detector.js"></script>
@@ -27,24 +37,20 @@
     <script src="arrow.js"></script>
     <script src="power.js"></script>
     <script src="clearer.js"></script>
-
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
 </head>
 
 <body>
-
-
-<div id="canvas" style="width:auto; margin: 0 auto;">
-    <input type="hidden" id="myField" value=""/>
-    <script src="bowling.js"></script>
-    <a id="viewSrcButton" target="_blank" href="https://github.com/GershonR/Bowling-Simulation"
-       title="View source code for Bowling Sim on GitHub">View source</a>
-    <img id="arrowKeys" src="textures/arrowkeys.png"></img>
-    <img id="spaceBar" src="textures/spacebar.png"></img>
-</div>
-
-
+    <div id="canvas" style="width:auto; margin: 0 auto;">
+        <input type="hidden" id="myField" value=""/>
+        <script src="bowling.js"></script>
+        <a id="viewSrcButton" target="_blank" href="https://github.com/GershonR/Bowling-Simulation"
+           title="View source code for Bowling Sim on GitHub">View source</a>
+        <img id="arrowKeys" src="textures/arrowkeys.png"/>
+        <img id="spaceBar" src="textures/spacebar.png"/>
+    </div>
 </body>
+
 <style>
     #viewSrcButton {
         position: fixed;
@@ -80,8 +86,9 @@
         font-family: Monospace;
         background-color: #000;
         color: #000;
-        margin: 0px;
+        margin: 0;
         overflow: hidden;
     }
 </style>
+
 </html>
