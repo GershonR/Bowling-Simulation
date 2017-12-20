@@ -430,7 +430,8 @@ function gameOver() {
         textShape.fromGeometry(geometry);
         text = new THREE.Mesh(textShape, matLite);
         text.rotation.y = (-Math.PI / 2);
-        text.position.set(-500, 100, 30);
+        text.position.set(-500, 20, -30);
+
         scene.add(text);
         setTimeout(function () {
             window.location.href = 'credits/index.html';

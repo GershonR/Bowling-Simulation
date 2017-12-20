@@ -50,7 +50,7 @@ var tries = 1;
 var delta = 0;
 var points = 0;
 var round = 1;
-var amountOfRounds = 2;
+var amountOfRounds = 3;
 
 function fillScene() {
     scene = new Physijs.Scene;
