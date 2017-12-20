@@ -382,7 +382,7 @@ function createScore() {
 
     var loader = new THREE.FontLoader();
     loader.load('fonts/helvetiker_regular.typeface.json', function (font) {
-        var xMid, text;
+        var xMid;
         var textShape = new THREE.BufferGeometry();
         var color = 0xFFFFFF;
         var matLite = new THREE.MeshBasicMaterial({
@@ -400,14 +400,44 @@ function createScore() {
         xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
 
         textShape.fromGeometry(geometry);
-        text = new THREE.Mesh(textShape, matLite);
-        text.rotation.y = (-Math.PI / 2);
-        text.position.set(-80, 30, -120);
-        scene.add(text);
+        laneText = new THREE.Mesh(textShape, matLite);
+        laneText.rotation.y = (-Math.PI / 2);
+        laneText.position.set(-80, 30, -120);
+        scene.add(laneText);
         setTimeout(function () {
-            scene.remove(text);
+            scene.remove(laneText);
         }, 3000);
     });
+}
 
+function gameOver() {
+	scene.remove(laneText);
+    var loader = new THREE.FontLoader();
+    loader.load('fonts/helvetiker_regular.typeface.json', function (font) {
+        var xMid;
+        var textShape = new THREE.BufferGeometry();
+        var color = 0xFFFFFF;
+        var matLite = new THREE.MeshBasicMaterial({
+            color: color,
+            transparent: true,
+            opacity: 0.95,
+            side: THREE.DoubleSide
+        });
+        var message = "Game Over";
 
+        var shapes = font.generateShapes(message, 50, 5);
+        var geometry = new THREE.ShapeGeometry(shapes);
+        geometry.computeBoundingBox();
+
+        xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+
+        textShape.fromGeometry(geometry);
+        text = new THREE.Mesh(textShape, matLite);
+        text.rotation.y = (-Math.PI / 2);
+        text.position.set(-80, 30, -150);
+        scene.add(text);
+        setTimeout(function () {
+            window.location.href = 'credits/index.html';
+        }, 3000);
+    });
 }
