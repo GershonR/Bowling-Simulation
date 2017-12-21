@@ -13,8 +13,7 @@ var keyboard = new KeyboardState();
 var clock = new THREE.Clock();
 var stats = new Stats();
 
-var sprite;
-var button;
+var sprite, button;
 var mesh = null;
 var pinsModel, pinMaterial;
 var ball, ballSet, arrow, powerSprite;
