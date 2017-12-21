@@ -12,7 +12,7 @@ Controls:
 ## Built With
 
 * [Three.JS](https://threejs.org/) - The main engine
-* [Physi.js](https://github.com/chandlerprall/Physijs) - The main engine
+* [Physi.js](https://github.com/chandlerprall/Physijs) - The physics engine
 
 ## Authors
 
