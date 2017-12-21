@@ -1,7 +1,7 @@
 # Bowling-Simulation
 A bowling simulation/game where you control a bowling ball and use it to knock over bowling pins.
 
-![](http://)
+![](https://github.com/GershonR/Bowling-Simulation/blob/master/examples/bowlingSim.png)
 
 ## Demo
 
