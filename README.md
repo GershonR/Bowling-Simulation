@@ -1,11 +1,13 @@
 # Bowling-Simulation
 A bowling simulation/game where you control a bowling ball and use it to knock over bowling pins.
 
-![](https://github.com/GershonR/Bowling-Simulation/blob/master/examples/bowlingSim.png)
-
 ## Demo
 
 [bowlingsim.com](http://bowlingsim.com/)
+
+
+![](https://github.com/GershonR/Bowling-Simulation/blob/master/examples/bowlingSim.png)
+
 
 Controls:
 - Left / Right Arrows Keys
