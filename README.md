@@ -5,6 +5,10 @@ A bowling simulation/game where you control a bowling ball and use it to knock o
 
 [bowlingsim.com](http://bowlingsim.com/)
 
+Controls:
+- Left / Right Arrows Keys
+- Spacebar
+
 ## Built With
 
 * [Three.JS](https://threejs.org/) - The main engine
